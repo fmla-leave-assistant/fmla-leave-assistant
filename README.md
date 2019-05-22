@@ -1,4 +1,40 @@
-# fmla-leave-assistant
+
+The name of the project  # fmla-leave-assistant
+Names of the team members
+-Jonny Graybill
+-Lee-Roy King
+-Austin Wood
+-Adrienne Easton
+-Peter Murphy
+
+
+A description of the project
+-FMLA software designed to assist employees and administrators to provide accurate tracking of FMLA protected leave. 
+
+The overall problem domain and how the project solves those problems
+
+-Currently, operators have no idea what their usage of FMLA is. Without this knowledge they do not know when they can or cannot take leave. This app is designed to provide employees peace of mind for getting their leave approved. From the administration side, pay adjustments for fmla leave are encoded by individuals on a biweekly basis equating to roughly 10% of their work week. This project will address these issues by, reducing the amount of time administrators spend organizing and annotating leave. Additionally this will give operators, visibility into and control of their FMLA leave.
+
+
+Semantic versioning, beginning with version 1.0.0 and incremented as changes are made
+
+
+A list of any libraries, frameworks, or packages that your application requires in order to properly function
+
+
+Instructions that the user may need to follow in order to get your application up and running on their own computer
+
+
+Clearly defined API endpoints with sample responses
+
+
+Clearly defined database schemas
+
+
+
+
+
+
 
 User Stories
 
@@ -28,3 +64,65 @@ As a manager I want to see data rendered in an easy to understand view so that I
 As a manager I want a product that reduces operational burden so that we save time as an organization
 
 
+Conflict plan
+
+Try to get conflicting parties to self remediate, if that fails then bring in a third member of the group to mediate. 
+If there is full on chaos we will delete the repo and then beg the instructor for mercy. 
+
+If you are pissed you should play a game.
+
+Anyone can tell anyone else to take five. 
+
+Remember first and foremost we are all on the same team and we should maintain that good will and shared vision.
+
+No one is here trying to break stuff, we are all here working towards the same goal. 
+
+If Lee is trying to boss everyone around, tell him to take five and chill tf out. (~Lee wrote this)
+
+To address members who may not be contributing we will in a non-accusatory manor inform that member that more work is expected of them and then encourage and support them in order to make that happen.
+
+Communication plan 
+
+Cell phones / slack 
+-text to check slack but most information should be passed through slack
+after hours communication is okay but there is no expectation of checking slack or phones outside of specified hours.
+6:30 - 9:30 pm working hours (regular class hours) 
+Safe environment - reference conflict plan
+Everyone will talk everyday
+
+Scope 
+*MVP*
+----------------
+--Front end--
+Customer page w/ week view
+Login/ create account 
+admin view 
+
+--API--
+translate
+google sheets
+
+--Database--
+Spreadsheet imported
+users exist
+schema 
+
+--Server--
+Send what the front end needs 
+
+
+*Stretch Goals*
+---------------
+
+--Front end--
+Administrator view
+drop spreadsheet in admin view either link or paste in
+password works (md5 hash thangs)
+adjustable view (week month year etc)
+
+--APIS --
+google calendar
+mock data api
+
+--Database--
+actually validates log in
