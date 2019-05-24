@@ -51,6 +51,6 @@ function homePage(request, response) {
   console.log(url);
   superagent.get(url)
     .then(results => languages = results.body.data.languages)
-    .then(() => response.render('index', { languages:languages }))
+    .then(() => response.render('pages/index', { languagesArray:languages }))
     .catch(error => handleError(error, response));
 }

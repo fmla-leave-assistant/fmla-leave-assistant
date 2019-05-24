@@ -9,7 +9,7 @@
   <nav>
     <%- include('../layout/navbar') %>
   </nav>
-  <form action="/$$$$CREATEUSERENDPOINT$$$" method="post" id="createuser">
+  <form action="/createUser" method="post" id="createuser">
     User Name
     <input type="text" name="loginform" placeholder="UserName" required>
 
@@ -28,9 +28,9 @@
     </select>
         <button type="submit">Create New User</button>
     </form>
-     
 
-    <form action="/$$$$LOGINENDPOINT$$$" method="post" id="loginform">
+
+    <form action="/login" method="post" id="loginform">
         User Name
         <input type="text" name="loginform" placeholder="UserName" required>
     
