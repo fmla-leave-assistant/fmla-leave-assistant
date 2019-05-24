@@ -8,6 +8,7 @@ const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
+const { Translate } = require('@google-cloud/translate');
 
 
 //App setup
@@ -16,6 +17,7 @@ const PORT = process.env.PORT;
 
 
 //Connecting to the database
+const translate = new Translate();
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
@@ -23,6 +25,7 @@ client.on('error', err => console.log(err));
 
 //Turn the server on
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
+
 
 //Set the view engine for server-side templating
 app.set('view engine', 'ejs');
@@ -51,6 +54,16 @@ function homePage(request, response) {
   console.log(url);
   superagent.get(url)
     .then(results => languages = results.body.data.languages)
-    .then(() => response.render('index', { languages:languages }))
+    .then(() => response.render('pages/index', { languages: languages }))
     .catch(error => handleError(error, response));
+}
+
+
+function translateText(text, target) {
+  let [translations] = translate.translate(text, target);
+  translations = Array.isArray(translations) ? translations : [translations];
+  console.log('Translations:');
+  translations.forEach((translation, i) => {
+    console.log(`${text[i]} => (${target}) ${translation}`);
+  });
 }
