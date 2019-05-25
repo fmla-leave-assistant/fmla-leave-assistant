@@ -15,6 +15,9 @@ const app = express();
 const PORT = process.env.PORT;
 
 
+app.use(express.static('public/'));
+
+
 //Connecting to the database
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
@@ -80,4 +83,3 @@ function homePage(request, response) {
   response.render('pages/index', {languagesArray: fullLanguageList})
 }
 
-// console.log(fullLanguageList)
