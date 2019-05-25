@@ -11,12 +11,15 @@ const methodOverride = require('method-override');
 const { Translate } = require('@google-cloud/translate');
 const fullLanguageList = require('./fullLanguageList.json');
 
+
+
 //App setup
 const app = express();
 const PORT = process.env.PORT;
 
 
 app.use(express.static('public/'));
+app.use(express.urlencoded({ extended: true }));
 
 
 //Connecting to the database
@@ -50,7 +53,8 @@ function handleError(err, response) {
 }
 
 function getSpreadSheet(request, response) {
-  let url= `https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEETS_API}`
+
+  let url = `https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEETS_API}`
 
   superagent.get(url)
     .then(results => {
@@ -71,6 +75,7 @@ function fillBaseHoursDB(data) {
   let SQL= 'INSERT INTO base_hours(boss, name, badge, sick_leave, rdo, first, second) VALUES($1, $2, $3, $4, $5, $6, $7);';
   let values = [data.bossColumn, data.nameColumn, data.badgeColumn, data.sick_leaveColumn, data.rdoColumn, data.firstColumn, data.secondColumn];
   return client.query(SQL,values);
+
 }
 
 getSpreadSheet();
@@ -86,25 +91,22 @@ function Row(info) {
 }
 
 
-
-
 //Helper functions
 function homePage(request, response) {
-  response.render('pages/index', {languagesArray: fullLanguageList})
-    .then(results => languages = results.body.data.languages)
-    .then(() => response.render('pages/index', {languagesArray: fullLanguageList}))
-    .catch(error => handleError(error, response));
+  response.render('pages/index', { languagesArray: fullLanguageList })
 }
 
 function renderUserPage(request, response) {
+  console.log(request.body);
+  //example response body  { loginform: [ '12345678', 'p@ssw0rd!', 'ku' ] }
   let thisWillChange = {
-    days: ['monday', 'tuesday', 'weds','thursday','friday','saturday','sunday'],
-    text: ['This is text in the 0 index', 
-      'This page currently depends on an object named \'pageData\' with the following key/values', 
+    days: ['monday', 'tuesday', 'weds', 'thursday', 'friday', 'saturday', 'sunday'],
+    text: ['This is text in the 0 index',
+      'This page currently depends on an object named \'pageData\' with the following key/values',
       'days: [array of days of the week which is translated], text: [array of all text fields with translated text]'
     ]
   }
-  response.render('pages/user', {pageData: thisWillChange})
+  response.render('pages/user', { pageData: thisWillChange })
 }
 
 

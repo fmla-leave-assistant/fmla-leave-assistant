@@ -24,3 +24,11 @@ CREATE TABLE hastis(
   LWOP VARCHAR(10),
   PPL VARCHAR(10)
 );
+
+DROP TABLE IF EXISTS languages;
+CREATE TABLE languages(
+    ID SERIAL PRIMARY KEY,
+    language VARCHAR(2),
+    enName VARCHAR(15),
+    name VARCHAR(15),
+);
