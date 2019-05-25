@@ -12,11 +12,11 @@ CREATE TABLE base_hours;
   second VARCHAR(10)
 );
 
+
 CREATE TABLE languages(
     ID SERIAL PRIMARY KEY,
     language VARCHAR(2),
     enName VARCHAR(15),
     name VARCHAR(15),
 )
-
 

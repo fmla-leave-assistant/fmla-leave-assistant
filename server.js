@@ -66,8 +66,12 @@ function getSpreadSheet(request, response) {
         .then(refinedData => console.log(refinedData))
         .catch(error => handleError(error, response));
 }
+function fillBaseHoursDB(data) {
+  let SQL= 'INSERT INTO base_hours (boss, name, badge, sick_leave, rdo, first, second VALUES($1, $2, $3, $4, $5, $6, $7);';
+  let values = [data.bossColumn, ]
+}
 
-getSpreadSheet();
+// getSpreadSheet();
 
 function Row(info) {
     this.bossColumn = info[0];
@@ -108,4 +112,3 @@ function translateText(text, target) {
         console.log(`${text[i]} => (${target}) ${translation}`);
     });
 }
-
