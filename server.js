@@ -8,6 +8,7 @@ const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
+const { Translate } = require('@google-cloud/translate');
 const fullLanguageList = require('./fullLanguageList.json');
 
 //App setup
@@ -19,6 +20,7 @@ app.use(express.static('public/'));
 
 
 //Connecting to the database
+const translate = new Translate();
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
@@ -27,12 +29,14 @@ client.on('error', err => console.log(err));
 //Turn the server on
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 
+
 //Set the view engine for server-side templating
 app.set('view engine', 'ejs');
 
 
 //API routes
 app.get('/', homePage);
+app.post('/login', renderUserPage);
 
 
 //Catch all
@@ -81,4 +85,28 @@ function Row(info) {
 //Helper functions
 function homePage(request, response) {
   response.render('pages/index', {languagesArray: fullLanguageList})
+    .then(results => languages = results.body.data.languages)
+    .then(() => response.render('pages/index', {languagesArray: fullLanguageList}))
+    .catch(error => handleError(error, response));
+}
+
+function renderUserPage(request, response) {
+  let thisWillChange = {
+      days: ['monday', 'tuesday', 'weds','thursday','friday','saturday','sunday'],
+      text: ['This is text in the 0 index', 
+      'This page currently depends on an object named \'pageData\' with the following key/values', 
+      'days: [array of days of the week which is translated], text: [array of all text fields with translated text]'
+    ]
+}
+  response.render('pages/user', {pageData: thisWillChange})
+}
+
+
+function translateText(text, target) {
+  let [translations] = translate.translate(text, target);
+  translations = Array.isArray(translations) ? translations : [translations];
+  console.log('Translations:');
+  translations.forEach((translation, i) => {
+    console.log(`${text[i]} => (${target}) ${translation}`);
+  });
 }
