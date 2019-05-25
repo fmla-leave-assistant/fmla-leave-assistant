@@ -45,9 +45,41 @@ function handleError(err, response) {
   if (response) response.status(500).send('Bruh, something didn\'t work');
 }
 
+function getSpreadSheet(request, response) {
+  console.log('PING');
+  let url= `https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEETS_API}`
+
+  superagent.get(url)
+    .then(results => {
+      let data = results.body.values;
+      let parsedRows = data.map(row => {
+        return new Row(row)
+      })
+      parsedRows.shift();
+      parsedRows.shift();
+      return parsedRows
+    })
+    .then(refinedData => console.log(refinedData))
+    .catch(error => handleError(error, response));
+}
+
+getSpreadSheet();
+
+function Row(info) {
+  this.bossColumn = info[0];
+  this.nameColumn = info[1];
+  this.badgeColumn = info[2];
+  this.sick_leaveColumn = info[6];
+  this.rdo = info[4];
+  this.first = info[7];
+  this.second = info[9];
+}
+
+
+
 
 //Helper functions
 function homePage(request, response) {
-response.render('pages/index', {languagesArray: fullLanguageList})
+  response.render('pages/index', {languagesArray: fullLanguageList})
 }
 
