@@ -6,47 +6,61 @@
 </head>
 
 <body>
-  <nav>
-    <%- include('../layout/navbar') %>
-  </nav>
-  <form action="/createUser" method="post" id="createuser">
-    User Name
-    <input type="text" name="loginform" placeholder="UserName" required>
-
-    Password
-    <input type="password" name="loginform" placeholder="password" required>
-
-    Re-enter Password
-    <input type="password" name="loginform" placeholder="password" required>
-
-    Select Language
-    <select name="loginform">
-     <% languagesArray.forEach(language => { %>
-        <option name="loginform" value="<%- language.language %>">
-            <%= language.name %>
-        <% }); %>
-    </select>
+    <nav>
+        <%- include('../layout/navbar') %>
+    </nav>
+    <div id="loginCreateFormDiv">
+    <button onclick="flipLogin()">Switch between Login/create user</button>     
+    <form action="/createUser" method="post" id="createuser">
+        <p>
+        <input type="text" name="loginform" placeholder="User name" required>
+        </p>
+        <p>
+        <input type="password" name="loginform" placeholder="Password" required>
+        </p>
+        <p>
+        <input type="password" name="loginform" placeholder="Re-enter password" required>
+        </p>
+        <p>
+        <select name="loginform">
+            <% languagesArray.forEach(language => { %>
+            <option name="loginform" value="<%- language.language %>">
+                <%= language.name %>
+                <% }); %>
+        </select>
+        </p>
+        <p>
         <button type="submit">Create New User</button>
+        </p>
     </form>
 
 
     <form action="/login" method="post" id="loginform">
-        User Name
-        <input type="text" name="loginform" placeholder="UserName" required>
-    
-        Password
+        <p>
+        <input type="text" name="loginform" placeholder="User name" required>
+        </p>
+
+        <p>
         <input type="password" name="loginform" placeholder="password" required>
-    
-        Select Language
+        </p>
+
+        <p>
         <select name="loginform">
-         <% languagesArray.forEach(language => { %>
+            <% languagesArray.forEach(language => { %>
             <option name="loginform" value="<%- language.language %>">
                 <%= language.name %>
-            <% }); %>
+                <% }); %>
         </select>
-            <button type="submit">Create New User</button>
-        </form>
-  </main>
+        </p>
+        <p>
+        <button type="submit">Log in to existing user</button>
+        </p>
+    </form>
+</div>
+    </main>
 </body>
+<footer>
+    <%- include('../layout/footer') %>
+</footer>
 
 </html>
