@@ -17,16 +17,10 @@ const fullLanguageList = require('./fullLanguageList.json');
 const app = express();
 const PORT = process.env.PORT;
 
-<<<<<<< HEAD
-
-app.use(express.static('public/'));
-app.use(express.urlencoded({ extended: true }));
-=======
 //Express middleware
 //Utilize expressJS functionality to parse the body of the request
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
->>>>>>> ffb9c19d7481f9119fca12cec3b0870993c9417d
 
 
 //Connecting to the database
@@ -101,7 +95,8 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
-  const target = request.body.loginform[2];
+  console.log(request.body)
+  const target = request.body.language;
   const text = 'Press here to submit your FMLA hours';
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
   const fullTextHours = `${text} .. ${daysOfWeek}`
