@@ -22,7 +22,7 @@
     Select Language
     <select name="loginform">
      <% languagesArray.forEach(language => { %>
-        <option name="loginform">
+        <option name="loginform" value="<%- language.language %>">
             <%= language.name %>
         <% }); %>
     </select>
@@ -40,7 +40,7 @@
         Select Language
         <select name="loginform">
          <% languagesArray.forEach(language => { %>
-            <option name="loginform">
+            <option name="loginform" value="<%- language.language %>">
                 <%= language.name %>
             <% }); %>
         </select>

@@ -3,7 +3,7 @@ const translateLanguageList = (languages) => {
     languages.forEach((language, idx) => {
       let translatedText = language.name;
       let targetLanguage = language.language;
-      let key = "AIzaSyCo79rU8VGGhG9VnA4l7hUXV01yXN6p37s";
+      let key = "GOOGLE_API_KEY";
       let url = `https://translation.googleapis.com/language/translate/v2?q=${translatedText}&key=${key}&source=en&target=${targetLanguage}`;
          $.get(url)
           .then(response => {

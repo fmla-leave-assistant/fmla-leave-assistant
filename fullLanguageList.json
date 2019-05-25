@@ -1,5 +1,10 @@
 [
     {
+      "enName": "English",
+      "language": "en",
+      "name": "English"
+    },
+    {
       "enName": "Chichewa",
       "language": "ny",
       "name": "Chichewa"
