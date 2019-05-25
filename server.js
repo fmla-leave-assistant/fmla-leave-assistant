@@ -8,10 +8,7 @@ const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
-<<<<<<< HEAD
-=======
 const { Translate } = require('@google-cloud/translate');
->>>>>>> 2584e1fae98ad10607fd5e90f8ef2659fa760380
 const fullLanguageList = require('./fullLanguageList.json');
 
 //App setup
