@@ -17,9 +17,16 @@ const fullLanguageList = require('./fullLanguageList.json');
 const app = express();
 const PORT = process.env.PORT;
 
+<<<<<<< HEAD
 
 app.use(express.static('public/'));
 app.use(express.urlencoded({ extended: true }));
+=======
+//Express middleware
+//Utilize expressJS functionality to parse the body of the request
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+>>>>>>> ffb9c19d7481f9119fca12cec3b0870993c9417d
 
 
 //Connecting to the database
@@ -40,6 +47,7 @@ app.set('view engine', 'ejs');
 //API routes
 app.get('/', homePage);
 app.post('/login', renderUserPage);
+app.post('/')
 
 
 //Catch all
@@ -86,31 +94,26 @@ function Row(info) {
   this.second = info[9];
 }
 
-
 //Helper functions
 function homePage(request, response) {
   response.render('pages/index', { languagesArray: fullLanguageList })
+    .catch(error => handleError(error, response));
 }
 
 function renderUserPage(request, response) {
-  console.log(request.body);
-  //example response body  { loginform: [ '12345678', 'p@ssw0rd!', 'ku' ] }
-  let thisWillChange = {
-    days: ['monday', 'tuesday', 'weds', 'thursday', 'friday', 'saturday', 'sunday'],
-    text: ['This is text in the 0 index',
-      'This page currently depends on an object named \'pageData\' with the following key/values',
-      'days: [array of days of the week which is translated], text: [array of all text fields with translated text]'
-    ]
-  }
-  response.render('pages/user', { pageData: thisWillChange })
-}
-
-
-function translateText(text, target) {
-  let [translations] = translate.translate(text, target);
-  translations = Array.isArray(translations) ? translations : [translations];
-  console.log('Translations:');
-  translations.forEach((translation, i) => {
-    console.log(`${text[i]} => (${target}) ${translation}`);
-  });
+  const target = request.body.loginform[2];
+  const text = 'Press here to submit your FMLA hours';
+  const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
+  const fullTextHours = `${text} .. ${daysOfWeek}`
+  let url = `https://translation.googleapis.com/language/translate/v2?q=${fullTextHours}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
+  superagent.post(url)
+    .then(translationResponse => {
+      let translationArray = (translationResponse.body.data.translations[0].translatedText).split(' .. ');
+      console.log(translationArray)
+      let thisWillChange = {
+        days: translationArray.slice(1, 8),
+        text: translationArray[0]
+      }
+      response.render('pages/user', { pageData: thisWillChange })
+    })
 }
