@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS base_hours;
+DROP TABLE IF EXISTS languages;
+
 CREATE TABLE base_hours;
   id SERIAL PRIMARY KEY,
   boss VARCHAR(100),
@@ -9,3 +11,12 @@ CREATE TABLE base_hours;
   first VARCHAR(10),
   second VARCHAR(10)
 );
+
+
+CREATE TABLE languages(
+    ID SERIAL PRIMARY KEY,
+    language VARCHAR(2),
+    enName VARCHAR(15),
+    name VARCHAR(15),
+)
+
