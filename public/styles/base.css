@@ -1,0 +1,9 @@
+html {
+    width: 480px;
+    margin: 0 auto;
+}
+
+#loginCreateFormDiv {
+    background: black;
+    color: white;
+}

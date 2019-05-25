@@ -1,13 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+    <%- include('../layout/head') %>
 </head>
+
 <body>
-  <h1>I just want this to work</h1>
-  
+    <nav>
+        <%- include('../layout/navbar') %>
+    </nav>
+    <div id="loginCreateFormDiv">
+    <button onclick="flipLogin()">Switch between Login/create user</button>     
+    <form action="/createUser" method="post" id="createuser">
+        <p>
+        <input type="text" name="loginform" placeholder="User name" required>
+        </p>
+        <p>
+        <input type="password" name="loginform" placeholder="Password" required>
+        </p>
+        <p>
+        <input type="password" name="loginform" placeholder="Re-enter password" required>
+        </p>
+        <p>
+        <select name="loginform">
+            <% languagesArray.forEach(language => { %>
+            <option name="loginform" value="<%- language.language %>">
+                <%= language.name %>
+                <% }); %>
+        </select>
+        </p>
+        <p>
+        <button type="submit">Create New User</button>
+        </p>
+    </form>
+
+
+    <form action="/login" method="post" id="loginform">
+        <p>
+        <input type="text" name="loginform" placeholder="UserName" required>
+        </p>
+
+        <p>
+        <input type="password" name="loginform" placeholder="password" required>
+        </p>
+
+        <p>
+        <select name="loginform">
+            <% languagesArray.forEach(language => { %>
+            <option name="loginform" value="<%- language.language %>">
+                <%= language.name %>
+                <% }); %>
+        </select>
+        </p>
+        <p>
+        <button type="submit">Log in to existing user</button>
+        </p>
+    </form>
+</div>
+    </main>
 </body>
+<footer>
+    <%- include('../layout/footer') %>
+</footer>
+
 </html>

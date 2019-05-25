@@ -1,0 +1,467 @@
+[
+    {
+      "enName": "English",
+      "language": "en",
+      "name": "English"
+    },
+    {
+      "enName": "Chichewa",
+      "language": "ny",
+      "name": "Chichewa"
+    },
+    {
+      "enName": "Afrikaans",
+      "language": "af",
+      "name": "Afrikaans"
+    },
+    {
+      "enName": "Bosnian",
+      "language": "bs",
+      "name": "Bosanski"
+    },
+    {
+      "enName": "Cebuano",
+      "language": "ceb",
+      "name": "Cebuano"
+    },
+    {
+      "enName": "Azerbaijani",
+      "language": "az",
+      "name": "Azərbaycan"
+    },
+    {
+      "enName": "Albanian",
+      "language": "sq",
+      "name": "shqiptar"
+    },
+    {
+      "enName": "Basque",
+      "language": "eu",
+      "name": "Euskal"
+    },
+    {
+      "enName": "Belarusian",
+      "language": "be",
+      "name": "беларускі"
+    },
+    {
+      "enName": "Arabic",
+      "language": "ar",
+      "name": "عربى"
+    },
+    {
+      "enName": "Bengali",
+      "language": "bn",
+      "name": "বাঙালি"
+    },
+    {
+      "enName": "Amharic",
+      "language": "am",
+      "name": "አማርኛ"
+    },
+    {
+      "enName": "Czech",
+      "language": "cs",
+      "name": "čeština"
+    },
+    {
+      "enName": "French",
+      "language": "fr",
+      "name": "français"
+    },
+    {
+      "enName": "Estonian",
+      "language": "et",
+      "name": "Eesti keel"
+    },
+    {
+      "enName": "Bulgarian",
+      "language": "bg",
+      "name": "български"
+    },
+    {
+      "enName": "Gujarati",
+      "language": "gu",
+      "name": "ગુજરાતી"
+    },
+    {
+      "enName": "German",
+      "language": "de",
+      "name": "Deutsche"
+    },
+    {
+      "enName": "Georgian",
+      "language": "ka",
+      "name": "ქართული"
+    },
+    {
+      "enName": "Galician",
+      "language": "gl",
+      "name": "Galego"
+    },
+    {
+      "enName": "Frisian",
+      "language": "fy",
+      "name": "Frysk"
+    },
+    {
+      "enName": "Esperanto",
+      "language": "eo",
+      "name": "Esperanto"
+    },
+    {
+      "enName": "Danish",
+      "language": "da",
+      "name": "dansk"
+    },
+    {
+      "enName": "Filipino",
+      "language": "tl",
+      "name": "Filipino"
+    },
+    {
+      "enName": "Croatian",
+      "language": "hr",
+      "name": "Hrvatski"
+    },
+    {
+      "enName": "Catalan",
+      "language": "ca",
+      "name": "Català"
+    },
+    {
+      "enName": "Chinese (Traditional)",
+      "language": "zh-TW",
+      "name": "中國傳統的）"
+    },
+    {
+      "enName": "Armenian",
+      "language": "hy",
+      "name": "հայերեն"
+    },
+    {
+      "enName": "Haitian Creole",
+      "language": "ht",
+      "name": "Kreyòl Ayisyen"
+    },
+    {
+      "enName": "Hungarian",
+      "language": "hu",
+      "name": "Magyar"
+    },
+    {
+      "enName": "Hmong",
+      "language": "hmn",
+      "name": "Hmoob"
+    },
+    {
+      "enName": "Chinese (Simplified)",
+      "language": "zh",
+      "name": "简体中文）"
+    },
+    {
+      "enName": "Finnish",
+      "language": "fi",
+      "name": "Suomalainen"
+    },
+    {
+      "enName": "Hawaiian",
+      "language": "haw",
+      "name": "Ōlelo Hawaiʻi"
+    },
+    {
+      "enName": "Dutch",
+      "language": "nl",
+      "name": "Nederlands"
+    },
+    {
+      "enName": "Icelandic",
+      "language": "is",
+      "name": "Íslensku"
+    },
+    {
+      "enName": "Hausa",
+      "language": "ha",
+      "name": "Hausa"
+    },
+    {
+      "enName": "Igbo",
+      "language": "ig",
+      "name": "Igbo"
+    },
+    {
+      "enName": "Kannada",
+      "language": "kn",
+      "name": "ಕನ್ನಡ"
+    },
+    {
+      "enName": "Indonesian",
+      "language": "id",
+      "name": "bahasa Indonesia"
+    },
+    {
+      "enName": "Irish",
+      "language": "ga",
+      "name": "Gaeilge"
+    },
+    {
+      "enName": "Italian",
+      "language": "it",
+      "name": "italiano"
+    },
+    {
+      "enName": "Sundanese",
+      "language": "su",
+      "name": "Sunda"
+    },
+    {
+      "enName": "Marathi",
+      "language": "mr",
+      "name": "मराठी"
+    },
+    {
+      "enName": "Swahili",
+      "language": "sw",
+      "name": "Kiswahili"
+    },
+    {
+      "enName": "Mongolian",
+      "language": "mn",
+      "name": "Монгол хэл дээр"
+    },
+    {
+      "enName": "Malayalam",
+      "language": "ml",
+      "name": "മലയാളം"
+    },
+    {
+      "enName": "Norwegian",
+      "language": "no",
+      "name": "norsk"
+    },
+    {
+      "enName": "Spanish",
+      "language": "es",
+      "name": "Español"
+    },
+    {
+      "enName": "Luxembourgish",
+      "language": "lb",
+      "name": "Lëtzebuergesch"
+    },
+    {
+      "enName": "Kyrgyz",
+      "language": "ky",
+      "name": "Кыргызча"
+    },
+    {
+      "enName": "Kurdish (Kurmanji)",
+      "language": "ku",
+      "name": "Kurdî (Kurmancî)"
+    },
+    {
+      "enName": "Malagasy",
+      "language": "mg",
+      "name": "Malagasy"
+    },
+    {
+      "enName": "Latin",
+      "language": "la",
+      "name": "Latine"
+    },
+    {
+      "enName": "Macedonian",
+      "language": "mk",
+      "name": "Македонски"
+    },
+    {
+      "enName": "Khmer",
+      "language": "km",
+      "name": "ភាសាខ្មែរ"
+    },
+    {
+      "enName": "Malay",
+      "language": "ms",
+      "name": "Melayu"
+    },
+    {
+      "enName": "Swedish",
+      "language": "sv",
+      "name": "svenska"
+    },
+    {
+      "enName": "Lao",
+      "language": "lo",
+      "name": "ລາວ"
+    },
+    {
+      "enName": "Vietnamese",
+      "language": "vi",
+      "name": "Tiếng Việt"
+    },
+    {
+      "enName": "Somali",
+      "language": "so",
+      "name": "Somali"
+    },
+    {
+      "enName": "Sindhi",
+      "language": "sd",
+      "name": "سنڌي"
+    },
+    {
+      "enName": "Sinhala",
+      "language": "si",
+      "name": "සිංහල"
+    },
+    {
+      "enName": "Telugu",
+      "language": "te",
+      "name": "తెలుగు"
+    },
+    {
+      "enName": "Turkish",
+      "language": "tr",
+      "name": "Türk"
+    },
+    {
+      "enName": "Thai",
+      "language": "th",
+      "name": "ไทย"
+    },
+    {
+      "enName": "Kazakh",
+      "language": "kk",
+      "name": "Қазақша"
+    },
+    {
+      "enName": "Punjabi",
+      "language": "pa",
+      "name": "ਪੰਜਾਬੀ"
+    },
+    {
+      "enName": "Shona",
+      "language": "sn",
+      "name": "Shona"
+    },
+    {
+      "enName": "Portuguese",
+      "language": "pt",
+      "name": "Português"
+    },
+    {
+      "enName": "Tamil",
+      "language": "ta",
+      "name": "தமிழ்"
+    },
+    {
+      "enName": "Maltese",
+      "language": "mt",
+      "name": "Malti"
+    },
+    {
+      "enName": "Uzbek",
+      "language": "uz",
+      "name": "O&#;zbek"
+    },
+    {
+      "enName": "Samoan",
+      "language": "sm",
+      "name": "Samoa"
+    },
+    {
+      "enName": "Russian",
+      "language": "ru",
+      "name": "русский"
+    },
+    {
+      "enName": "Xhosa",
+      "language": "xh",
+      "name": "isiXhosa"
+    },
+    {
+      "enName": "Slovak",
+      "language": "sk",
+      "name": "slovenský"
+    },
+    {
+      "enName": "Yiddish",
+      "language": "yi",
+      "name": "Yiddish"
+    },
+    {
+      "enName": "Persian",
+      "language": "fa",
+      "name": "فارسی"
+    },
+    {
+      "enName": "Serbian",
+      "language": "sr",
+      "name": "Српски"
+    },
+    {
+      "enName": "Latvian",
+      "language": "lv",
+      "name": "Latviešu valoda"
+    },
+    {
+      "enName": "Japanese",
+      "language": "ja",
+      "name": "日本人"
+    },
+    {
+      "enName": "Lithuanian",
+      "language": "lt",
+      "name": "Lietuvių"
+    },
+    {
+      "enName": "Polish",
+      "language": "pl",
+      "name": "Polskie"
+    },
+    {
+      "enName": "Welsh",
+      "language": "cy",
+      "name": "Cymraeg"
+    },
+    {
+      "enName": "Sesotho",
+      "language": "st",
+      "name": "Sesotho"
+    },
+    {
+      "enName": "Yoruba",
+      "language": "yo",
+      "name": "Yorùbá"
+    },
+    {
+      "enName": "Romanian",
+      "language": "ro",
+      "name": "Română"
+    },
+    {
+      "enName": "Ukrainian",
+      "language": "uk",
+      "name": "Українська"
+    },
+    {
+      "enName": "Scots Gaelic",
+      "language": "gd",
+      "name": "Gàidhlig na h-Alba"
+    },
+    {
+      "enName": "Myanmar (Burmese)",
+      "language": "my",
+      "name": "မြန်မာ (ဗမာ)"
+    },
+    {
+      "enName": "Pashto",
+      "language": "ps",
+      "name": "پښتو"
+    },
+    {
+      "enName": "Nepali",
+      "language": "ne",
+      "name": "नेपाली"
+    }
+  ]

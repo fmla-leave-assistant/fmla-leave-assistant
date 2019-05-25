@@ -9,11 +9,14 @@ const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
 const { Translate } = require('@google-cloud/translate');
-
+const fullLanguageList = require('./fullLanguageList.json');
 
 //App setup
 const app = express();
 const PORT = process.env.PORT;
+
+
+app.use(express.static('public/'));
 
 
 //Connecting to the database
@@ -33,6 +36,7 @@ app.set('view engine', 'ejs');
 
 //API routes
 app.get('/', homePage);
+app.get('/login', renderUserPage);
 
 
 //Catch all
@@ -54,8 +58,13 @@ function homePage(request, response) {
   console.log(url);
   superagent.get(url)
     .then(results => languages = results.body.data.languages)
-    .then(() => response.render('pages/index', { languages: languages }))
+    .then(() => response.render('pages/index', {languagesArray: fullLanguageList}))
     .catch(error => handleError(error, response));
+}
+
+function renderUserPage(request, response) {
+  let thisWillChange = {};
+  response.render('/pages/user', {pageData: thisWillChange})
 }
 
 
@@ -67,3 +76,4 @@ function translateText(text, target) {
     console.log(`${text[i]} => (${target}) ${translation}`);
   });
 }
+
