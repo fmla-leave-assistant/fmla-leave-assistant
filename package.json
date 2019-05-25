@@ -1,0 +1,32 @@
+{
+  "name": "fmla-leave-assistant",
+  "version": "1.0.0",
+  "description": "The name of the project  # fmla-leave-assistant Names of the team members -Jonny Graybill -Lee-Roy King -Austin Wood -Adrienne Easton -Peter Murphy",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fmla-leave-assistant/fmla-leave-assistant.git"
+  },
+  "author": "Jonny Graybill, Lee-Roy King, Adrienne Easton, Austin Wood",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fmla-leave-assistant/fmla-leave-assistant/issues"
+  },
+  "homepage": "https://github.com/fmla-leave-assistant/fmla-leave-assistant#readme",
+  "dependencies": {
+    "@google-cloud/translate": "^4.0.1",
+    "dotenv": "^8.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.17.0",
+    "method-override": "^3.0.0",
+    "nodemon": "^1.19.0",
+    "nvm": "0.0.4",
+    "pg": "^7.11.0",
+    "superagent": "^5.0.5"
+  },
+  "devDependencies": {}
+}
