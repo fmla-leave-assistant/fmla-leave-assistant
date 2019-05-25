@@ -8,6 +8,10 @@ const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
+<<<<<<< HEAD
+=======
+const { Translate } = require('@google-cloud/translate');
+>>>>>>> 2584e1fae98ad10607fd5e90f8ef2659fa760380
 const fullLanguageList = require('./fullLanguageList.json');
 
 //App setup
@@ -19,6 +23,7 @@ app.use(express.static('public/'));
 
 
 //Connecting to the database
+const translate = new Translate();
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
@@ -27,12 +32,14 @@ client.on('error', err => console.log(err));
 //Turn the server on
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 
+
 //Set the view engine for server-side templating
 app.set('view engine', 'ejs');
 
 
 //API routes
 app.get('/', homePage);
+app.get('/login', renderUserPage);
 
 
 //Catch all
@@ -81,5 +88,23 @@ function Row(info) {
 //Helper functions
 function homePage(request, response) {
   response.render('pages/index', {languagesArray: fullLanguageList})
+    .then(results => languages = results.body.data.languages)
+    .then(() => response.render('pages/index', {languagesArray: fullLanguageList}))
+    .catch(error => handleError(error, response));
+}
+
+function renderUserPage(request, response) {
+  let thisWillChange = {};
+  response.render('/pages/user', {pageData: thisWillChange})
+}
+
+
+function translateText(text, target) {
+  let [translations] = translate.translate(text, target);
+  translations = Array.isArray(translations) ? translations : [translations];
+  console.log('Translations:');
+  translations.forEach((translation, i) => {
+    console.log(`${text[i]} => (${target}) ${translation}`);
+  });
 }
 

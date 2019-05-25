@@ -10,6 +10,25 @@
     <%- include('../layout/navbar') %>
   </nav>
 
+<%= pageData %>
+
   Congrats you made it to the user screen
 
-  
+<div id="hoursForm">
+  <form action="/updateHours" method="post" id="hoursForm">
+    
+    <% pageData.days.forEach(day => { %>
+      <%= day %>
+    <input type="text" name="hoursForm" placeholder="0">
+    <% }); %>
+
+    <button type="submit">Update Hours</button>
+</form>
+</div>
+
+
+This page currently depends on an object named 'pageData' with the following key/values 
+{
+  days: [array of days of the week which is translated]
+  text: [array of all text fields with translated text]
+}
