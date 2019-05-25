@@ -87,8 +87,6 @@ function Row(info) {
 //Helper functions
 function homePage(request, response) {
     response.render('pages/index', { languagesArray: fullLanguageList })
-        .then(results => languages = results.body.data.languages)
-        .then(() => response.render('pages/index', { languagesArray: fullLanguageList }))
         .catch(error => handleError(error, response));
 }
 
