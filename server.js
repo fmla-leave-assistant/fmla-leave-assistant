@@ -36,7 +36,7 @@ app.set('view engine', 'ejs');
 
 //API routes
 app.get('/', homePage);
-app.get('/login', renderUserPage);
+app.post('/login', renderUserPage);
 
 
 //Catch all
@@ -91,8 +91,14 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
-  let thisWillChange = {};
-  response.render('/pages/user', {pageData: thisWillChange})
+  let thisWillChange = {
+      days: ['monday', 'tuesday', 'weds','thursday','friday','saturday','sunday'],
+      text: ['This is text in the 0 index', 
+      'This page currently depends on an object named \'pageData\' with the following key/values', 
+      'days: [array of days of the week which is translated], text: [array of all text fields with translated text]'
+    ]
+}
+  response.render('pages/user', {pageData: thisWillChange})
 }
 
 
