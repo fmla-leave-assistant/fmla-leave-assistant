@@ -8,7 +8,7 @@ const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
-
+const fullLanguageList = require('./fullLanguageList.json');
 
 //App setup
 const app = express();
@@ -45,12 +45,7 @@ function handleError(err, response) {
 
 //Helper functions
 function homePage(request, response) {
-  let languages = [];
-  let targetLanguage = 'en';
-  let url = `https://translation.googleapis.com/language/translate/v2/languages?target=${targetLanguage}&key=${process.env.GOOGLE_API_KEY}`;
-  console.log(url);
-  superagent.get(url)
-    .then(results => languages = results.body.data.languages)
-    .then(() => response.render('index', { languages:languages }))
-    .catch(error => handleError(error, response));
+response.render('pages/index', {languagesArray: fullLanguageList})
 }
+
+console.log(fullLanguageList)
