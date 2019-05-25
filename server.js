@@ -8,7 +8,7 @@ const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
-
+const fullLanguageList = require('./fullLanguageList.json');
 
 //App setup
 const app = express();
@@ -45,31 +45,7 @@ function handleError(err, response) {
 
 //Helper functions
 function homePage(request, response) {
-  let languages = [];
-  let targetLanguage = 'en';
-  let url = `https://translation.googleapis.com/language/translate/v2/languages?target=${targetLanguage}&key=${process.env.GOOGLE_API_KEY}`;
-  superagent.get(url)
-    .then(results => languages = results.body.data.languages)
-    .then(languages = translateLanguageList(languages))
-    .then(() => response.render('pages/index', { languagesArray:languages }))
-    .catch(error => handleError(error, response));
+response.render('pages/index', {languagesArray: fullLanguageList})
 }
 
-function translateLanguageList(languageList){
-    let returnLanguages = languageList.map(language => {
-      let translatedText = language.name
-        let targetLanguage = language.language  
-      let url = `https://translation.googleapis.com/language/translate/v2?q=${translatedText}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${targetLanguage}`
-        console.log(url)
-        superagent.get(url)
-        .then(response => {
-          console.log(response)
-            return {
-                language: language.language,
-                name: response.data.translations[0].translatedText
-            }
-        })
-    })
-    console.log(returnLanguages);
-    return returnLanguages;
-}
+console.log(fullLanguageList)
