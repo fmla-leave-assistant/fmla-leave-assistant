@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <%- include('../layout/head') %>
+  <%- include('../layout/head') %>
 </head>
 
 <body>
@@ -10,8 +10,32 @@
     <%- include('../layout/navbar') %>
   </nav>
 
-<!-- this will be a dropdown for days of the week  -->
+  Congrats you made it to the user screen
 
+  <div id="hoursForm">
+    <form action="/updateHours" method="post" id="hoursForm">
 
-<!-- This will be your days of the week in a form -->
+      <% pageData.days.forEach(day => { %>
+      <div>
+        <%= day %>
+        <input type="text" name="hoursForm" placeholder="0">
+      </div>
+      <% }); %>
 
+      <button type="submit"><%= pageData.text[0] %></button>
+    </form>
+  </div>
+
+  <div>
+    <p>
+      -----------------------------second text field-----------------------
+      <p><%= pageData.text[1] %></p>
+    </p>
+  </div>
+
+  <div>
+    <p>
+      -----------------------------third text field----------------------------------------
+      <p><%= pageData.text[2] %></p>
+    </p>
+  </div>
