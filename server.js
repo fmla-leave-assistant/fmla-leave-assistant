@@ -63,6 +63,10 @@ function getSpreadSheet(request, response) {
     .catch(error => handleError(error, response));
 }
 
+function fillBaseHoursDb(data) {
+  
+}
+
 getSpreadSheet();
 
 function Row(info) {
