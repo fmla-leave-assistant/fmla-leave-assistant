@@ -7,7 +7,8 @@ require('dotenv').config();
 const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
-
+const methodOverride = require('method-override');
+const fullLanguageList = require('./fullLanguageList.json');
 
 //App setup
 const app = express();
@@ -23,9 +24,16 @@ client.on('error', err => console.log(err));
 //Turn the server on
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 
+//Set the view engine for server-side templating
+app.set('view engine', 'ejs');
+
 
 //API routes
+app.get('/', homePage);
 
+
+//Catch all
+app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
 
 
 //Error handler
@@ -35,20 +43,22 @@ function handleError(err, response) {
 }
 
 function getSpreadSheet(request, response) {
-  let url= 'https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=AIzaSyA0vxlhkfqH7U7BdUtnGb3zWiTMbcJrg0U'
+  console.log('PING');
+  let url= `https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEETS_API}`
 
-  superagent.get(url) 
-  .then(results => {
-    let data = results.body.values
-    let parsedRows = data.map(row => {
-      Row(row)
-    })
-    parsedRows.shift();
-    parsedRows.shift();
+  superagent.get(url)
+    .then(results => {
+      let data = results.body.values;
+      let parsedRows = data.map(row => {
+        return new Row(row)
+      })
+      parsedRows.shift();
+      parsedRows.shift();
+      return parsedRows
     })
     .then(refinedData => console.log(refinedData))
-    .catch(error => handleError(error, reponse));
-};
+    .catch(error => handleError(error, response));
+}
 
 getSpreadSheet();
 
@@ -65,3 +75,9 @@ function Row(info) {
 
 
 
+//Helper functions
+function homePage(request, response) {
+  response.render('pages/index', {languagesArray: fullLanguageList})
+}
+
+// console.log(fullLanguageList)

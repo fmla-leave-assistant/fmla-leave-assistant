@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../layout/head') %>
+</head>
+
+<body>
+  <nav>
+    <%- include('../layout/navbar') %>
+  </nav>
+  <form action="/createUser" method="post" id="createuser">
+    User Name
+    <input type="text" name="loginform" placeholder="UserName" required>
+
+    Password
+    <input type="password" name="loginform" placeholder="password" required>
+
+    Re-enter Password
+    <input type="password" name="loginform" placeholder="password" required>
+
+    Select Language
+    <select name="loginform">
+     <% languagesArray.forEach(language => { %>
+        <option name="loginform" value="<%- language.language %>">
+            <%= language.name %>
+        <% }); %>
+    </select>
+        <button type="submit">Create New User</button>
+    </form>
+
+
+    <form action="/login" method="post" id="loginform">
+        User Name
+        <input type="text" name="loginform" placeholder="UserName" required>
+    
+        Password
+        <input type="password" name="loginform" placeholder="password" required>
+    
+        Select Language
+        <select name="loginform">
+         <% languagesArray.forEach(language => { %>
+            <option name="loginform" value="<%- language.language %>">
+                <%= language.name %>
+            <% }); %>
+        </select>
+            <button type="submit">Create New User</button>
+        </form>
+  </main>
+</body>
+
+</html>
