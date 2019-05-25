@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS base_hours;
 DROP TABLE IF EXISTS languages;
 
-CREATE TABLE base_hours;
+CREATE TABLE base_hours(
   id SERIAL PRIMARY KEY,
   boss VARCHAR(100),
   name VARCHAR(100),

@@ -100,9 +100,11 @@ function renderUserPage(request, response) {
   const text = 'Press here to submit your FMLA hours';
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
   const fullTextHours = `${text} .. ${daysOfWeek}`
+  console.log(fullTextHours);
   let url = `https://translation.googleapis.com/language/translate/v2?q=${fullTextHours}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   superagent.post(url)
     .then(translationResponse => {
+      console.log(translationResponse.body.data.translations[0].translatedText)
       let translationArray = (translationResponse.body.data.translations[0].translatedText).split(' .. ');
       console.log(translationArray)
       let thisWillChange = {
