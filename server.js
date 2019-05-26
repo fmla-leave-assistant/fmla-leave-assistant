@@ -11,6 +11,8 @@ const methodOverride = require('method-override');
 const { Translate } = require('@google-cloud/translate');
 const fullLanguageList = require('./fullLanguageList.json');
 
+
+
 //App setup
 const app = express();
 const PORT = process.env.PORT;
@@ -53,37 +55,41 @@ function handleError(err, response) {
 }
 
 function getSpreadSheet(request, response) {
-  console.log('PING');
-  let url = `https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEETS_API}`
+  let url= `https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEETS_API}`
 
   superagent.get(url)
     .then(results => {
-      let data = results.body.values;
-      let parsedRows = data.map(row => {
+      let parsedRows = results.body.values.map(row => {
         return new Row(row)
       })
       parsedRows.shift();
       parsedRows.shift();
       return parsedRows
     })
-    .then(refinedData => console.log(refinedData))
+    .then(refinedData => refinedData.forEach(element => fillBaseHoursDB(element)
+      .catch(error => handleError(error, response))
+    ))
     .catch(error => handleError(error, response));
 }
+
 function fillBaseHoursDB(data) {
-  let SQL = 'INSERT INTO base_hours (boss, name, badge, sick_leave, rdo, first, second VALUES($1, $2, $3, $4, $5, $6, $7);';
-  let values = [data.bossColumn,]
+
+  let SQL= 'INSERT INTO base_hours(boss, name, badge, sick_leave, rdo, first, second) VALUES($1, $2, $3, $4, $5, $6, $7);';
+  let values = [data.bossColumn, data.nameColumn, data.badgeColumn, data.sick_leaveColumn, data.rdoColumn, data.firstColumn, data.secondColumn];
+  return client.query(SQL,values);
+
 }
 
-// getSpreadSheet();
+getSpreadSheet();
 
 function Row(info) {
   this.bossColumn = info[0];
   this.nameColumn = info[1];
   this.badgeColumn = info[2];
   this.sick_leaveColumn = info[6];
-  this.rdo = info[4];
-  this.first = info[7];
-  this.second = info[9];
+  this.rdoColumn = info[4];
+  this.firstColumn = info[7];
+  this.secondColumn = info[9];
 }
 
 //Helper functions
