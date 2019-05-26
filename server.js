@@ -110,7 +110,7 @@ function renderUserPage(request, response) {
     .then(translationResponse => {
       console.log(translationResponse.body.data.translations[0].translatedText)
       let translationArray = (translationResponse.body.data.translations[0].translatedText).split(' .. ');
-      console.log(translationArray)
+      // console.log(translationArray)
       let thisWillChange = {
         days: translationArray.slice(1, 8),
         text: translationArray[0]
