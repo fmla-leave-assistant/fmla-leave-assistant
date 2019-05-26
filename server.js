@@ -80,7 +80,8 @@ function fillBaseHoursDB(data) {
 
 }
 
-getSpreadSheet();
+// This only needs to be run once but in the event we need to re-initialize the database we are keeping this for now
+// getSpreadSheet();
 
 function Row(info) {
   this.bossColumn = info[0];
@@ -110,7 +111,6 @@ function renderUserPage(request, response) {
     .then(translationResponse => {
       console.log(translationResponse.body.data.translations[0].translatedText)
       let translationArray = (translationResponse.body.data.translations[0].translatedText).split(' .. ');
-      // console.log(translationArray)
       let thisWillChange = {
         days: translationArray.slice(1, 8),
         text: translationArray[0]
