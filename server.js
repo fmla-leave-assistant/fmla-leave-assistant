@@ -94,18 +94,22 @@ function homePage(request, response) {
 
 function renderUserPage(request, response) {
   const target = request.body.loginform[2];
+  const thisWillChange = {};
   const text = 'Press here to submit your FMLA hours';
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
-  const fullTextHours = `${text} .. ${daysOfWeek}`
-  let url = `https://translation.googleapis.com/language/translate/v2?q=${fullTextHours}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
+  let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   superagent.post(url)
     .then(translationResponse => {
-      let translationArray = (translationResponse.body.data.translations[0].translatedText).split(' .. ');
-      console.log(translationArray)
-      let thisWillChange = {
-        days: translationArray.slice(1, 8),
-        text: translationArray[0]
-      }
-      response.render('pages/user', { pageData: thisWillChange })
+      let translationText = (translationResponse.body.data.translations[0].translatedText);
+      thisWillChange.text = translationText;
+    })
+    .then(e => {
+      let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
+      superagent.post(url2)
+        .then(daysResponse => {
+          let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
+          thisWillChange.days = translatedDays;
+          response.render('pages/user', { pageData: thisWillChange })
+        })
     })
 }
