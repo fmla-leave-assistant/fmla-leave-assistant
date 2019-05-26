@@ -100,7 +100,7 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
-  const target = request.body.loginform[2];
+  const target = request.body.language;
   const thisWillChange = {};
   const text = 'Press here to submit your FMLA hours';
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
