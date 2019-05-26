@@ -11,32 +11,18 @@
   </nav>
 
 
-  Congrats you made it to the user.ejs screen
 
   <div id="hoursForm">
     <form action="/updateHours" method="post" id="hoursForm">
 
       <% pageData.days.forEach(day => { %>
-      <div>
-        <%= day %>
-        <input type="text" name="hoursForm" placeholder="0">
-      </div>
+      <div class="dayclass width100">
+      <div class="width100"><%= day %></div>
+      <input type="text" name="hoursForm" placeholder="0" class="hourinput">
       <% }); %>
-
-      <button type="submit"><%= pageData.text[0] %></button>
+      
+    </div>
+      <button class="hourSubmitButton"type="submit"><%= pageData.text %></button>
     </form>
   </div>
 
-  <div>
-    <p>
-      -----------------------------second text field-----------------------
-      <p><%= pageData.text[1] %></p>
-    </p>
-  </div>
-
-  <div>
-    <p>
-      -----------------------------third text field----------------------------------------
-      <p><%= pageData.text[2] %></p>
-    </p>
-  </div>

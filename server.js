@@ -17,12 +17,10 @@ const fullLanguageList = require('./fullLanguageList.json');
 const app = express();
 const PORT = process.env.PORT;
 
-
 //Express middleware
 //Utilize expressJS functionality to parse the body of the request
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-
 
 
 //Connecting to the database
@@ -101,13 +99,16 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
-  const target = request.body.loginform[2];
+  console.log(request.body)
+  const target = request.body.language;
   const text = 'Press here to submit your FMLA hours';
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
   const fullTextHours = `${text} .. ${daysOfWeek}`
+  console.log(fullTextHours);
   let url = `https://translation.googleapis.com/language/translate/v2?q=${fullTextHours}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   superagent.post(url)
     .then(translationResponse => {
+      console.log(translationResponse.body.data.translations[0].translatedText)
       let translationArray = (translationResponse.body.data.translations[0].translatedText).split(' .. ');
       console.log(translationArray)
       let thisWillChange = {
