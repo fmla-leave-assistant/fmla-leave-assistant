@@ -101,7 +101,6 @@ function homePage(request, response) {
 
 function renderUserPage(request, response) {
   const dayOfYear = request.body.currentDay
-  console.log(dayOfYear);
   const target = request.body.language;
   const thisWillChange = {};
   const text = 'Press here to submit your FMLA hours';
