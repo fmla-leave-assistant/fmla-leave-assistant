@@ -96,10 +96,12 @@ function Row(info) {
 //Helper functions
 function homePage(request, response) {
   response.render('pages/index', { languagesArray: fullLanguageList })
-    .catch(error => handleError(error, response));
+    // .catch(error => handleError(error, response));
 }
 
 function renderUserPage(request, response) {
+  const dayOfYear = request.body.currentDay
+  console.log(dayOfYear);
   const target = request.body.language;
   const thisWillChange = {};
   const text = 'Press here to submit your FMLA hours';

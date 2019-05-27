@@ -7,4 +7,6 @@ function flipLogin () {
 }
 
 
-const getDayOfYear = () => Math.floor((((new Date()) - (new Date(now.getFullYear(), 0, 0))) / 525600/ 60000 )* 365)
+const getDayOfYear = () => Math.floor((((new Date()) - (new Date(new Date().getFullYear(), 0, 0))) / 525600/ 60000 )* 365)
+
+$('#replacewithdayofyear')[0].defaultValue = getDayOfYear()
