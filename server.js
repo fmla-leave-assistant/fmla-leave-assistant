@@ -125,9 +125,12 @@ function renderUserPage(request, response) {
 
 
 // tools to make the magic happen 
+
+
+// I'm moderately proud of this since it does not modify the existing array despite the sort
 const modifiedLanguageList = (languageList) => {
   return languageList.map(element => {
-    element.name = element.name[0].toUpperCase() + element.name.slice(1,element.name.length)
+  element.name = element.name[0].toUpperCase() + element.name.slice(1,element.name.length)
     return element
 }).sort( (a, b) => {
 return ((a.name > b.name ) ? 1 : -1);
