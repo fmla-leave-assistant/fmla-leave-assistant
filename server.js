@@ -55,7 +55,7 @@ function handleError(err, response) {
 }
 
 function getSpreadSheet(request, response) {
-  let url= `https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEETS_API}`
+  let url = `https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEETS_API}`
 
   superagent.get(url)
     .then(results => {
@@ -74,9 +74,9 @@ function getSpreadSheet(request, response) {
 
 function fillBaseHoursDB(data) {
 
-  let SQL= 'INSERT INTO base_hours(boss, name, badge, sick_leave, rdo, first, second) VALUES($1, $2, $3, $4, $5, $6, $7);';
+  let SQL = 'INSERT INTO base_hours(boss, name, badge, sick_leave, rdo, first, second) VALUES($1, $2, $3, $4, $5, $6, $7);';
   let values = [data.bossColumn, data.nameColumn, data.badgeColumn, data.sick_leaveColumn, data.rdoColumn, data.firstColumn, data.secondColumn];
-  return client.query(SQL,values);
+  return client.query(SQL, values);
 
 }
 
@@ -95,8 +95,9 @@ function Row(info) {
 
 //Helper functions
 function homePage(request, response) {
-  response.render('pages/index', { languagesArray: fullLanguageList })
-    // .catch(error => handleError(error, response));
+  const languagesClean = modifiedLanguageList(fullLanguageList)
+  response.render('pages/index', { languagesArray: languagesClean })
+  // .catch(error => handleError(error, response));
 }
 
 function renderUserPage(request, response) {
@@ -120,4 +121,15 @@ function renderUserPage(request, response) {
           response.render('pages/user', { pageData: thisWillChange })
         })
     })
+}
+
+
+// tools to make the magic happen 
+const modifiedLanguageList = (languageList) => {
+  return languageList.map(element => {
+    element.name = element.name[0].toUpperCase() + element.name.slice(1,element.name.length)
+    return element
+}).sort( (a, b) => {
+return ((a.name > b.name ) ? 1 : -1);
+})
 }
