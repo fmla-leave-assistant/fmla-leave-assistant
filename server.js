@@ -42,6 +42,7 @@ app.set('view engine', 'ejs');
 app.get('/', homePage);
 app.post('/login', renderUserPage);
 app.post('/')
+app.post('/submit', submitHours);
 
 
 //Catch all
@@ -110,14 +111,14 @@ function renderUserPage(request, response) {
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   superagent.post(url)
     .then(translationResponse => {
-      let translationText = (translationResponse.body.data.translations[0].translatedText);
+      let translationText = (translationResponse.body.error ? text : (translationResponse.body.data.translations[0].translatedText));
       thisWillChange.text = translationText;
     })
     .then(e => {
       let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
       superagent.post(url2)
         .then(daysResponse => {
-          let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
+          let translatedDays = (daysResponse.body.error ? daysOfWeek.split(' .. ') : daysResponse.body.data.translations[0].translatedText.split(' '));
           thisWillChange.days = translatedDays;
           response.render('pages/user', { pageData: thisWillChange })
         })
@@ -125,15 +126,20 @@ function renderUserPage(request, response) {
 }
 
 
-// tools to make the magic happen 
+function submitHours(request, response) {
+
+}
+
+
+// tools to make the magic happen
 
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
 const modifiedLanguageList = (languageList) => {
   return languageList.map(element => {
-  element.name = element.name[0].toUpperCase() + element.name.slice(1,element.name.length)
+    element.name = element.name[0].toUpperCase() + element.name.slice(1, element.name.length)
     return element
-}).sort( (a, b) => {
-return ((a.name > b.name ) ? 1 : -1);
-})
+  }).sort((a, b) => {
+    return ((a.name > b.name) ? 1 : -1);
+  })
 }
