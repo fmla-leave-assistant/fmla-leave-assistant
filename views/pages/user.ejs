@@ -13,12 +13,14 @@
 
 
   <div id="hoursForm">
-    <form action="/updateHours" method="post" id="hoursForm">
+    <form action="/submitUserHours" method="post" id="hoursForm">
 
       <% pageData.days.forEach(day => { %>
       <div class="dayclass width100">
       <div class="width100"><%= day %></div>
-      <input type="text" name="hoursForm" placeholder="0" class="hourinput">
+      <input type="text" name="hours" placeholder="0" class="hourinput">
+      <input type="hidden" name="daynumber" value="<%- day.number %>">
+      <input type="hidden" name="badge" value="pageData.badge">
       <% }); %>
       
     </div>

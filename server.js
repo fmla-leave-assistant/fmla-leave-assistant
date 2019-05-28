@@ -102,20 +102,19 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
+  const pageData = {
+  text: 'Press here to submit your FMLA hours',
+  days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday']}
+  const dayOfWeek = request.body.dayOfWeek
   const badgeNumber = request.body.badgeNumber
   const dayOfYear = request.body.currentDay
   const target = request.body.language;
   const thisWillChange = {};
-  const text = 'Press here to submit your FMLA hours';
-  const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
+  const text = pageData.text;
+  const daysOfWeek = pageData.days;
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   if(request.body.language === 'en'){
-    response.render('pages/user', {
-      pageData: {
-      text: 'Press here to submit your FMLA hours',
-      days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
-      }
-    })
+    response.render('pages/user', {pageData: pageData})
   }
   superagent.post(url)
     .then(translationResponse => {
@@ -153,4 +152,30 @@ const modifiedLanguageList = (languageList) => {
     // I'm less proud of this 
     return ((a.name === 'English') ? -1 : 1)
   })
+}
+
+let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday']
+const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray) => {
+  let startArrayDay = parseInt(startingDayOfYear) - 3;
+  const decrementDay = (dayOfWeekNumber) => {
+    return (!dayOfWeekNumber) ? dayOfWeekNumber + 7 : dayOfWeekNumber -1
+  }
+ const increaseDay = (dayOfWeekNumber, increaseby) => {
+    for(let i = 0; i < increaseby; i++){
+    dayOfWeekNumber = (dayOfWeekNumber === 6) ? 0 : dayOfWeekNumber + 1
+    }
+    return dayOfWeekNumber
+ }
+  let startArrayDayOfWeek = decrementDay(decrementDay(decrementDay(startingDayOfWeek)))
+
+  let start = startArrayDay
+  let result = [];
+  for(let i = 0; i < 7; i++){
+    result.push({
+      dayOfYear: start + i,
+      dayOfWeek: weekArray[increaseDay(startArrayDayOfWeek, i)],
+      badgeNumber: badgeNumber
+    })
+  }
+  return result
 }
