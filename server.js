@@ -42,6 +42,7 @@ app.set('view engine', 'ejs');
 app.get('/', homePage);
 app.post('/login', renderUserPage);
 app.post('/')
+app.post('/submit', submitHours);
 
 
 //Catch all
@@ -102,7 +103,6 @@ function homePage(request, response) {
 
 function renderUserPage(request, response) {
   const badgeNumber = request.body.badgeNumber
-  console.log(badgeNumber);
   const dayOfYear = request.body.currentDay
   const target = request.body.language;
   const thisWillChange = {};
@@ -110,9 +110,17 @@ function renderUserPage(request, response) {
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
   getHastis(badgeNumber, dayOfYear);
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
+  if(request.body.language === 'en'){
+    response.render('pages/user', {
+      pageData: {
+      text: 'Press here to submit your FMLA hours',
+      days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
+      }
+    })
+  }
   superagent.post(url)
     .then(translationResponse => {
-      let translationText = (translationResponse.body.data.translations[0].translatedText);
+      let translationText = translationResponse.body.data.translations[0].translatedText;
       thisWillChange.text = translationText;
     })
     .then(e => {
@@ -127,7 +135,12 @@ function renderUserPage(request, response) {
 }
 
 
-// tools to make the magic happen 
+function submitHours(request, response) {
+
+}
+
+
+// tools to make the magic happen
 
 function getHastis(badgeNumber, dayOfYear) {
   let sql = `SELECT * FROM hastis WHERE badge=${badgeNumber} AND date=${dayOfYear};`;
@@ -143,9 +156,12 @@ function getHastis(badgeNumber, dayOfYear) {
 // I'm moderately proud of this since it does not modify the existing array despite the sort
 const modifiedLanguageList = (languageList) => {
   return languageList.map(element => {
-  element.name = element.name[0].toUpperCase() + element.name.slice(1,element.name.length)
+    element.name = element.name[0].toUpperCase() + element.name.slice(1, element.name.length)
     return element
-}).sort( (a, b) => {
-return ((a.name > b.name ) ? 1 : -1);
-})
+  }).sort((a, b) => {
+    return ((a.name > b.name) ? 1 : -1);
+  }).sort((a,b) => {
+    // I'm less proud of this 
+    return ((a.name === 'English') ? -1 : 1)
+  })
 }
