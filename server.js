@@ -97,6 +97,7 @@ function renderUserPage(request, response) {
   const thisWillChange = {};
   const text = 'Press here to submit your FMLA hours';
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
+  getHastis(badgeNumber, dayOfYear);
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   if (request.body.language === 'en') {
     response.render('pages/user', {
@@ -128,6 +129,22 @@ function submitUserHours(request, response) {
 }
 
 // tools to make the magic happen
+
+function getHastis(badgeNumber, dayOfYear) {
+  let sql = `SELECT * FROM hastis WHERE badge='${badgeNumber}' AND date='${dayOfYear}';`;
+  return client.query(sql)
+    .then( hastisQuery => {
+      if(hastisQuery.rows[0]){
+        console.log('PING1');
+        return hastisQuery
+      } else{
+        console.log('PING2');
+        let sqlInsert = `INSERT INTO hastis(badge, date, hours) VALUES ($1, $2, $3);`;
+        let values = [badgeNumber, dayOfYear, 0];
+        return client.query(sqlInsert, values)
+      }
+    })
+}
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
 const modifiedLanguageList = (languageList) => {
