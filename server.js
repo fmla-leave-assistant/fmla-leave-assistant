@@ -113,8 +113,8 @@ function renderUserPage(request, response) {
   if(request.body.language === 'en'){
     response.render('pages/user', {
       pageData: {
-      text: 'Press here to submit your FMLA hours',
-      days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
+        text: 'Press here to submit your FMLA hours',
+        days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
       }
     })
   }
@@ -148,8 +148,8 @@ function getHastis(badgeNumber, dayOfYear) {
   if (hastisQuery[0]) {
     return hastisQuery
   } else {let sqlInsert = `INSERT INTO hastis(badge, date, hours) VALUES (${badgeNumber}, ${dayOfYear}, 0);`;
-  client.query(sqlInsert);
-  return hastisQuery;
+    client.query(sqlInsert);
+    return hastisQuery;
   }
 }
 
