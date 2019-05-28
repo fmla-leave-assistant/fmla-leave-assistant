@@ -149,5 +149,8 @@ const modifiedLanguageList = (languageList) => {
     return element
   }).sort((a, b) => {
     return ((a.name > b.name) ? 1 : -1);
+  }).sort((a,b) => {
+    // I'm less proud of this 
+    return ((a.name === 'English') ? -1 : 1)
   })
 }
