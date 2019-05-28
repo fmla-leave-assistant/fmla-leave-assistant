@@ -8,10 +8,7 @@ const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
-const { Translate } = require('@google-cloud/translate');
 const fullLanguageList = require('./fullLanguageList.json');
-
-
 
 //App setup
 const app = express();
@@ -22,32 +19,24 @@ const PORT = process.env.PORT;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-
 //Connecting to the database
-const translate = new Translate();
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
 
-
 //Turn the server on
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
-
 
 //Set the view engine for server-side templating
 app.set('view engine', 'ejs');
 
-
 //API routes
 app.get('/', homePage);
 app.post('/login', renderUserPage);
-app.post('/')
-app.post('/submit', submitHours);
-
+app.post('/submit', submitUserHours);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
-
 
 //Error handler
 function handleError(err, response) {
@@ -109,38 +98,36 @@ function renderUserPage(request, response) {
   const text = 'Press here to submit your FMLA hours';
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
-  if(request.body.language === 'en'){
+  if (request.body.language === 'en') {
     response.render('pages/user', {
       pageData: {
-      text: 'Press here to submit your FMLA hours',
-      days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
+        text: 'Press here to submit your FMLA hours',
+        days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
       }
     })
+  } else {
+    superagent.post(url)
+      .then(translationResponse => {
+        let translationText = translationResponse.body.data.translations[0].translatedText;
+        thisWillChange.text = translationText;
+      })
+      .then(e => {
+        let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
+        superagent.post(url2)
+          .then(daysResponse => {
+            let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
+            thisWillChange.days = translatedDays;
+            response.render('pages/user', { pageData: thisWillChange })
+          })
+      })
   }
-  superagent.post(url)
-    .then(translationResponse => {
-      let translationText = translationResponse.body.data.translations[0].translatedText;
-      thisWillChange.text = translationText;
-    })
-    .then(e => {
-      let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
-      superagent.post(url2)
-        .then(daysResponse => {
-          let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
-          thisWillChange.days = translatedDays;
-          response.render('pages/user', { pageData: thisWillChange })
-        })
-    })
 }
 
-
-function submitHours(request, response) {
-
+function submitUserHours(request, response) {
+//skeleton code for route function
 }
-
 
 // tools to make the magic happen
-
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
 const modifiedLanguageList = (languageList) => {
@@ -149,7 +136,7 @@ const modifiedLanguageList = (languageList) => {
     return element
   }).sort((a, b) => {
     return ((a.name > b.name) ? 1 : -1);
-  }).sort((a,b) => {
+  }).sort((a, b) => {
     // I'm less proud of this 
     return ((a.name === 'English') ? -1 : 1)
   })
