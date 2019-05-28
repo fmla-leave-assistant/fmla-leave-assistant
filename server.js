@@ -8,10 +8,7 @@ const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
-const { Translate } = require('@google-cloud/translate');
 const fullLanguageList = require('./fullLanguageList.json');
-
-
 
 //App setup
 const app = express();
@@ -22,32 +19,24 @@ const PORT = process.env.PORT;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-
 //Connecting to the database
-const translate = new Translate();
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
 
-
 //Turn the server on
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
-
 
 //Set the view engine for server-side templating
 app.set('view engine', 'ejs');
 
-
 //API routes
 app.get('/', homePage);
 app.post('/login', renderUserPage);
-app.post('/')
-app.post('/submit', submitHours);
-
+app.post('/submit', submitUserHours);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
-
 
 //Error handler
 function handleError(err, response) {
@@ -134,14 +123,27 @@ function renderUserPage(request, response) {
     })
 }
 
-
-function submitHours(request, response) {
-
+function submitUserHours(request, response) {
+//skeleton code for route function
 }
-
 
 // tools to make the magic happen
 
+function getHastis(badgeNumber, dayOfYear) {
+  let sql = `SELECT * FROM hastis WHERE badge='${badgeNumber}' AND date='${dayOfYear}';`;
+  return client.query(sql)
+    .then( hastisQuery => {
+      if(hastisQuery.rows[0]){
+        console.log('PING1');
+        return hastisQuery
+      } else{
+        console.log('PING2');
+        let sqlInsert = `INSERT INTO hastis(badge, date, hours) VALUES ($1, $2, $3);`;
+        let values = [badgeNumber, dayOfYear, 0];
+        return client.query(sqlInsert, values)
+      }
+    })
+}
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
 const modifiedLanguageList = (languageList) => {
@@ -150,7 +152,7 @@ const modifiedLanguageList = (languageList) => {
     return element
   }).sort((a, b) => {
     return ((a.name > b.name) ? 1 : -1);
-  }).sort((a,b) => {
+  }).sort((a, b) => {
     // I'm less proud of this 
     return ((a.name === 'English') ? -1 : 1)
   })
