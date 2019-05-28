@@ -38,7 +38,6 @@ app.post('/submit', submitUserHours);
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
 
-
 //Error handler
 function handleError(err, response) {
   console.error(err);
@@ -106,21 +105,22 @@ function renderUserPage(request, response) {
         days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
       }
     })
+  } else {
+    superagent.post(url)
+      .then(translationResponse => {
+        let translationText = translationResponse.body.data.translations[0].translatedText;
+        thisWillChange.text = translationText;
+      })
+      .then(e => {
+        let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
+        superagent.post(url2)
+          .then(daysResponse => {
+            let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
+            thisWillChange.days = translatedDays;
+            response.render('pages/user', { pageData: thisWillChange })
+          })
+      })
   }
-  superagent.post(url)
-    .then(translationResponse => {
-      let translationText = translationResponse.body.data.translations[0].translatedText;
-      thisWillChange.text = translationText;
-    })
-    .then(e => {
-      let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
-      superagent.post(url2)
-        .then(daysResponse => {
-          let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
-          thisWillChange.days = translatedDays;
-          response.render('pages/user', { pageData: thisWillChange })
-        })
-    })
 }
 
 function submitUserHours(request, response) {
