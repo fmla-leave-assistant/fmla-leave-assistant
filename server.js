@@ -126,7 +126,9 @@ function renderUserPage(request, response) {
       superagent.post(url2)
         .then(daysResponse => {
           let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
-          thisWillChange.days = translatedDays;
+          console.log(dayOfWeek)
+          thisWillChange.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, translatedDays);
+          console.log(thisWillChange.days)
           response.render('pages/user', { pageData: thisWillChange })
         })
     })
@@ -154,13 +156,13 @@ const modifiedLanguageList = (languageList) => {
   })
 }
 
-let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday']
 const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray) => {
   let startArrayDay = parseInt(startingDayOfYear) - 3;
   const decrementDay = (dayOfWeekNumber) => {
-    return (!dayOfWeekNumber) ? dayOfWeekNumber + 7 : dayOfWeekNumber -1
+    return (!dayOfWeekNumber) ? dayOfWeekNumber + 6 : dayOfWeekNumber -1
   }
  const increaseDay = (dayOfWeekNumber, increaseby) => {
+   dayOfWeekNumber = parseInt(dayOfWeekNumber)
     for(let i = 0; i < increaseby; i++){
     dayOfWeekNumber = (dayOfWeekNumber === 6) ? 0 : dayOfWeekNumber + 1
     }
@@ -171,9 +173,11 @@ const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray)
   let start = startArrayDay
   let result = [];
   for(let i = 0; i < 7; i++){
+    let weekindex = increaseDay(startArrayDayOfWeek, i)
+    console.log(weekindex)
     result.push({
       dayOfYear: start + i,
-      dayOfWeek: weekArray[increaseDay(startArrayDayOfWeek, i)],
+      dayOfWeek: weekArray[weekindex],
       badgeNumber: badgeNumber
     })
   }
