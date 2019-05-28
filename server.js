@@ -143,14 +143,19 @@ function submitHours(request, response) {
 // tools to make the magic happen
 
 function getHastis(badgeNumber, dayOfYear) {
-  let sql = `SELECT * FROM hastis WHERE badge=${badgeNumber} AND date=${dayOfYear};`;
-  let hastisQuery = client.query(sql);
-  if (hastisQuery[0]) {
-    return hastisQuery
-  } else {let sqlInsert = `INSERT INTO hastis(badge, date, hours) VALUES (${badgeNumber}, ${dayOfYear}, 0);`;
-    client.query(sqlInsert);
-    return hastisQuery;
-  }
+  let sql = `SELECT * FROM hastis WHERE badge='${badgeNumber}' AND date='${dayOfYear}';`;
+  return client.query(sql)
+    .then( hastisQuery => {
+      if(hastisQuery.rows[0]){
+        console.log('PING1');
+        return hastisQuery
+      } else{
+        console.log('PING2');
+        let sqlInsert = `INSERT INTO hastis(badge, date, hours) VALUES ($1, $2, $3);`;
+        let values = [badgeNumber, dayOfYear, 0];
+        return client.query(sqlInsert, values)
+      }
+    })
 }
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
