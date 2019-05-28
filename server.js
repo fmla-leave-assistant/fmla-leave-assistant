@@ -109,16 +109,24 @@ function renderUserPage(request, response) {
   const text = 'Press here to submit your FMLA hours';
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
+  if(request.body.language === 'en'){
+    response.render('pages/user', {
+      pageData: {
+      text: 'Press here to submit your FMLA hours',
+      days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
+      }
+    })
+  }
   superagent.post(url)
     .then(translationResponse => {
-      let translationText = (translationResponse.body.error ? text : (translationResponse.body.data.translations[0].translatedText));
+      let translationText = translationResponse.body.data.translations[0].translatedText;
       thisWillChange.text = translationText;
     })
     .then(e => {
       let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
       superagent.post(url2)
         .then(daysResponse => {
-          let translatedDays = (daysResponse.body.error ? daysOfWeek.split(' .. ') : daysResponse.body.data.translations[0].translatedText.split(' '));
+          let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
           thisWillChange.days = translatedDays;
           response.render('pages/user', { pageData: thisWillChange })
         })
