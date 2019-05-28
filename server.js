@@ -102,7 +102,6 @@ function homePage(request, response) {
 
 function renderUserPage(request, response) {
   const badgeNumber = request.body.badgeNumber
-  console.log(badgeNumber);
   const dayOfYear = request.body.currentDay
   const target = request.body.language;
   const thisWillChange = {};
