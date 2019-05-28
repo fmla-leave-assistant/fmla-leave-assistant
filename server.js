@@ -103,23 +103,30 @@ function homePage(request, response) {
 
 function renderUserPage(request, response) {
   const badgeNumber = request.body.badgeNumber
-  console.log(badgeNumber);
   const dayOfYear = request.body.currentDay
   const target = request.body.language;
   const thisWillChange = {};
   const text = 'Press here to submit your FMLA hours';
   const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
+  if(request.body.language === 'en'){
+    response.render('pages/user', {
+      pageData: {
+      text: 'Press here to submit your FMLA hours',
+      days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
+      }
+    })
+  }
   superagent.post(url)
     .then(translationResponse => {
-      let translationText = (translationResponse.body.error ? text : (translationResponse.body.data.translations[0].translatedText));
+      let translationText = translationResponse.body.data.translations[0].translatedText;
       thisWillChange.text = translationText;
     })
     .then(e => {
       let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
       superagent.post(url2)
         .then(daysResponse => {
-          let translatedDays = (daysResponse.body.error ? daysOfWeek.split(' .. ') : daysResponse.body.data.translations[0].translatedText.split(' '));
+          let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
           thisWillChange.days = translatedDays;
           response.render('pages/user', { pageData: thisWillChange })
         })
@@ -142,5 +149,8 @@ const modifiedLanguageList = (languageList) => {
     return element
   }).sort((a, b) => {
     return ((a.name > b.name) ? 1 : -1);
+  }).sort((a,b) => {
+    // I'm less proud of this 
+    return ((a.name === 'English') ? -1 : 1)
   })
 }
