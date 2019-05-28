@@ -124,7 +124,7 @@ function renderUserPage(request, response) {
 }
 
 function submitUserHours(request, response) {
-
+//skeleton code for route function
 }
 
 // tools to make the magic happen
