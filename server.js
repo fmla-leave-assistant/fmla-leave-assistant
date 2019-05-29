@@ -33,7 +33,7 @@ app.set('view engine', 'ejs');
 //API routes
 app.get('/', homePage);
 app.post('/login', renderUserPage);
-app.post('/submit', submitUserHours);
+app.post('/submitUserHours', userSubmitHours);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
@@ -93,9 +93,10 @@ function homePage(request, response) {
 function renderUserPage(request, response) {
   console.log(request.body)
   const pageData = {
-  text: 'Press here to submit your FMLA hours',
-  days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'],
-  language: request.body.language}
+    text: 'Press here to submit your FMLA hours',
+    days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    language: request.body.language
+  }
   const dayOfWeek = request.body.dayOfWeek
   const badgeNumber = request.body.badgeNumber
   const dayOfYear = request.body.currentDay
@@ -105,29 +106,48 @@ function renderUserPage(request, response) {
   const text = pageData.text;
   const daysOfWeek = pageData.days;
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
-  if(request.body.language === 'en'){
-    response.render('pages/user', {pageData: pageData})
+  if (request.body.language === 'en') {
+    response.render('pages/user', { pageData: pageData })
+  } else {
+    superagent.post(url)
+      .then(translationResponse => {
+        let translationText = translationResponse.body.data.translations[0].translatedText;
+        thisWillChange.text = translationText;
+      })
+      .then(e => {
+        let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
+        superagent.post(url2)
+          .then(daysResponse => {
+            let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
+            console.log(dayOfWeek)
+            thisWillChange.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, translatedDays);
+            console.log(thisWillChange.days)
+            response.render('pages/user', { pageData: thisWillChange })
+          })
+      })
   }
-  superagent.post(url)
-    .then(translationResponse => {
-      let translationText = translationResponse.body.data.translations[0].translatedText;
-      thisWillChange.text = translationText;
-    })
-    .then(e => {
-      let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
-      superagent.post(url2)
-        .then(daysResponse => {
-          let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
-          console.log(dayOfWeek)
-          thisWillChange.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, translatedDays);
-          console.log(thisWillChange.days)
-          response.render('pages/user', { pageData: thisWillChange })
-        })
-    })
 }
 
-function submitUserHours(request, response) {
-//skeleton code for route function
+function userSubmitHours(request, response) {
+  //skeleton code for route function
+  let x = 'shit from sql';
+  let y = 'more shit from sql';
+  const thisWillChangeAgain = {};
+  const target = 'es';
+  let theDate = new Date().toDateString();
+  const pageData = {
+    // message: `You previously used ${x} hours of FMLA. As of ${theDate}, you have ${y} hours remaining`,
+  }
+  const message = pageData.message;
+  console.log('🤨' + theDate);
+  console.log(pageData);
+  let url = `https://translation.googleapis.com/language/translate/v2?q=${message}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
+  superagent.post(url)
+    .then(messageResponse => {
+      let translationMessage = messageResponse.body.data.translations[0].translatedMessage;
+      thisWillChangeAgain.message = translationMessage;
+      response.render('pages/userResults', { pageData: thisWillChangeAgain })
+    })
 }
 
 // tools to make the magic happen
@@ -135,11 +155,11 @@ function submitUserHours(request, response) {
 function getHastis(badgeNumber, dayOfYear) {
   let sql = `SELECT * FROM hastis WHERE badge='${badgeNumber}' AND date='${dayOfYear}';`;
   return client.query(sql)
-    .then( hastisQuery => {
-      if(hastisQuery.rows[0]){
+    .then(hastisQuery => {
+      if (hastisQuery.rows[0]) {
         console.log('PING1');
         return hastisQuery
-      } else{
+      } else {
         console.log('PING2');
         let sqlInsert = `INSERT INTO hastis(badge, date, hours) VALUES ($1, $2, $3);`;
         let values = [badgeNumber, dayOfYear, 0];
@@ -156,7 +176,7 @@ const modifiedLanguageList = (languageList) => {
   }).sort((a, b) => {
     return ((a.name > b.name) ? 1 : -1);
   }).sort((a, b) => {
-    // I'm less proud of this 
+    // I'm less proud of this
     return ((a.name === 'English') ? -1 : 1)
   })
 }
@@ -164,20 +184,20 @@ const modifiedLanguageList = (languageList) => {
 const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray) => {
   let startArrayDay = parseInt(startingDayOfYear) - 3;
   const decrementDay = (dayOfWeekNumber) => {
-    return (!dayOfWeekNumber) ? dayOfWeekNumber + 6 : dayOfWeekNumber -1
+    return (!dayOfWeekNumber) ? dayOfWeekNumber + 6 : dayOfWeekNumber - 1
   }
- const increaseDay = (dayOfWeekNumber, increaseby) => {
-   dayOfWeekNumber = parseInt(dayOfWeekNumber)
-    for(let i = 0; i < increaseby; i++){
-    dayOfWeekNumber = (dayOfWeekNumber === 6) ? 0 : dayOfWeekNumber + 1
+  const increaseDay = (dayOfWeekNumber, increaseby) => {
+    dayOfWeekNumber = parseInt(dayOfWeekNumber)
+    for (let i = 0; i < increaseby; i++) {
+      dayOfWeekNumber = (dayOfWeekNumber === 6) ? 0 : dayOfWeekNumber + 1
     }
     return dayOfWeekNumber
- }
+  }
   let startArrayDayOfWeek = decrementDay(decrementDay(decrementDay(startingDayOfWeek)))
 
   let start = startArrayDay
   let result = [];
-  for(let i = 0; i < 7; i++){
+  for (let i = 0; i < 7; i++) {
     let weekindex = increaseDay(startArrayDayOfWeek, i)
     console.log(weekindex)
     result.push({
