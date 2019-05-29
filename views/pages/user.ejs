@@ -10,7 +10,7 @@
     <%- include('../layout/navbar') %>
   </nav>
 
-<% const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd + 1)/365 * 525600 * 60000)) %>
+<% const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd + 1)/365 * 525600 * 60000)).toDateString().split(' ').slice(1,4).join(' ') %>
 
   <div id="hoursForm">
     <form action="/submitUserHours" method="post" id="hoursForm">
