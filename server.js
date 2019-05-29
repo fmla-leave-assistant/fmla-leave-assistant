@@ -159,7 +159,7 @@ function updateHastis(badgeNumber, dayOfYear, inputHours){
 }
 
 function calculateNewUserHours(){
-
+  let baseSQL =  `SELECT sick_leave WHERE badge=${badgeNum};`;
 }
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
