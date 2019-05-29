@@ -158,9 +158,22 @@ function updateHastis(badgeNumber, dayOfYear, inputHours){
   return client.query(SQL);
 }
 
-function calculateNewUserHours(){
-  let baseSQL =  `SELECT sick_leave WHERE badge=${badgeNum};`;
+function calculateNewUserHours(badgeNum){
+  let baseSQL =  `SELECT sick_leave FROM base_hours WHERE badge=${badgeNum};`;
+  client.query(baseSQL)
+  .then(baseHours => {
+    let hastisSQL = `SELECT hours FROM hastis WHERE badge=${badgeNum};`;
+    client.query(hastisSQL)
+    .then(hastisHours => {
+      console.log(baseHours, 'base hours');
+      console.log(hastisHours, 'hastis hours');
+      
+    })
+  }) 
 }
+
+calculateNewUserHours(46247);
+
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
 const modifiedLanguageList = (languageList) => {
@@ -202,3 +215,5 @@ const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray)
   }
   return result
 }
+
+
