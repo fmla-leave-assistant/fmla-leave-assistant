@@ -138,18 +138,22 @@ response.render('pages/userResults', {})
 
 function getHastis(badgeNumber, dayOfYear) {
   let sql = `SELECT hours FROM hastis WHERE badge='${badgeNumber}' AND date='${dayOfYear}';`;
-  return client.query(sql)
+  client.query(sql)
     .then( hastisQuery => {
+      console.log(hastisQuery.rows[0].hours);
       if(hastisQuery.rows[0]){
         console.log('PING1');
-        return hastisQuery
+        return hastisQuery.rows[0].hours
       } else{
         console.log('PING2');
         let sqlInsert = `INSERT INTO hastis(badge, date, hours) VALUES ($1, $2, $3);`;
         let values = [badgeNumber, dayOfYear, 0];
         client.query(sqlInsert, values)
           .then(result =>{
-            return client.query(sql);
+            client.query(sql)
+              .then(newResult => {
+                return newResult.rows[0].hours;
+              })
           })
       }
     })
@@ -162,7 +166,7 @@ function updateHastis(badgeNumber, dayOfYear, inputHours){
 }
 
 function calculateNewUserHours(){
-  let baseSQL =  `SELECT sick_leave WHERE badge=${badgeNum};`;
+
 }
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
@@ -204,5 +208,3 @@ const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray)
   return result
 }
 
-getHastis(1222,145);
-getHastis(1222,145);
