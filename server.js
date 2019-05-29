@@ -93,20 +93,20 @@ function homePage(request, response) {
 function renderUserPage(request, response) {
   console.log(request.body)
   const pageData = {
-  text: 'Press here to submit your FMLA hours',
-  days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'],
-  language: request.body.language}
+    text: 'Press here to submit your FMLA hours',
+    days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'],
+    language: request.body.language}
   const dayOfWeek = request.body.dayOfWeek;
   const badgeNumber = request.body.badgeNumber;
   pageData.badgeNumber = badgeNumber;
   const dayOfYear = request.body.currentDay;
-
+  const weekOfDays = [dayOfYear-3,dayOfYear-2,dayOfYear-1,dayOfYear,dayOfYear+1,dayOfYear+2,dayOfYear+3]
   const target = request.body.language;
   const thisWillChange = {};
   thisWillChange.language = request.body.language;
   const text = pageData.text;
   const daysOfWeek = pageData.days;
-  getHastis(badgeNumber, daysOfWeek);
+  // getHastis(badgeNumber, daysOfWeek);
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   if(request.body.language === 'en'){
     pageData.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, pageData.days)
@@ -124,36 +124,42 @@ function renderUserPage(request, response) {
         .then(daysResponse => {
           let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
           thisWillChange.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, translatedDays);
-          response.render('pages/user', { pageData: thisWillChange })
+          let SQL1= `SELECT date FROM hastis WHERE badge='${badgeNumber}';`;
+          client.query(SQL1)
+            .then(daysByBadge => {
+              let insertDays = weekOfDays.filter(day => {
+                (daysByBadge.contains(day)? false : true)
+              })
+              return insertDays
+            })
+            .then((insertDays) => {
+              let valuesArr=[];
+              for(let i = 0; i < insertDays.length; i++){
+                valuesArr.push(`(${badgeNumber}, ${insertDays[i]}, '0')`);
+              }
+              let SQL2 = `INSERT INTO hastis(badge, date, hours) VALUES(${valuesArr.join()})`
+              client.query(SQL2)
+              return true
+            })
+            .then( () =>{
+              let SQL3 = `SELECT hours, date FROM hastis WHERE badge ='${badgeNumber}' AND (date=$1 OR date=$2 OR date=$3 OR date=$4 OR date=$5 OR date=$6 OR date=$7);`;
+              let values = weekOfDays;
+              client.query(SQL3, values)
+                .then( currentHours =>{
+                  console.log(currentHours,'This is current Hours')
+                  response.render('pages/user', { pageData: thisWillChange })
+                })
+            })
         })
     })
 }
 
 function submitUserHours(request, response) {
 //skeleton code for route function
-response.render('HA gotcha')
+  response.render('HA gotcha')
 }
 
 // tools to make the magic happen
-
-function getHastis(badgeNumber, dayOfYear) {
-  let sql = `SELECT hours FROM hastis WHERE badge='${badgeNumber}' AND date='${dayOfYear}';`;
-  return client.query(sql)
-    .then( hastisQuery => {
-      if(hastisQuery.rows[0]){
-        console.log('PING1');
-        return hastisQuery
-      } else{
-        console.log('PING2');
-        let sqlInsert = `INSERT INTO hastis(badge, date, hours) VALUES ($1, $2, $3);`;
-        let values = [badgeNumber, dayOfYear, 0];
-        client.query(sqlInsert, values)
-          .then(result =>{
-            return client.query(sql);
-          })
-      }
-    })
-}
 
 function updateHastis(badgeNumber, dayOfYear, inputHours){
   let SQL = ` UPDATE hastis SET hours = ${inputHours} WHERE badge = ${badgeNumber} AND date = ${dayOfYear};`;
