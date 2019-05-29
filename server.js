@@ -165,9 +165,13 @@ function calculateNewUserHours(badgeNum){
     let hastisSQL = `SELECT hours FROM hastis WHERE badge=${badgeNum};`;
     client.query(hastisSQL)
     .then(hastisHours => {
-      console.log(baseHours, 'base hours');
-      console.log(hastisHours, 'hastis hours');
-      
+      // console.log(baseHours, 'base hours');
+      // console.log(hastisHours, 'hastis hours');
+    
+      // push all hours entries into an array (or something)
+      // .reduce through the array starting with sick_leave as the accumulator
+      // return the end result of that math
+
     })
   }) 
 }
