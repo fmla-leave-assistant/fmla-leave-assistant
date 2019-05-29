@@ -91,34 +91,39 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
+  console.log(request.body)
   const pageData = {
-    text: 'Press here to submit your FMLA hours',
-    days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday']}
-  const dayOfWeek = request.body.dayOfWeek
-  const badgeNumber = request.body.badgeNumber
-  const dayOfYear = request.body.currentDay
+  text: 'Press here to submit your FMLA hours',
+  days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'],
+  language: request.body.language}
+  const dayOfWeek = request.body.dayOfWeek;
+  const badgeNumber = request.body.badgeNumber;
+  pageData.badgeNumber = badgeNumber;
+  const dayOfYear = request.body.currentDay;
+
   const target = request.body.language;
   const thisWillChange = {};
+  thisWillChange.language = request.body.language;
   const text = pageData.text;
   const daysOfWeek = pageData.days;
   getHastis(badgeNumber, daysOfWeek);
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   if(request.body.language === 'en'){
+    pageData.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, pageData.days)
     response.render('pages/user', {pageData: pageData})
   }
   superagent.post(url)
     .then(translationResponse => {
       let translationText = translationResponse.body.data.translations[0].translatedText;
       thisWillChange.text = translationText;
+      thisWillChange.badgeNumber = badgeNumber;
     })
     .then(e => {
       let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
       superagent.post(url2)
         .then(daysResponse => {
           let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
-          console.log(dayOfWeek)
           thisWillChange.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, translatedDays);
-          console.log(thisWillChange.days)
           response.render('pages/user', { pageData: thisWillChange })
         })
     })
@@ -196,7 +201,6 @@ const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray)
     result.push({
       dayOfYear: start + i,
       dayOfWeek: weekArray[weekindex],
-      badgeNumber: badgeNumber
     })
   }
   return result

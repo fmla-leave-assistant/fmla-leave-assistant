@@ -10,25 +10,43 @@
     <%- include('../layout/navbar') %>
   </nav>
 
-<% const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd + 1)/365 * 525600 * 60000)) %>
+  <% const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd)/365 * 525600 * 60000)).toDateString().split(' ').slice(1,4).join(' ') %>
 
+  <div class="jumpButtons">
+    <form action="/login" method="post" id="logform">
+      <input type="hidden" name="currentDay" value="<%= parseInt(pageData.days[3].dayOfYear)+3 %>">
+      <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">
+      <p><input type="hidden" name="badgeNumber" value="<%= pageData.days[3].badgeNumber %>" required></p>
+      <p><input type="hidden" name="language" value="<%= pageData.language %>"></p>
+      <p><button type="submit">Jump forward 3 days</button></p>
+    </form>
+    <form action="/login" method="post" id="logform">
+      <input type="hidden" name="currentDay" value="<%= parseInt(pageData.days[3].dayOfYear)-3 %>">
+      <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">
+      <p><input type="hidden" name="badgeNumber" value="<%= pageData.days[3].badgeNumber %>" required></p>
+      <p><input type="hidden" name="language" value="<%= pageData.language %>"></p>
+      <p><button type="submit">Jump backward 3 days</button></p>
+    </form>
+  </div>
   <div id="hoursForm">
     <form action="/submitUserHours" method="post" id="hoursForm">
+      <input type="hidden" name="language" value="<%= pageData.language %>">
+      <input type="hidden" name="badge" value="<%- pageData.badgeNumber %>">
       <% pageData.days.forEach(day => { %>
-      <div class="dayclass width100">
-      <div class="width100"><%= day.dayOfWeek %></div>
-      <div class="date"><%= getDateFromJd(day.dayOfYear) %></div>
-      <input type="text" name="hours" placeholder="0" class="hourinput">
-      <input type="hidden" name="daynumber" value="<%- day.dayOfYear %>">
-      <input type="hidden" name="badge" value="<%- day.badgeNumber %>">
-      <% }); %>
-      
-    </div>
-      <button class="hourSubmitButton"type="submit"><%= pageData.text %></button>
+      <div class="oneDayClass">
+        <div class="dayclass width100">
+          <div class="width100"><%= day.dayOfWeek %></div>
+          <div class="date"><%= getDateFromJd(day.dayOfYear) %></div>
+          <input type="text" name="hours" placeholder="0" class="hourinput">
+          <input type="hidden" name="daynumber" value="<%- day.dayOfYear %>">
+        </div>
+      </div>
+        <% }); %>
+
+      <button class="hourSubmitButton" type="submit"><%= pageData.text %></button>
     </form>
   </div>
 
   <footer>
-      <%- include('../layout/footer') %>
+    <%- include('../layout/footer') %>
   </footer>
-
