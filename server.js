@@ -33,7 +33,7 @@ app.set('view engine', 'ejs');
 //API routes
 app.get('/', homePage);
 app.post('/login', renderUserPage);
-app.post('/submit', submitUserHours);
+app.put('/submit', submitUserHours);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
@@ -129,6 +129,7 @@ function renderUserPage(request, response) {
 
 function submitUserHours(request, response) {
 //skeleton code for route function
+response.render('HA gotcha')
 }
 
 // tools to make the magic happen
@@ -180,7 +181,6 @@ const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray)
   let result = [];
   for(let i = 0; i < 7; i++){
     let weekindex = increaseDay(startArrayDayOfWeek, i)
-    console.log(weekindex)
     result.push({
       dayOfYear: start + i,
       dayOfWeek: weekArray[weekindex],
