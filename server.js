@@ -100,11 +100,13 @@ function renderUserPage(request, response) {
   const badgeNumber = request.body.badgeNumber;
   pageData.badgeNumber = badgeNumber;
   const dayOfYear = request.body.currentDay;
+
   const target = request.body.language;
   const thisWillChange = {};
   thisWillChange.language = request.body.language;
   const text = pageData.text;
   const daysOfWeek = pageData.days;
+  getHastis(badgeNumber, daysOfWeek);
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   if(request.body.language === 'en'){
     pageData.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, pageData.days)
@@ -128,13 +130,16 @@ function renderUserPage(request, response) {
 }
 
 function submitUserHours(request, response) {
-//skeleton code for route function
+  const badgeNumber = request.body.badgeNumber;
+  const dayOfYear = request.body.currentDay;
+  let inputHours = request.body.IDKWHATTHISVARIABLEISYET;
+  updateHastis(badgeNumber, dayOfYear, inputHours);
 }
 
 // tools to make the magic happen
 
 function getHastis(badgeNumber, dayOfYear) {
-  let sql = `SELECT * FROM hastis WHERE badge='${badgeNumber}' AND date='${dayOfYear}';`;
+  let sql = `SELECT hours FROM hastis WHERE badge='${badgeNumber}' AND date='${dayOfYear}';`;
   return client.query(sql)
     .then( hastisQuery => {
       if(hastisQuery.rows[0]){
@@ -144,9 +149,21 @@ function getHastis(badgeNumber, dayOfYear) {
         console.log('PING2');
         let sqlInsert = `INSERT INTO hastis(badge, date, hours) VALUES ($1, $2, $3);`;
         let values = [badgeNumber, dayOfYear, 0];
-        return client.query(sqlInsert, values)
+        client.query(sqlInsert, values)
+          .then(result =>{
+            return client.query(sql);
+          })
       }
     })
+}
+
+function updateHastis(badgeNumber, dayOfYear, inputHours){
+  let SQL = ` UPDATE hastis SET hours = ${inputHours} WHERE badge = ${badgeNumber} AND date = ${dayOfYear};`;
+  return client.query(SQL);
+}
+
+function calculateNewUserHours(){
+
 }
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
@@ -167,13 +184,13 @@ const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray)
   const decrementDay = (dayOfWeekNumber) => {
     return (!dayOfWeekNumber) ? dayOfWeekNumber + 6 : dayOfWeekNumber -1
   }
- const increaseDay = (dayOfWeekNumber, increaseby) => {
-   dayOfWeekNumber = parseInt(dayOfWeekNumber)
+  const increaseDay = (dayOfWeekNumber, increaseby) => {
+    dayOfWeekNumber = parseInt(dayOfWeekNumber)
     for(let i = 0; i < increaseby; i++){
-    dayOfWeekNumber = (dayOfWeekNumber === 6) ? 0 : dayOfWeekNumber + 1
+      dayOfWeekNumber = (dayOfWeekNumber === 6) ? 0 : dayOfWeekNumber + 1
     }
     return dayOfWeekNumber
- }
+  }
   let startArrayDayOfWeek = decrementDay(decrementDay(decrementDay(startingDayOfWeek)))
 
   let start = startArrayDay
