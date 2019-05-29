@@ -30,6 +30,8 @@
   </div>
   <div id="hoursForm">
     <form action="/submitUserHours" method="post" id="hoursForm">
+      <input type="hidden" name="language" value="<%= pageData.language %>">
+      <input type="hidden" name="badge" value="<%- pageData.badgeNumber %>">
       <% pageData.days.forEach(day => { %>
       <div class="oneDayClass">
         <div class="dayclass width100">
@@ -37,7 +39,6 @@
           <div class="date"><%= getDateFromJd(day.dayOfYear) %></div>
           <input type="text" name="hours" placeholder="0" class="hourinput">
           <input type="hidden" name="daynumber" value="<%- day.dayOfYear %>">
-          <input type="hidden" name="badge" value="<%- day.badgeNumber %>">
         </div>
       </div>
         <% }); %>
