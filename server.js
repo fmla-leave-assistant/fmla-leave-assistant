@@ -131,7 +131,7 @@ function renderUserPage(request, response) {
 
 function submitUserHours(request, response) {
 //skeleton code for route function
-response.render('HA gotcha')
+response.render('pages/userResults', {})
 }
 
 // tools to make the magic happen
@@ -153,6 +153,7 @@ function getHastis(badgeNumber, dayOfYear) {
           })
       }
     })
+    .then(result => console.log(result))
 }
 
 function updateHastis(badgeNumber, dayOfYear, inputHours){
@@ -202,3 +203,6 @@ const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray)
   }
   return result
 }
+
+getHastis(1222,145);
+getHastis(1222,145);
