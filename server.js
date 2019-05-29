@@ -97,6 +97,7 @@ function renderUserPage(request, response) {
   const dayOfWeek = request.body.dayOfWeek
   const badgeNumber = request.body.badgeNumber
   const dayOfYear = request.body.currentDay
+  console.log(dayOfYear);
   const target = request.body.language;
   const thisWillChange = {};
   const text = pageData.text;
