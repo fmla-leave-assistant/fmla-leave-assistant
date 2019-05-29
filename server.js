@@ -125,7 +125,10 @@ function renderUserPage(request, response) {
 }
 
 function submitUserHours(request, response) {
-//skeleton code for route function
+  const badgeNumber = request.body.badgeNumber;
+  const dayOfYear = request.body.currentDay;
+  let inputHours = request.body.IDKWHATTHISVARIABLEISYET;
+  updateHastis(badgeNumber, dayOfYear, inputHours);
 }
 
 // tools to make the magic happen
@@ -144,6 +147,17 @@ function getHastis(badgeNumber, dayOfYear) {
         return client.query(sqlInsert, values)
       }
     })
+}
+
+function updateHastis(badgeNumber, dayOfYear, inputHours){
+  inputHours.forEach(input => {
+
+    let SQL = ` UPDATE hastis SET hours = ${input} WHERE badge = ${badgeNumber} AND date = ${dayOfYear};`;
+    return client.query(SQL);
+  })
+}
+function calculateNewUserHours(){
+  
 }
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
