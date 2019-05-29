@@ -27,6 +27,7 @@
 
     <form action="/login" method="post" id="logform">
         <input type="hidden" name="currentDay" value="replacewithdayofyear" id="replacewithdayofyear">
+        <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">
         <p><input type="text" name="badgeNumber" placeholder="Badge Number" required></p>
         <p><input type="password" name="password" placeholder="password" required></p>
         <p><select name="language">

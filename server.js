@@ -91,37 +91,36 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
+  const pageData = {
+  text: 'Press here to submit your FMLA hours',
+  days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday']}
+  const dayOfWeek = request.body.dayOfWeek
   const badgeNumber = request.body.badgeNumber
   const dayOfYear = request.body.currentDay
   const target = request.body.language;
   const thisWillChange = {};
-  const text = 'Press here to submit your FMLA hours';
-  const daysOfWeek = ['Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'];
-  getHastis(badgeNumber, dayOfYear);
+  const text = pageData.text;
+  const daysOfWeek = pageData.days;
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
-  if (request.body.language === 'en') {
-    response.render('pages/user', {
-      pageData: {
-        text: 'Press here to submit your FMLA hours',
-        days: 'Monday .. Tuesday .. Wednesday .. Thursday .. Friday .. Saturday .. Sunday'.split(' .. ')
-      }
-    })
-  } else {
-    superagent.post(url)
-      .then(translationResponse => {
-        let translationText = translationResponse.body.data.translations[0].translatedText;
-        thisWillChange.text = translationText;
-      })
-      .then(e => {
-        let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
-        superagent.post(url2)
-          .then(daysResponse => {
-            let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
-            thisWillChange.days = translatedDays;
-            response.render('pages/user', { pageData: thisWillChange })
-          })
-      })
+  if(request.body.language === 'en'){
+    response.render('pages/user', {pageData: pageData})
   }
+  superagent.post(url)
+    .then(translationResponse => {
+      let translationText = translationResponse.body.data.translations[0].translatedText;
+      thisWillChange.text = translationText;
+    })
+    .then(e => {
+      let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
+      superagent.post(url2)
+        .then(daysResponse => {
+          let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
+          console.log(dayOfWeek)
+          thisWillChange.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, translatedDays);
+          console.log(thisWillChange.days)
+          response.render('pages/user', { pageData: thisWillChange })
+        })
+    })
 }
 
 function submitUserHours(request, response) {
@@ -171,4 +170,32 @@ const modifiedLanguageList = (languageList) => {
     // I'm less proud of this 
     return ((a.name === 'English') ? -1 : 1)
   })
+}
+
+const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray) => {
+  let startArrayDay = parseInt(startingDayOfYear) - 3;
+  const decrementDay = (dayOfWeekNumber) => {
+    return (!dayOfWeekNumber) ? dayOfWeekNumber + 6 : dayOfWeekNumber -1
+  }
+ const increaseDay = (dayOfWeekNumber, increaseby) => {
+   dayOfWeekNumber = parseInt(dayOfWeekNumber)
+    for(let i = 0; i < increaseby; i++){
+    dayOfWeekNumber = (dayOfWeekNumber === 6) ? 0 : dayOfWeekNumber + 1
+    }
+    return dayOfWeekNumber
+ }
+  let startArrayDayOfWeek = decrementDay(decrementDay(decrementDay(startingDayOfWeek)))
+
+  let start = startArrayDay
+  let result = [];
+  for(let i = 0; i < 7; i++){
+    let weekindex = increaseDay(startArrayDayOfWeek, i)
+    console.log(weekindex)
+    result.push({
+      dayOfYear: start + i,
+      dayOfWeek: weekArray[weekindex],
+      badgeNumber: badgeNumber
+    })
+  }
+  return result
 }
