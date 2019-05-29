@@ -100,6 +100,7 @@ function renderUserPage(request, response) {
   const badgeNumber = request.body.badgeNumber
   const dayOfYear = request.body.currentDay
   const target = request.body.language;
+  pageData.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, pageData.days, )
   const thisWillChange = {};
   thisWillChange.language = request.body.language
   const text = pageData.text;
