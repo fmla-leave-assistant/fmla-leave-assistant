@@ -169,13 +169,20 @@ function calculateNewUserHours(badgeNum){
     .then(hastisHours => {
       console.log(baseHours, 'base hours');
       console.log(hastisHours, 'hastis hours');
-      console.log(Object.values(hastisHours.rows[0])); // hits specific hours entry
+      console.log(Object.values(hastisHours.rows[0])); // hits specific hours entry (when there are entries in the hastis table to hit)
       console.log(Object.values(base_hours.rows[0])); // does this hit the available fmla? No interent right now.
+
+      // pseudocode - 
+      // push all hours entries into an array (or something)
+      // .reduce through the array starting with sick_leave as the accumulator
+      // return the end result of that math
 
       Object.values(hastisHours.rows).forEach(i => {
         randomArray.push(i.hours)
         console.log(i, '------------------------------');
       })
+
+      // insert reduce method here 
 
       console.log(randomArray, '##############################');
 
@@ -184,11 +191,6 @@ function calculateNewUserHours(badgeNum){
       //   randomArray.push(hoursSum);
       // }
       // console.log(randomArray);
-
-      // pseudocode
-      // push all hours entries into an array (or something)
-      // .reduce through the array starting with sick_leave as the accumulator
-      // return the end result of that math
 
     })
   }) 
