@@ -91,14 +91,17 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
+  console.log(request.body)
   const pageData = {
   text: 'Press here to submit your FMLA hours',
-  days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday']}
+  days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'],
+  language: request.body.language}
   const dayOfWeek = request.body.dayOfWeek
   const badgeNumber = request.body.badgeNumber
   const dayOfYear = request.body.currentDay
   const target = request.body.language;
   const thisWillChange = {};
+  thisWillChange.language = request.body.language
   const text = pageData.text;
   const daysOfWeek = pageData.days;
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
