@@ -100,7 +100,7 @@ function renderUserPage(request, response) {
   const badgeNumber = request.body.badgeNumber;
   pageData.badgeNumber = badgeNumber;
   const dayOfYear = request.body.currentDay;
-  const weekOfDays = [dayOfYear-3,dayOfYear-2,dayOfYear-1,dayOfYear,dayOfYear+1,dayOfYear+2,dayOfYear+3]
+  const weekOfDays = [dayOfYear-3,dayOfYear-2,dayOfYear-1,parseInt(dayOfYear),parseInt(dayOfYear)+1,parseInt(dayOfYear)+2,parseInt(dayOfYear)+3]
   const target = request.body.language;
   const thisWillChange = {};
   thisWillChange.language = request.body.language;
@@ -127,32 +127,41 @@ function renderUserPage(request, response) {
           let SQL1= `SELECT date FROM hastis WHERE badge='${badgeNumber}';`;
           client.query(SQL1)
             .then(daysByBadge => {
+              daysByBadge.dayArray = daysByBadge.rows.map(dayObject => parseInt(dayObject.date))
               let insertDays = weekOfDays.filter(day => {
-                (daysByBadge.contains(day)? false : true)
+                // console.log(day, daysByBadge.dayArray)
+                return (daysByBadge.dayArray.includes(day)? false : true)
               })
+              // console.log(insertDays)
               return insertDays
             })
             .then((insertDays) => {
               let valuesArr=[];
               for(let i = 0; i < insertDays.length; i++){
-                valuesArr.push(`(${badgeNumber}, ${insertDays[i]}, '0')`);
+                valuesArr.push(`('${badgeNumber}', '${insertDays[i]}', '0')`);
               }
-              let SQL2 = `INSERT INTO hastis(badge, date, hours) VALUES(${valuesArr.join()})`
+              let SQL2 = `INSERT INTO hastis(badge, date, hours) VALUES ${valuesArr.join()}`
               client.query(SQL2)
               return true
             })
             .then( () =>{
-              let SQL3 = `SELECT hours, date FROM hastis WHERE badge ='${badgeNumber}' AND (date=$1 OR date=$2 OR date=$3 OR date=$4 OR date=$5 OR date=$6 OR date=$7);`;
+              let SQL3 = `SELECT hours, date FROM hastis WHERE badge ='${badgeNumber}' AND (date=$1 OR date=$2 OR date=$3 OR date=$4 OR date=$5 OR date=$6 OR date=$7) order by date ASC;`;
               let values = weekOfDays;
               client.query(SQL3, values)
                 .then( currentHours =>{
-                  console.log(currentHours,'This is current Hours')
+                  console.log(currentHours.rows,'This is current Hours')
+                  thisWillChange.days = thisWillChange.days.map( (day,idx) => {
+                    day.hours = currentHours.rows[idx].hours;
+                    return day;
+                  })
+                  console.log(thisWillChange)
                   response.render('pages/user', { pageData: thisWillChange })
                 })
             })
         })
     })
 }
+
 
 function submitUserHours(request, response) {
 //skeleton code for route function
@@ -167,7 +176,7 @@ function updateHastis(badgeNumber, dayOfYear, inputHours){
 }
 
 function calculateNewUserHours(){
-  let baseSQL =  `SELECT sick_leave WHERE badge=${badgeNum};`;
+
 }
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
@@ -208,3 +217,4 @@ const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray)
   }
   return result
 }
+
