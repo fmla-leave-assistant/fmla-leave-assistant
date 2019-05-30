@@ -41,7 +41,7 @@ app.set('view engine', 'ejs');
 //API routes
 app.get('/', homePage);
 app.post('/login', renderUserPage);
-app.post('/submit', renderUserResults);
+app.put('/submit', renderUserResults);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
@@ -114,7 +114,6 @@ function renderUserPage(request, response) {
   thisWillChange.language = request.body.language;
   const text = pageData.text;
   const daysOfWeek = pageData.days;
-  // getHastis(badgeNumber, daysOfWeek);
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
   if(request.body.language === 'en'){
     pageData.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, pageData.days)
@@ -137,10 +136,8 @@ function renderUserPage(request, response) {
             .then(daysByBadge => {
               daysByBadge.dayArray = daysByBadge.rows.map(dayObject => parseInt(dayObject.date))
               let insertDays = weekOfDays.filter(day => {
-                // console.log(day, daysByBadge.dayArray)
                 return (daysByBadge.dayArray.includes(day)? false : true)
               })
-              // console.log(insertDays)
               return insertDays
             })
             .then((insertDays) => {
@@ -157,12 +154,10 @@ function renderUserPage(request, response) {
               let values = weekOfDays;
               client.query(SQL3, values)
                 .then( currentHours =>{
-                  console.log(currentHours.rows,'This is current Hours')
                   thisWillChange.days = thisWillChange.days.map( (day,idx) => {
                     day.hours = currentHours.rows[idx].hours;
                     return day;
                   })
-                  console.log(thisWillChange)
                   response.render('pages/user', { pageData: thisWillChange })
                 })
             })
@@ -179,13 +174,11 @@ function renderUserResults(request, response) {
   let inputHours = request.body.hours;
   let dayOfYear = request.body.daysnumber;
   inputHours = inputHours.map(hour => parseInt(hour));
-  console.log(dayOfYear);
   dayOfYear = dayOfYear.map(day => parseInt(day));
   for(let i = 0; i < 7; i++){
     let SQL = ` UPDATE hastis SET hours ='${inputHours[i]}' WHERE badge ='${badgeNumber}' AND date ='${dayOfYear[i]}';`;
     client.query(SQL)
   }
-  //les gamble.
   let SQL2 = `SELECT hours FROM hastis WHERE badge=${badgeNumber};`;
   client.query(SQL2)
     .then(results => {

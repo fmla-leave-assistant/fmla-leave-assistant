@@ -43,7 +43,8 @@
       </div>
         <% }); %>
 
-      <button class="hourSubmitButton" type="submit"><%= pageData.text %></button>
+        <input type="hidden" name="_method" value="put">
+        <button class="hourSubmitButton" type="submit"><%= pageData.text %></button>
     </form>
   </div>
 
