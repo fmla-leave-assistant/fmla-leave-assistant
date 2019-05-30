@@ -14,4 +14,6 @@ Date.prototype.getDayNumber = () => Math.floor((((new Date()) - (new Date(new Da
 
 const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd)/365 * 525600 * 60000))
 
+
+// this will error on second page 
 $('#replacewithdayofyear')[0].defaultValue = new Date().getDayNumber()
