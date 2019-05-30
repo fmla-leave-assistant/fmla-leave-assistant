@@ -18,6 +18,14 @@ const PORT = process.env.PORT;
 //Utilize expressJS functionality to parse the body of the request
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(methodOverride((request,response) => {
+  if(request.body && typeof request.body === 'object' && '_method' in request.body){
+    //look in the url encoded POST body and delete correct method
+    let method = request.body._method;
+    delete request.body._method;
+    return method;
+  }
+}));
 
 //Connecting to the database
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -33,7 +41,7 @@ app.set('view engine', 'ejs');
 //API routes
 app.get('/', homePage);
 app.post('/login', renderUserPage);
-app.put('/submit', submitUserHours);
+app.post('/submit', renderUserResults);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
@@ -91,7 +99,7 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
-  console.log(request.body)
+  // console.log(request.body)
   const pageData = {
     text: 'Press here to submit your FMLA hours',
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'],
@@ -163,15 +171,24 @@ function renderUserPage(request, response) {
 }
 
 
-function submitUserHours(request, response) {
-//skeleton code for route function
-  response.render('HA gotcha')
+function renderUserResults(request, response) {
+  console.log('request.body', request.body);
+  let badgeNumber = request.body.badge;
+  let inputHours = request.body.hours;
+  let dayOfYear = request.body.daysnumber;
+  inputHours = inputHours.map(hour => parseInt(hour));
+  console.log(dayOfYear);
+  dayOfYear = dayOfYear.map(day => parseInt(day));
+  for(let i = 0; i < 7; i++){
+    let SQL = ` UPDATE hastis SET hours ='${inputHours[i]}' WHERE badge ='${badgeNumber}' AND date ='${dayOfYear[i]}';`;
+    client.query(SQL)
+  }
+  response.render('pages/userResults')
 }
 
 // tools to make the magic happen
 
 function updateHastis(badgeNumber, dayOfYear, inputHours){
-  let SQL = ` UPDATE hastis SET hours = ${inputHours} WHERE badge = ${badgeNumber} AND date = ${dayOfYear};`;
   return client.query(SQL);
 }
 
