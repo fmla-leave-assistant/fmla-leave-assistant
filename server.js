@@ -70,12 +70,12 @@ function getSpreadSheet(request, response) {
     .catch(error => handleError(error, response));
 }
 
+
 function fillBaseHoursDB(data) {
 
   let SQL = 'INSERT INTO base_hours(boss, name, badge, sick_leave, rdo, first, second) VALUES($1, $2, $3, $4, $5, $6, $7);';
   let values = [data.bossColumn, data.nameColumn, data.badgeColumn, data.sick_leaveColumn, data.rdoColumn, data.firstColumn, data.secondColumn];
   return client.query(SQL, values);
-
 }
 
 // This only needs to be run once but in the event we need to re-initialize the database we are keeping this for now
@@ -172,7 +172,9 @@ function renderUserPage(request, response) {
 
 
 function renderUserResults(request, response) {
-  console.log('request.body', request.body);
+  let responseObj = {};
+  let textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ'
+  const target = request.body.language;
   let badgeNumber = request.body.badge;
   let inputHours = request.body.hours;
   let dayOfYear = request.body.daysnumber;
@@ -183,7 +185,32 @@ function renderUserResults(request, response) {
     let SQL = ` UPDATE hastis SET hours ='${inputHours[i]}' WHERE badge ='${badgeNumber}' AND date ='${dayOfYear[i]}';`;
     client.query(SQL)
   }
-  response.render('pages/userResults')
+  //les gamble.
+  let SQL2 = `SELECT hours FROM hastis WHERE badge=${badgeNumber};`;
+  client.query(SQL2)
+    .then(results => {
+      let negativeHours = 0;
+      results.rows.forEach(obj => negativeHours += parseInt(obj.hours))
+      return negativeHours
+    })
+    .then(negativeHours => {
+      let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
+      client.query(SQL3)
+        .then(hours => {
+          responseObj.mathResult = hours.rows[0].sick_leave-negativeHours;
+          return true
+        })
+      return true
+    })
+    .then(() => {
+      let url = `https://translation.googleapis.com/language/translate/v2?q=${textToTranslate}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
+      superagent.post(url)
+        .then(banana => {
+          let translatedText = banana.body.data.translations[0].translatedText;
+          responseObj.translatedText = translatedText;
+          response.render('pages/userResults', {userResults:responseObj})
+        })
+    })
 }
 
 // tools to make the magic happen
