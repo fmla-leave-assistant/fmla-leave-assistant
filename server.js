@@ -18,6 +18,14 @@ const PORT = process.env.PORT;
 //Utilize expressJS functionality to parse the body of the request
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(methodOverride((request,response) => {
+  if(request.body && typeof request.body === 'object' && '_method' in request.body){
+    //look in the url encoded POST body and delete correct method
+    let method = request.body._method;
+    delete request.body._method;
+    return method;
+  }
+}));
 
 //Connecting to the database
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -33,7 +41,7 @@ app.set('view engine', 'ejs');
 //API routes
 app.get('/', homePage);
 app.post('/login', renderUserPage);
-app.put('/submit', submitUserHours);
+app.post('/submit', renderUserResults);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
@@ -62,12 +70,12 @@ function getSpreadSheet(request, response) {
     .catch(error => handleError(error, response));
 }
 
+
 function fillBaseHoursDB(data) {
 
   let SQL = 'INSERT INTO base_hours(boss, name, badge, sick_leave, rdo, first, second) VALUES($1, $2, $3, $4, $5, $6, $7);';
   let values = [data.bossColumn, data.nameColumn, data.badgeColumn, data.sick_leaveColumn, data.rdoColumn, data.firstColumn, data.secondColumn];
   return client.query(SQL, values);
-
 }
 
 // This only needs to be run once but in the event we need to re-initialize the database we are keeping this for now
@@ -91,7 +99,7 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
-  console.log(request.body)
+  // console.log(request.body)
   const pageData = {
     text: 'Press here to submit your FMLA hours',
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'],
@@ -163,15 +171,51 @@ function renderUserPage(request, response) {
 }
 
 
-function submitUserHours(request, response) {
-//skeleton code for route function
-  response.render('HA gotcha')
+function renderUserResults(request, response) {
+  let responseObj = {};
+  let textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ'
+  const target = request.body.language;
+  let badgeNumber = request.body.badge;
+  let inputHours = request.body.hours;
+  let dayOfYear = request.body.daysnumber;
+  inputHours = inputHours.map(hour => parseInt(hour));
+  console.log(dayOfYear);
+  dayOfYear = dayOfYear.map(day => parseInt(day));
+  for(let i = 0; i < 7; i++){
+    let SQL = ` UPDATE hastis SET hours ='${inputHours[i]}' WHERE badge ='${badgeNumber}' AND date ='${dayOfYear[i]}';`;
+    client.query(SQL)
+  }
+  //les gamble.
+  let SQL2 = `SELECT hours FROM hastis WHERE badge=${badgeNumber};`;
+  client.query(SQL2)
+    .then(results => {
+      let negativeHours = 0;
+      results.rows.forEach(obj => negativeHours += parseInt(obj.hours))
+      return negativeHours
+    })
+    .then(negativeHours => {
+      let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
+      client.query(SQL3)
+        .then(hours => {
+          responseObj.mathResult = hours.rows[0].sick_leave-negativeHours;
+          return true
+        })
+      return true
+    })
+    .then(() => {
+      let url = `https://translation.googleapis.com/language/translate/v2?q=${textToTranslate}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
+      superagent.post(url)
+        .then(banana => {
+          let translatedText = banana.body.data.translations[0].translatedText;
+          responseObj.translatedText = translatedText;
+          response.render('pages/userResults', {userResults:responseObj})
+        })
+    })
 }
 
 // tools to make the magic happen
 
 function updateHastis(badgeNumber, dayOfYear, inputHours){
-  let SQL = ` UPDATE hastis SET hours = ${inputHours} WHERE badge = ${badgeNumber} AND date = ${dayOfYear};`;
   return client.query(SQL);
 }
 
