@@ -17,3 +17,5 @@ const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).
 
 // this will error on second page 
 $('#replacewithdayofyear')[0].defaultValue = new Date().getDayNumber()
+
+

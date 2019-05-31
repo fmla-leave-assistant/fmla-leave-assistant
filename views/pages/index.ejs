@@ -2,44 +2,72 @@
 <html lang="en">
 
 <head>
-    <%- include('../layout/head') %>
+  <link rel="stylesheet" href="/styles//reset.css">
+  <link rel="stylesheet" type="text/css" href="/styles//base.css">
+  <link rel="stylesheet" type="text/css" href="/styles//select2/select2.min.css">
+
+  <%- include('../layout/head') %>
+
 </head>
 
 <body>
-    <nav>
-        <%- include('../layout/navbar') %>
-    </nav>
-    <div id="loginCreateFormDiv">
-    <button onclick="flipLogin()">Switch between Login/create user</button>     
-    <form action="/createUser" method="post" id="createuser">
-        <p><input type="text" name="loginform" placeholder="Badge number" required></p>
-        <p><input type="password" name="loginform" placeholder="Password" required></p>
-        <p><input type="password" name="loginform" placeholder="Re-enter password" required></p>
-        <p><select name="loginform">
-            <% languagesArray.forEach(language => { %>
-            <option name="loginform" value="<%- language.language %>">
-                <%= language.name %>
-                <% }); %>
-        </select></p>
-        <p><button type="submit">Create New User</button></p>
-    </form>
+  <% const dayFinder = () => Math.floor((((new Date()) - (new Date(new Date().getFullYear(), 0, 0))) / 525600 / 60000) * 365) %>
 
+  <input type="hidden" name="currentDay" value="<%- dayFinder() %>" id="replacewithdayofyear">
+  <nav>
+    <%- include('../layout/navbar') %>
+  </nav>
 
-    <form action="/login" method="post" id="logform">
-        <input type="hidden" name="currentDay" value="replacewithdayofyear" id="replacewithdayofyear">
+  <div class="container-user-form">
+    <div class="wrap-user-form">
+      <form action="/login" method="post" id="logform" class="input-form validate-form">
+        <input type="hidden" name="currentDay" value="<replacewithdayofyear>" id="replacewithdayofyear">
         <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">
-        <p><input type="text" name="badgeNumber" placeholder="Badge Number" required></p>
-        <p><input type="password" name="password" placeholder="password" required></p>
-        <p><select name="language">
-        <% languagesArray.forEach(language => { %>
-        <option name="language" value="<%- language.language %>">
-        <%= language.name %>
-        <% }); %>
-        </select></p>
-        <p><button type="submit">Log in to existing user</button></p>
-    </form>
-</div>
-    
+        <span class="input-form-title">
+          FMLA Leave Planner
+        </span>
+        <div class="wrap-input validate-input" data-validate="Badge # is required">
+          <span class="label-input">Badge #</span>
+          <input class="input" type="text" name="badgeNumber" placeholder="Enter your Badge #">
+          <span class="focus-input"></span>
+        </div>
+        <div class="wrap-input validate-input" data-validate="">
+          <span class="label-input">Password</span>
+          <input class="input" type="password" name="password" placeholder="Enter your password">
+          <span class="focus-input"></span>
+        </div>
+        <div class="wrap-input input-select">
+          <span class="label-input">Preferred Language</span>
+          <div>
+            <p><select class="selection-2" name="language">
+                <% languagesArray.forEach(language => { %>
+                <option name="language" value="<%- language.language %>">
+                  <%= language.name %>
+                  <% }); %>
+              </select></p>
+          </div>
+          <span class="focus-input"></span>
+        </div>
+        <div class="container-user-form-form-btn">
+          <div class="wrap-user-form-form-btn">
+            <div class="input-form-bgbtn"></div>
+            <button type="submit" class="input-form-btn">
+              <span id="important">
+                Submit
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="dropDownSelect1"></div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="/styles/select2/select2.min.js"></script>
+  <script src="/scripts/select.js">	</script>
+
 </body>
 <footer>
     <%- include('../layout/footer') %>
