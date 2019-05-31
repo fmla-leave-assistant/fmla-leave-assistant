@@ -128,6 +128,7 @@ function renderUserPage(request, response) {
         })
         return insertDays
       })
+      .catch(error => handleError(error, response))
       .then((insertDays) => {
         let valuesArr = [];
         for (let i = 0; i < insertDays.length; i++) {
@@ -137,6 +138,7 @@ function renderUserPage(request, response) {
         client.query(SQL2)
         return true
       })
+      .catch(error => handleError(error, response))
       .then(() => {
         let SQL3 = `SELECT hours, date FROM hastis WHERE badge ='${badgeNumber}' AND (date=$1 OR date=$2 OR date=$3 OR date=$4 OR date=$5 OR date=$6 OR date=$7) order by date ASC;`;
         let values = weekOfDays;
@@ -148,6 +150,7 @@ function renderUserPage(request, response) {
             })
             response.render('pages/user', { pageData: thisWillChange })
           })
+          .catch(error => handleError(error, response));
       })
   }
   else {
@@ -175,6 +178,7 @@ function renderUserPage(request, response) {
                 return insertDays
               })
               .catch(error => handleError(error, response))
+              .catch(error => handleError(error, response))
               .then((insertDays) => {
                 let valuesArr = [];
                 for (let i = 0; i < insertDays.length; i++) {
@@ -184,6 +188,7 @@ function renderUserPage(request, response) {
                 client.query(SQL2)
                 return true
               })
+              .catch(error => handleError(error, response))
               .then(() => {
                 let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
                 client.query(SQL3)
@@ -216,6 +221,7 @@ function renderUserPage(request, response) {
           .catch(error => handleError(error, response));
         return true
       })
+      .catch(error => handleError(error, response));
   }
 }
 
