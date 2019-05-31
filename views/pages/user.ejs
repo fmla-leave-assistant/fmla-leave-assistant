@@ -2,32 +2,39 @@
 <html lang="en">
 
 <head>
-  <%- include('../layout/head') %>
+    <link rel="stylesheet" href="/styles//reset.css">
+    <link rel="stylesheet" type="text/css" href="/styles//base.css">
+    <link rel="stylesheet" type="text/css" href="/styles//modules.css">
+    <script src="https://kit.fontawesome.com/920a899264.js"></script>
+      <%- include('../layout/head') %>
 </head>
 
 <body>
   <nav>
     <%- include('../layout/navbar') %>
   </nav>
+  <div class="container-user-form">
+      <div class="wrap-user-form">
   <h2> You Have: <%- pageData.totalUserHours%> Hours</h2>
   <% const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd)/365 * 525600 * 60000)).toDateString().split(' ').slice(1,4).join(' ') %>
 
   <div class="jumpButtons">
+      <form action="/login" method="post" id="logform">
+        <input type="hidden" name="currentDay" value="<%= parseInt(pageData.days[3].dayOfYear)-3 %>">
+        <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">
+        <p><input type="hidden" name="badgeNumber" value="<%= pageData.badgeNumber %>" required></p>
+        <p><input type="hidden" name="language" value="<%= pageData.language %>"></p>
+        <p><button type="submit"><i class="fas fa-arrow-left"></i></button></p>
+      </form>
     <form action="/login" method="post" id="logform">
       <input type="hidden" name="currentDay" value="<%= parseInt(pageData.days[3].dayOfYear)+3 %>">
       <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">
       <p><input type="hidden" name="badgeNumber" value="<%= pageData.badgeNumber %>" required></p>
       <p><input type="hidden" name="language" value="<%= pageData.language %>"></p>
-      <p><button type="submit">Jump forward 3 days</button></p>
-    </form>
-    <form action="/login" method="post" id="logform">
-      <input type="hidden" name="currentDay" value="<%= parseInt(pageData.days[3].dayOfYear)-3 %>">
-      <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">
-      <p><input type="hidden" name="badgeNumber" value="<%= pageData.badgeNumber %>" required></p>
-      <p><input type="hidden" name="language" value="<%= pageData.language %>"></p>
-      <p><button type="submit">Jump backward 3 days</button></p>
+      <p><button type="submit"><i class="fas fa-arrow-right"></i></button></p>
     </form>
   </div>
+  
   <div id="hoursForm">
     <form action="/submit" method="post" id="hoursForm" _method="put">
       <input type="hidden" name="language" value="<%= pageData.language %>">
@@ -43,10 +50,24 @@
       </div>
         <% }); %>
 
-        <input type="hidden" name="_method" value="put">
-        <button class="hourSubmitButton" type="submit"><%= pageData.text %></button>
+        <div class="container-user-form-form-btn">
+            <div class="wrap-user-form-form-btn">
+              <div class="input-form-bgbtn"></div>
+              <input type="hidden" name="_method" value="put">
+              <button type="submit" class="input-form-btn hourSubmitButton">
+                <span id="important">
+                    <%= pageData.text %>
+                </span>
+                </button>
+            </div>
+          </div>
+
+        <!-- <input type="hidden" name="_method" value="put">
+        <button class="hourSubmitButton" type="submit"><%= pageData.text %></button> -->
     </form>
   </div>
+      </div>
+      </div>
 
   <!-- <footer>
     <%- include('../layout/footer') %>
