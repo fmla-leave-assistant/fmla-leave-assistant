@@ -9,7 +9,7 @@
   <nav>
     <%- include('../layout/navbar') %>
   </nav>
-
+  <h2> You Have: <%- pageData.totalUserHours%> Hours</h2>
   <% const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd)/365 * 525600 * 60000)).toDateString().split(' ').slice(1,4).join(' ') %>
 
   <div class="jumpButtons">
@@ -37,7 +37,7 @@
         <div class="dayclass width100">
           <div class="width100"><%= day.dayOfWeek %></div>
           <div class="date"><%= getDateFromJd(day.dayOfYear) %></div>
-          <input type="text" name="hours" value="<%- day.hours %>" class="hourinput">
+          <input type="number" name="hours" value="<%- day.hours %>" min ="0" max="8" class="hourinput">
           <input type="hidden" name="daysnumber" value="<%- day.dayOfYear %>">
         </div>
       </div>
