@@ -150,73 +150,74 @@ function renderUserPage(request, response) {
           })
       })
   }
-  superagent.post(url)
-    .then(translationResponse => {
-      let translationText = translationResponse.body.data.translations[0].translatedText;
-      thisWillChange.text = translationText;
-      thisWillChange.badgeNumber = badgeNumber;
-      return true
-    })
-    .catch(error => handleError(error, response))
-    .then(e => {
-      let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
-      superagent.post(url2)
-        .then(daysResponse => {
-          let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
-          thisWillChange.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, translatedDays);
-          let SQL1 = `SELECT date FROM hastis WHERE badge='${badgeNumber}';`;
-          client.query(SQL1)
-            .then(daysByBadge => {
-              daysByBadge.dayArray = daysByBadge.rows.map(dayObject => parseInt(dayObject.date))
-              let insertDays = weekOfDays.filter(day => {
-                return (daysByBadge.dayArray.includes(day) ? false : true)
-              })
-              return insertDays
-            })
-            .catch(error => handleError(error, response))
-            .then((insertDays) => {
-              let valuesArr = [];
-              for (let i = 0; i < insertDays.length; i++) {
-                valuesArr.push(`('${badgeNumber}', '${insertDays[i]}', '0')`);
-              }
-              let SQL2 = `INSERT INTO hastis(badge, date, hours) VALUES ${valuesArr.join()}`
-              client.query(SQL2)
-              return true
-            })
-            .then(() => {
-            .catch(error => handleError(error, response))
-          let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
-          client.query(SQL3)
-            .then(hours => {
-              let parsedHours = Object.values(hours.rows[0])
-              thisWillChange.totalUserHours = parsedHours[0];
-              return true
-            })
-            .catch(error => handleError(error, response))
-            .then( () =>{
-              let SQL3 = `SELECT hours, date FROM hastis WHERE badge ='${badgeNumber}' AND (date=$1 OR date=$2 OR date=$3 OR date=$4 OR date=$5 OR date=$6 OR date=$7) order by date ASC;`;
-              let values = weekOfDays;
-              client.query(SQL3, values)
-                .then(currentHours => {
-                  thisWillChange.days = thisWillChange.days.map((day, idx) => {
-                    day.hours = currentHours.rows[idx].hours;
-                    return day;
-                  })
-                  response.render('pages/user', { pageData: thisWillChange })
+  else {
+    superagent.post(url)
+      .then(translationResponse => {
+        let translationText = translationResponse.body.data.translations[0].translatedText;
+        thisWillChange.text = translationText;
+        thisWillChange.badgeNumber = badgeNumber;
+        return true
+      })
+      .catch(error => handleError(error, response))
+      .then(e => {
+        let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
+        superagent.post(url2)
+          .then(daysResponse => {
+            let translatedDays = daysResponse.body.data.translations[0].translatedText.split(' ');
+            thisWillChange.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, translatedDays);
+            let SQL1 = `SELECT date FROM hastis WHERE badge='${badgeNumber}';`;
+            client.query(SQL1)
+              .then(daysByBadge => {
+                daysByBadge.dayArray = daysByBadge.rows.map(dayObject => parseInt(dayObject.date))
+                let insertDays = weekOfDays.filter(day => {
+                  return (daysByBadge.dayArray.includes(day) ? false : true)
                 })
-                .catch(error => handleError(error, response))
-              return true
-            })
-            .catch(error => handleError(error, response))
-          return true
-        })
-        .catch(error => handleError(error, response))
-      return true
-    })
-    .catch(error => handleError(error, response));
-  return true
+                return insertDays
+              })
+              .catch(error => handleError(error, response))
+              .then((insertDays) => {
+                let valuesArr = [];
+                for (let i = 0; i < insertDays.length; i++) {
+                  valuesArr.push(`('${badgeNumber}', '${insertDays[i]}', '0')`);
+                }
+                let SQL2 = `INSERT INTO hastis(badge, date, hours) VALUES ${valuesArr.join()}`
+                client.query(SQL2)
+                return true
+              })
+              .then(() => {
+                let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
+                client.query(SQL3)
+                  .then(hours => {
+                    let parsedHours = Object.values(hours.rows[0])
+                    thisWillChange.totalUserHours = parsedHours[0];
+                    return true
+                  })
+                  .catch(error => handleError(error, response))
+                  .then(() => {
+                    let SQL3 = `SELECT hours, date FROM hastis WHERE badge ='${badgeNumber}' AND (date=$1 OR date=$2 OR date=$3 OR date=$4 OR date=$5 OR date=$6 OR date=$7) order by date ASC;`;
+                    let values = weekOfDays;
+                    client.query(SQL3, values)
+                      .then(currentHours => {
+                        thisWillChange.days = thisWillChange.days.map((day, idx) => {
+                          day.hours = currentHours.rows[idx].hours;
+                          return day;
+                        })
+                        response.render('pages/user', { pageData: thisWillChange })
+                      })
+                      .catch(error => handleError(error, response))
+                    return true
+                  })
+                  .catch(error => handleError(error, response))
+                return true
+              })
+              .catch(error => handleError(error, response))
+            return true
+          })
+          .catch(error => handleError(error, response));
+        return true
+      })
+  }
 }
-
 
 function renderUserResults(request, response) {
   let responseObj = {};
@@ -252,15 +253,17 @@ function renderUserResults(request, response) {
             })
             return true
           }
-          let url = `https://translation.googleapis.com/language/translate/v2?q=${textToTranslate}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
-          superagent.post(url)
-            .then(banana => {
-              let translatedText = banana.body.data.translations[0].translatedText;
-              responseObj.translatedText = translatedText;
-              response.render('pages/userResults', { userResults: responseObj })
-            .catch(error => handleError(error, response))
-              return true
-            })
+          else {
+            let url = `https://translation.googleapis.com/language/translate/v2?q=${textToTranslate}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
+            superagent.post(url)
+              .then(banana => {
+                let translatedText = banana.body.data.translations[0].translatedText;
+                responseObj.translatedText = translatedText;
+                response.render('pages/userResults', { userResults: responseObj })
+                  .catch(error => handleError(error, response))
+                return true
+              })
+          }
         })
         .catch(error => handleError(error, response))
     })
