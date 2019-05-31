@@ -194,7 +194,7 @@ function renderUserPage(request, response) {
                 let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
                 client.query(SQL3)
                   .then(hours => {
-                    let parsedHours = Object.values(hours.rows[0])
+                    let parsedHours = hours.rows[0].sick_leave
                     thisWillChange.totalUserHours = parsedHours[0];
                     return true
                   })
