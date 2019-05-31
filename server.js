@@ -64,8 +64,8 @@ function getSpreadSheet(request, response) {
       parsedRows.shift();
       return parsedRows
     })
+    .catch(error => handleError(error, response))
     .then(refinedData => refinedData.forEach(element => fillBaseHoursDB(element)
-      .catch(error => handleError(error, response))
     ))
     .catch(error => handleError(error, response));
 }
@@ -95,7 +95,6 @@ function Row(info) {
 function homePage(request, response) {
   const languagesClean = modifiedLanguageList(fullLanguageList)
   response.render('pages/index', { languagesArray: languagesClean })
-  // .catch(error => handleError(error, response));
 }
 
 function renderUserPage(request, response) {
@@ -123,7 +122,9 @@ function renderUserPage(request, response) {
       let translationText = translationResponse.body.data.translations[0].translatedText;
       thisWillChange.text = translationText;
       thisWillChange.badgeNumber = badgeNumber;
+      return true
     })
+    .catch(error => handleError(error, response))
     .then(e => {
       let url2 = `https://translation.googleapis.com/language/translate/v2?q=${daysOfWeek}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`
       superagent.post(url2)
@@ -139,6 +140,7 @@ function renderUserPage(request, response) {
               })
               return insertDays
             })
+            .catch(error => handleError(error, response))
             .then((insertDays) => {
               let valuesArr=[];
               for(let i = 0; i < insertDays.length; i++){
@@ -148,13 +150,15 @@ function renderUserPage(request, response) {
               client.query(SQL2)
               return true
             })
+            .catch(error => handleError(error, response))
           let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
           client.query(SQL3)
             .then(hours => {
               let parsedHours = Object.values(hours.rows[0])
-              console.log('HUR IT ISSSSSS= ',parsedHours[0]);
               thisWillChange.totalUserHours = parsedHours[0];
+              return true
             })
+            .catch(error => handleError(error, response))
             .then( () =>{
               let SQL3 = `SELECT hours, date FROM hastis WHERE badge ='${badgeNumber}' AND (date=$1 OR date=$2 OR date=$3 OR date=$4 OR date=$5 OR date=$6 OR date=$7) order by date ASC;`;
               let values = weekOfDays;
@@ -166,9 +170,17 @@ function renderUserPage(request, response) {
                   })
                   response.render('pages/user', { pageData: thisWillChange })
                 })
+                .catch(error => handleError(error, response))
+              return true
             })
+            .catch(error => handleError(error, response))
+          return true
         })
+        .catch(error => handleError(error, response))
+      return true
     })
+    .catch(error => handleError(error, response));
+  return true
 }
 
 
@@ -192,6 +204,8 @@ function renderUserResults(request, response) {
       results.rows.forEach(obj => negativeHours += parseInt(obj.hours))
       return negativeHours
     })
+    .catch(error => handleError(error, response))
+
     .then(negativeHours => {
       let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
       client.query(SQL3)
@@ -199,8 +213,10 @@ function renderUserResults(request, response) {
           responseObj.mathResult = hours.rows[0].sick_leave-negativeHours;
           return true
         })
+        .catch(error => handleError(error, response))
       return true
     })
+    .catch(error => handleError(error, response))
     .then(() => {
       let url = `https://translation.googleapis.com/language/translate/v2?q=${textToTranslate}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
       superagent.post(url)
@@ -209,7 +225,9 @@ function renderUserResults(request, response) {
           responseObj.translatedText = translatedText;
           response.render('pages/userResults', {userResults:responseObj})
         })
+        .catch(error => handleError(error, response))
     })
+    .catch(error => handleError(error, response))
 }
 
 // tools to make the magic happen
