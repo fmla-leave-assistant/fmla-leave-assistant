@@ -133,14 +133,17 @@ iframe {
 }
 
 .fa-arrow-left {
-  margin-left: 100px;
   font-size: 25px;
-  padding-right: 150px;
+  margin-right: 100px;
 }
 
 .fa-arrow-right {
- 
   font-size: 25px;
+  margin-left: 100px;
+}
+
+h2 {
+ padding: 50px;
 }
 
 .oneDayClass {
