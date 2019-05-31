@@ -199,7 +199,6 @@ function renderUserPage(request, response) {
 
 
 function renderUserResults(request, response) {
-  console.log(request.body)
   let responseObj = {};
   const textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ'
   const target = request.body.language;
@@ -225,10 +224,8 @@ function renderUserResults(request, response) {
         })
 
         .then((apple) => {
-          console.log(apple)
           if (target === 'en') {
             responseObj.translatedText = textToTranslate;
-            console.log(responseObj)
             response.render('pages/userResults', {
               userResults: responseObj
             })
