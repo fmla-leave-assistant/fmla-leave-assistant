@@ -99,7 +99,6 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
-  // console.log(request.body)
   const pageData = {
     text: 'Press here to submit your FMLA hours',
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'],
@@ -149,6 +148,13 @@ function renderUserPage(request, response) {
               client.query(SQL2)
               return true
             })
+          let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
+          client.query(SQL3)
+            .then(hours => {
+              let parsedHours = Object.values(hours.rows[0])
+              console.log('HUR IT ISSSSSS= ',parsedHours[0]);
+              thisWillChange.totalUserHours = parsedHours[0];
+            })
             .then( () =>{
               let SQL3 = `SELECT hours, date FROM hastis WHERE badge ='${badgeNumber}' AND (date=$1 OR date=$2 OR date=$3 OR date=$4 OR date=$5 OR date=$6 OR date=$7) order by date ASC;`;
               let values = weekOfDays;
@@ -168,7 +174,7 @@ function renderUserPage(request, response) {
 
 function renderUserResults(request, response) {
   let responseObj = {};
-  let textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ'
+  let textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ';
   const target = request.body.language;
   let badgeNumber = request.body.badge;
   let inputHours = request.body.hours;
@@ -210,10 +216,6 @@ function renderUserResults(request, response) {
 
 function updateHastis(badgeNumber, dayOfYear, inputHours){
   return client.query(SQL);
-}
-
-function calculateNewUserHours(){
-
 }
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
