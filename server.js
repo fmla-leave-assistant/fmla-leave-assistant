@@ -54,7 +54,6 @@ function handleError(err, response) {
 
 function getSpreadSheet(request, response) {
   let url = `https://sheets.googleapis.com/v4/spreadsheets/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/values/Sheet1?valueRenderOption=FORMATTED_VALUE&key=${process.env.GOOGLE_SHEETS_API}`
-
   superagent.get(url)
     .then(results => {
       let parsedRows = results.body.values.map(row => {
@@ -72,7 +71,6 @@ function getSpreadSheet(request, response) {
 
 
 function fillBaseHoursDB(data) {
-
   let SQL = 'INSERT INTO base_hours(boss, name, badge, sick_leave, rdo, first, second) VALUES($1, $2, $3, $4, $5, $6, $7);';
   let values = [data.bossColumn, data.nameColumn, data.badgeColumn, data.sick_leaveColumn, data.rdoColumn, data.firstColumn, data.secondColumn];
   return client.query(SQL, values);
@@ -108,11 +106,19 @@ function renderUserPage(request, response) {
   const badgeNumber = request.body.badgeNumber;
   thisWillChange.badgeNumber = badgeNumber;
   const dayOfYear = request.body.currentDay;
-  const weekOfDays = [dayOfYear - 3, dayOfYear - 2, dayOfYear - 1, parseInt(dayOfYear), parseInt(dayOfYear) + 1, parseInt(dayOfYear) + 2, parseInt(dayOfYear) + 3]
+  const weekOfDays = [
+    parseInt(dayOfYear) - 3,
+    parseInt(dayOfYear) - 2,
+    parseInt(dayOfYear) - 1,
+    parseInt(dayOfYear),
+    parseInt(dayOfYear) + 1,
+    parseInt(dayOfYear) + 2,
+    parseInt(dayOfYear) + 3
+  ]
   const target = request.body.language;
   const daysOfWeek = days;
   let url = `https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
-  if (request.body.language === 'en') {
+  if (thisWillChange.language === 'en') {
     thisWillChange.days = weekMaker(badgeNumber, dayOfYear, dayOfWeek, days)
     let SQL1 = `SELECT date FROM hastis WHERE badge='${badgeNumber}';`;
     client.query(SQL1)
@@ -193,14 +199,13 @@ function renderUserPage(request, response) {
 
 
 function renderUserResults(request, response) {
+  console.log(request.body)
   let responseObj = {};
-  let textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ'
+  const textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ'
   const target = request.body.language;
-  let badgeNumber = request.body.badge;
-  let inputHours = request.body.hours;
-  let dayOfYear = request.body.daysnumber;
-  inputHours = inputHours.map(hour => parseInt(hour));
-  dayOfYear = dayOfYear.map(day => parseInt(day));
+  const badgeNumber = request.body.badge;
+  const inputHours = request.body.hours.map(hour => parseInt(hour));
+  const dayOfYear = request.body.daysnumber.map(day => parseInt(day));
   for (let i = 0; i < 7; i++) {
     let SQL = ` UPDATE hastis SET hours ='${inputHours[i]}' WHERE badge ='${badgeNumber}' AND date ='${dayOfYear[i]}';`;
     client.query(SQL)
@@ -217,30 +222,31 @@ function renderUserResults(request, response) {
       client.query(SQL3)
         .then(hours => {
           responseObj.mathResult = hours.rows[0].sick_leave - negativeHours;
-          return true
         })
-      return true
-    })
-    .then(() => {
-      let url = `https://translation.googleapis.com/language/translate/v2?q=${textToTranslate}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
-      superagent.post(url)
-        .then(banana => {
-          let translatedText = banana.body.data.translations[0].translatedText;
-          responseObj.translatedText = translatedText;
-          response.render('pages/userResults', { userResults: responseObj })
+
+        .then((apple) => {
+          console.log(apple)
+          if (target === 'en') {
+            responseObj.translatedText = textToTranslate;
+            console.log(responseObj)
+            response.render('pages/userResults', {
+              userResults: responseObj
+            })
+            return true
+          }
+          let url = `https://translation.googleapis.com/language/translate/v2?q=${textToTranslate}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}`;
+          superagent.post(url)
+            .then(banana => {
+              let translatedText = banana.body.data.translations[0].translatedText;
+              responseObj.translatedText = translatedText;
+              response.render('pages/userResults', { userResults: responseObj })
+              return true
+            })
         })
     })
 }
 
 // tools to make the magic happen
-
-function updateHastis(badgeNumber, dayOfYear, inputHours) {
-  return client.query(SQL);
-}
-
-function calculateNewUserHours() {
-
-}
 
 // I'm moderately proud of this since it does not modify the existing array despite the sort
 const modifiedLanguageList = (languageList) => {
