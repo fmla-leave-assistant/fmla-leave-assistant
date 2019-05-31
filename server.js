@@ -96,6 +96,7 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
+  console.log(request.body)
   const thisWillChange = {}
   const text = 'Press here to submit your FMLA hours';
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

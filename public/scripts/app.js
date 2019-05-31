@@ -11,6 +11,7 @@ function flipLogin() {
 
 Date.prototype.getDayNumber = () => Math.floor((((new Date()) - (new Date(new Date().getFullYear(), 0, 0))) / 525600 / 60000) * 365)
 
+const dayFinder = () => Math.floor((((new Date()) - (new Date(new Date().getFullYear(), 0, 0))) / 525600 / 60000) * 365)
 
 const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd)/365 * 525600 * 60000))
 
