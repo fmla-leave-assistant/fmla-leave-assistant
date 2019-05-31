@@ -70,7 +70,7 @@
   <div class="container-user-form">
     <div class="wrap-user-form">
       <form action="/login" method="post" id="logform" class="input-form validate-form">
-        <input type="hidden" name="currentDay" value="replacewithdayofyear" id="replacewithdayofyear">
+        <input type="hidden" name="currentDay" value="<%- dayFinder() %>" id="replacewithdayofyear">
         <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">
         <span class="input-form-title">
           FMLA Leave Planner
