@@ -25,5 +25,3 @@ CREATE TABLE languages(
     enName VARCHAR(15),
     name VARCHAR(15)
 );
-
-

@@ -79,8 +79,20 @@ function fillBaseHoursDB(data) {
 }
 
 // This only needs to be run once but in the event we need to re-initialize the database we are keeping this for now
-// getSpreadSheet();
+const populateBaseHoursifEmpty = () => {
+  let SQL = `SELECT * FROM base_hours;`
+  client.query(SQL)
+    .then(result => {
+      if (!result.rowCount) { getSpreadSheet() }
+      return true
+    })
+    let SQL2 = `DELETE FROM base_hours WHERE badge IN (SELECT badge FROM base_hours GROUP BY badge HAVING (COUNT(badge) > 1));`
+    client.query(SQL2)
+    .then(result => console.log('killed duplicated'))
+}
 
+
+populateBaseHoursifEmpty()
 function Row(info) {
   this.bossColumn = info[0];
   this.nameColumn = info[1];
