@@ -17,114 +17,107 @@
 
   <div class="container-user-form">
       <div class="wrap-user-form">
+          <div id="img-container">
+              <a href="/">
+                <img class="icon" id="logo" src="/styles/images/JALA-logo.png">
+              </a>
+            </div>
+  <h1>Operator Accruals Converter</h1>
 
+  <section>
+    <div id="choice1">
+      <h2>Choice #1</h2>
+      <select>
+        <option default=""></option>
+          <option value="sl1">Sick Leave</option>
+          <option value="vl1">Vacation Leave</option>
+          <option value="ac1">AC Bank</option>
+          <option value="ppl1">Paid Parental Leave</option>
+        </select>
+    </div>
+
+    <div id="choice2">
+      <h2>Choice #2</h2>
+      <select>
+          <option default=""></option>
+            <option value="sl2">Sick Leave</option>
+            <option value="vl2">Vacation Leave</option>
+            <option value="ac2">AC Bank</option>
+            <option value="ppl2">Paid Parental Leave</option>
+          </select>
         
-      <h1>Operator Accruals Calculator</h1>
-  
-      <FORM id="gross-hours-form" NAME="hoursform" ACTION="" METHOD="GET">Enter Operator's Gross Hours: <br>
-      <br>
-      <INPUT id="hours" TYPE="text" NAME="inputbox" VALUE="">Hours<P>
-      </FORM>
-      <br>
-      
-      <div class="selectors">
-      <form class="choice">Choice #1<br>
-      <select>
-        <option default=""></option>
-        <option value="sl">Sick leave</option>
-        <option value="vl">Vacation leave</option>
-        <option value="ac">Ac bank</option>
-        <option value="lwop">Leave without pay</option>
-        <option value="ppl">Paid parental leave</option>
-      </select>
-      </form>
-      
-      <form class="choice">Choice #2<br>
-      <select>
-        <option default=""></option>
-        <option value="sl">Sick leave</option>
-        <option value="vl">Vacation leave</option>
-        <option value="ac">Ac bank</option>
-        <option value="lwop">Leave without pay</option>
-        <option value="ppl">Paid parental leave</option>
-      </select>
-      </form>
-      
-      <form class="choice">Choice #3<br>
-      <select>
-        <option default=""></option>
-        <option value="sl">Sick leave</option>
-        <option value="vl">Vacation leave</option>
-        <option value="ac">Ac bank</option>
-        <option value="lwop">Leave without pay</option>
-        <option value="ppl">Paid parental leave</option>
-      </select>
-      </form>
-      
-      <form class="choice">Choice #4<br>
-      <select>
-        <option default=""></option>
-        <option value="sl">Sick leave</option>
-        <option value="vl">Vacation leave</option>
-        <option value="ac">Ac bank</option>
-        <option value="lwop">Leave without pay</option>
-        <option value="ppl">Paid parental leave</option>
-      </select>
-      </form>
-      
-      <form class="choice">Choice #5<br>
-      <select>
-        <option default=""></option>
-        <option value="sl">Sick leave</option>
-        <option value="vl">Vacation leave</option>
-        <option value="ac">Ac bank</option>
-        <option value="lwop">Leave without pay</option>
-        <option value="ppl">Paid parental leave</option>
-      </select>
-      </form>
-    </div>
-      
-      <br><br>
-      
-      <div class="hour-output-forms">
-      <FORM class="the-main-forms" NAME="myform" ACTION="" METHOD="GET">Enter Operator's Sick Leave: <br>
-      <br>
-      <INPUT id="sickLeave" TYPE="text" NAME="inputbox" VALUE=""> Sick Leave <P>
-      <p id="slOutput">Output</p>
-      <p id="slOutput2"><p>
-      </FORM>
+      </div>
+
+      <div id="choice3">
+        <h2>Choice #3</h2>
+        <select>
+            <option default=""></option>
+              <option value="sl3">Sick Leave</option>
+              <option value="vl3">Vacation Leave</option>
+              <option value="ac3">AC Bank</option>
+              <option value="ppl3">Paid Parental Leave</option>
+            </select>
           
-      <FORM class="the-main-forms" NAME="secondform" ACTION="" METHOD="GET">Enter Operator's Vacation Leave:
-      <br>
-      <br>
-      <INPUT id="vacationLeave" TYPE="text" NAME="secondinputbox" VALUE=""> Vacation Leave<P>
-      <p id="vlOutput">Output</p>
-      </FORM>
-          
-      
-      <FORM class="the-main-forms" NAME="thirdform" ACTION="" METHOD="GET">Enter Operator's AC accruals:<br>
-      <br>
-      <INPUT id="ac" TYPE="text" NAME="thirdinputbox" VALUE=""> AC Hours<P>
-      <p id="acOutput">Output</p>
-      </FORM>
-          
-      
-      <FORM class="the-main-forms" NAME="fourthform" ACTION="" METHOD="GET">Enter Operator's PPL Accruals:
-      <br>
-      <br>
-      <INPUT id="ppl" TYPE="text" NAME="fourthinputbox" VALUE=""> PPL Hours<P>
-       <p id="pplOutput">Output</p>
-      </FORM>
-    </div>
-    <button id="divide" type="submit">Refresh</button>
-   <button id="master" type="submit">Calculate</button>
+        </div>
+
+        <div id="choice4">
+          <h2>Choice #4</h2>
+          <select>
+              <option default=""></option>
+                <option value="sl4">Sick Leave</option>
+                <option value="vl4">Vacation Leave</option>
+                <option value="ac4">AC Bank</option>
+                <option value="ppl4">Paid Parental Leave</option>
+              </select>
+            
+          </div>
+
+  </section>
+  <br>
+
+<FORM NAME="myform" ACTION="" METHOD="GET">Enter Operator's Sick Leave: <br>
+<br>
+<INPUT id="sickLeave" TYPE="text" NAME="inputbox" VALUE=""> Sick Leave <P>
+<p id="slOutput">Output</p>
+</FORM>
+    
+<FORM NAME="secondform" ACTION="" METHOD="GET">Enter Operator's Vacation Leave:
+<br>
+<br>
+<INPUT id="vacationLeave" TYPE="text" NAME="secondinputbox" VALUE=""> Vacation Leave<P>
+<p id="vlOutput">Output</p>
+</FORM>
+    
+
+<FORM NAME="thirdform" ACTION="" METHOD="GET">Enter Operator's AC accruals:<br>
+<br>
+<INPUT id="ac" TYPE="text" NAME="thirdinputbox" VALUE=""> AC Hours<P>
+<p id="acOutput">Output</p>
+</FORM>
+    
+
+<FORM NAME="fourthform" ACTION="" METHOD="GET">Enter Operator's PPL Accruals:
+<br>
+<br>
+<INPUT id="ppl" TYPE="text" NAME="fourthinputbox" VALUE=""> PPL Hours<P>
+ <p id="pplOutput">Output</p>
+</FORM>
+
+
+<br><br>
+<button id="master" type="submit">Calculate</button>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="app.js"></script>
+
+  </div>
   </div>
   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
-    <script src="/scripts/select.js"></script>
+    <script src="/scripts/calculator.js"></script>
 </body>
 
 <footer>
   <%- include('../layout/footer') %>
 </footer> 
+</html>

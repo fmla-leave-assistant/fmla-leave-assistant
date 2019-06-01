@@ -622,13 +622,3 @@ hr {
 .choice {
   padding: 5px;
 }
-
-.hour-output-forms {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.the-main-forms {
-  width: 100%;
-}
