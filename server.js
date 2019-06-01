@@ -42,6 +42,7 @@ app.set('view engine', 'ejs');
 app.get('/', homePage);
 app.post('/login', renderUserPage);
 app.put('/submit', renderUserResults);
+app.get('/about', renderAboutUs);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
@@ -285,6 +286,10 @@ function renderUserResults(request, response) {
         .catch(error => handleError(error, response))
     })
     .catch(error => handleError(error, response))
+}
+
+function renderAboutUs(request, response){
+  response.render('pages/about', {})
 }
 
 // tools to make the magic happen
