@@ -1,38 +1,41 @@
 /*fonts*/
 
-@font-face {
-  font-family: Poppins-Regular;
-  src: url('../fonts/poppins/Poppins-Regular.ttf'); 
-}
 
-@font-face {
-  font-family: Poppins-Medium;
-  src: url('../fonts/poppins/Poppins-Medium.ttf'); 
-}
-
-@font-face {
-  font-family: Poppins-Bold;
-  src: url('../fonts/poppins/Poppins-Bold.ttf'); 
-}
-
-@font-face {
-  font-family: Poppins-SemiBold;
-  src: url('../fonts/poppins/Poppins-SemiBold.ttf'); 
-}
 
 * {
 	margin: 0px; 
 	padding: 0px; 
-	box-sizing: border-box;
+  box-sizing: border-box;
+
 }
 
 body, html {
 	height: 100%;
-	font-family: Poppins-Regular, sans-serif;
+  font-family: 'Mukta', sans-serif;
 }
 
+#img-container {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#logo {
+  height: 75px;
+  width: 75px;
+  margin-left: -10px;
+  margin-top: -20px;
+}
+
+/* 
+hr {
+  border: solid #2727CC 1px;
+  width: 300px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+} */
+
 a {
-	font-family: Poppins-Regular;
+  font-family: 'Mukta', sans-serif;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
@@ -56,7 +59,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 p {
-	font-family: Poppins-Regular;
+  font-family: 'Mukta', sans-serif;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
@@ -159,12 +162,13 @@ iframe {
 
 .input-form-title {
   display: block;
-  font-family: Poppins-Bold;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: bold;
   font-size: 39px;
-  color: #333333;
+  color: black;
   line-height: 1.2;
   text-align: center;
-  padding-bottom: 44px;
+  padding-bottom: 40px;
 }
 
 
@@ -179,8 +183,8 @@ iframe {
 }
 
 .label-input {
-  font-family: Poppins-Regular;
-  font-size: 13px;
+  font-family: 'Mukta', sans-serif;
+  font-size: 20px;
   color: #666666;
   line-height: 1.5;
   padding-left: 5px;
@@ -190,8 +194,8 @@ iframe {
   display: block;
   width: 100%;
   background: transparent;
-  font-family: Poppins-Medium;
-  font-size: 18px;
+  font-family: 'Mukta', sans-serif;
+  font-size: 12px;
   color: #333333;
   line-height: 1.2;
   padding: 0 5px;
@@ -289,8 +293,9 @@ textarea.input {
   padding: 0 20px;
   width: 100%;
   height: 50px;
-  font-family: Poppins-Medium;
-  font-size: 16px;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: bold;
+  font-size: 17px;
   color: #fff;
   line-height: 1.2;
 }
@@ -411,8 +416,8 @@ textarea.input {
 }
 
 .select2-container .select2-selection--single .select2-selection__rendered {
-  font-family: Poppins-Medium;
-  font-size: 18px;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 12px;
   color: #333333;
   line-height: 1.2;
   padding-left: 5px ;
@@ -476,13 +481,13 @@ textarea.input {
 }
 
 .select2-container .select2-results__option--highlighted[aria-selected] {
-  background: #2727CC;
+  background: #00dbde;
   color: white;
 }
 
 .select2-results__options {
-  font-family: Poppins-Regular;
-  font-size: 15px;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 12px;
   color: #333333;
   line-height: 1.2;
 }
@@ -490,8 +495,8 @@ textarea.input {
 .select2-search--dropdown .select2-search__field {
   border: 1px solid #aaa;
   outline: none;
-  font-family: Poppins-Regular;
-  font-size: 15px;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 12px;
   color: #333333;
   line-height: 1.2;
 }

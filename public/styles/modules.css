@@ -120,31 +120,68 @@ iframe {
 	max-width: 1200px;
 }
 
+.dayclass {
+  display: grid;
+  grid-template-columns: 1fr 200px 1fr;
+  grid-row-gap: 20px;
+  justify-items: stretch;
+  align-items: stretch;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 20px;
+  font-family: 'Mukta', sans-serif;
+}
 
+.width100 {
+  text-align: left;
+}
+
+.date {
+  text-align: center;
+}
+
+input.hourinput {
+  
+  flex-grow: 1;
+  text-align: center;
+  font-size: 18px;
+  font-family: 'Mukta', sans-serif;
+  align-self: stretch;
+}
 
 .wrap-user-form {
   text-align: center;
 }
 
 .jumpButtons {
-  display: flex;
+  
   margin-top: 20px;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.middle {
+  align-self: center;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-size: 30px;
+  position: relative;
+  top: -5px;
+  font-family: 'Mukta', sans-serif;
 }
 
 .fa-arrow-left {
   font-size: 25px;
-  margin-right: 110px;
+  position: relative;
 }
 
 .fa-arrow-right {
   font-size: 25px;
-  margin-left: 110px;
+  position: relative;
 }
 
-h2 {
- padding: 50px;
-}
 
 .oneDayClass {
   display: inline;

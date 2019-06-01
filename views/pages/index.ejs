@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="/styles//reset.css">
   <link rel="stylesheet" type="text/css" href="/styles//base.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Mukta|Nanum+Gothic|Varela+Round&display=swap" rel="stylesheet">
   <%- include('../layout/head') %>
 
 </head>
@@ -18,6 +19,10 @@
 
   <div class="container-user-form">
     <div class="wrap-user-form">
+      <div id="img-container">
+        <img id="logo" src="/styles/images/JALA-logo.png">
+        </div>
+        <!-- <hr> -->
       <form action="/login" method="post" id="logform" class="input-form validate-form">
         <input type="hidden" name="currentDay" value="<%- dayFinder() %>" id="replacewithdayofyear">
         <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">

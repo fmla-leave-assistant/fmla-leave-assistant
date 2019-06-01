@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/styles/base.css">
     <link rel="stylesheet" type="text/css" href="/styles/modules.css">
     <script src="https://kit.fontawesome.com/920a899264.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Mukta|Nanum+Gothic|Varela+Round&display=swap" rel="stylesheet">
       <%- include('../layout/head') %>
 </head>
 
@@ -24,7 +25,7 @@
         <p><input type="hidden" name="language" value="<%= pageData.language %>"></p>
         <p><button type="submit"><i class="fas fa-arrow-left"></i></button></p>
       </form>
-      <h2> You Have: <%- pageData.totalUserHours%> Hours
+      <h2 class="middle"> You Have: <%- pageData.totalUserHours %> Hours
   <% const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd)/365 * 525600 * 60000)).toDateString().split(' ').slice(1,4).join(' ') %><h2>
 
     <form action="/login" method="post" id="logform">
@@ -62,14 +63,11 @@
                 </button>
             </div>
           </div>
-
-        <!-- <input type="hidden" name="_method" value="put">
-        <button class="hourSubmitButton" type="submit"><%= pageData.text %></button> -->
     </form>
   </div>
       </div>
       </div>
 
-  <!-- <footer>
+  <footer>
     <%- include('../layout/footer') %>
-  </footer> -->
+  </footer>
