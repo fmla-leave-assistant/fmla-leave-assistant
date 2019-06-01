@@ -96,8 +96,9 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
+  console.log(request.body)
   const thisWillChange = {}
-  const text = 'Press here to submit your FMLA hours';
+  const text = 'Submit your FMLA hours';
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   thisWillChange.language = request.body.language;
   thisWillChange.text = text;
@@ -193,7 +194,7 @@ function renderUserPage(request, response) {
                 let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
                 client.query(SQL3)
                   .then(hours => {
-                    let parsedHours = Object.values(hours.rows[0])
+                    let parsedHours = hours.rows[0].sick_leave
                     thisWillChange.totalUserHours = parsedHours[0];
                     return true
                   })

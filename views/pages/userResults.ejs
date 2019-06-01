@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="/styles//reset.css">
+    <link rel="stylesheet" type="text/css" href="/styles//base.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
   <%- include('../layout/head') %>
 </head>
 
@@ -10,12 +13,14 @@
     <%- include('../layout/navbar') %>
   </nav>
 
-<div>
+
+<div class="container-user-form ">
+  <div class="wrap-user-form">
 Sick Leave/FMLA available 
 Hours available 
 <%- userResults.translatedText %>
 <%- userResults.mathResult %>
-
+</div>
 </div>
     </form>
   </div>
