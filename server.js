@@ -157,7 +157,7 @@ function renderUserPage(request, response) {
     client.query(SQL4)
       .then(hours => {
         let parsedHours = hours.rows[0].sick_leave
-        thisWillChange.totalUserHours = parsedHours[0];
+        thisWillChange.totalUserHours = parsedHours;
         console.log('-------------after sick hours' ,thisWillChange)
         response.render('pages/user', { pageData: thisWillChange })
         return true
@@ -207,7 +207,7 @@ function renderUserPage(request, response) {
                 client.query(SQL3)
                   .then(hours => {
                     let parsedHours = hours.rows[0].sick_leave
-                    thisWillChange.totalUserHours = parsedHours[0];
+                    thisWillChange.totalUserHours = parsedHours;
                     return true
                   })
                   .catch(error => handleError(error, response))
