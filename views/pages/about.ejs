@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="/styles//reset.css">
+    <link rel="stylesheet" type="text/css" href="/styles/base.css">
+    <link rel="stylesheet" type="text/css" href="/styles/modules.css">
+    <script src="https://kit.fontawesome.com/920a899264.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Mukta|Nanum+Gothic|Varela+Round&display=swap" rel="stylesheet">
   <%- include('../layout/head') %>
 </head>
 
@@ -10,36 +15,44 @@
     <%- include('../layout/navbar') %>
   </nav>
 
-  <h1>About Us</h1>
+  <div class="container-user-form">
+      <div class="wrap-user-form">
 
-  <section>
+  <h1>About Us</h1>
+<br><br><br>
+  <section class="about-photos">
 
     <div>
-      <img src="https://morganfillman.space/640/360" alt="Adrienne Easton" title="Adrienne Easton">
+      <img id="adrienne" src="/styles/images/adrienne.png" alt="Adrienne Easton" title="Adrienne Easton">
       <h3>Adrienne Easton</h3>
       <p>Adrienne Easton is a Full Stack JavaScript Software Developer who comes from working as a school psychologist and psychometrist. She loves the problem solving and endless possibilities and creativity in programming, while integrating her knowledge around empathy around human behavior from the field of psychology. Adrienne also enjoys acting, singing, swimming, and making balloon animals.</p>
     </div>
-
+<br><br><br>
     <div>
-      <img src="https://baconmockup.com/640/360" alt="Austin Wood" title="Austin Wood">
+      <img id="austin" src="/styles/images/austin.png" alt="Austin Wood" title="Austin Wood">
       <h3>Austin Wood</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet luctus venenatis lectus magna.</p>
     </div>
-
-    <div>
-      <img src="https://placezombie.com/640x360" alt="Jonny Graybill" title="Jonny Graybill">
+<br><br><br>
+    <div">
+      <img  id="jonny" src="/styles/images/jonny.png" alt="Jonny Graybill" title="Jonny Graybill">
       <h3>Jonny Graybill</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet luctus venenatis lectus magna.</p>
     </div>
-
+<br><br><br>
     <div>
-      <img src="https://placebeard.it/640x360" alt="Lee-Roy King" title="Lee-Roy King">
+      <img id="lee" src="/styles/images/lee.png" alt="Lee-Roy King" title="Lee-Roy King">
       <h3>Lee-Roy King</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet luctus venenatis lectus magna.</p>
     </div>
 
   </section>
 
+  </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
 </body>
 
 <footer>

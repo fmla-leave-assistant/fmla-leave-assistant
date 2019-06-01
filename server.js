@@ -43,6 +43,7 @@ app.get('/', homePage);
 app.post('/login', renderUserPage);
 app.put('/submit', renderUserResults);
 app.get('/about', renderAboutUs);
+app.get('/calculator', renderCalculator);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
@@ -290,6 +291,10 @@ function renderUserResults(request, response) {
 
 function renderAboutUs(request, response){
   response.render('pages/about', {})
+}
+
+function renderCalculator(request, response){
+  response.render('pages/calculator', {})
 }
 
 // tools to make the magic happen

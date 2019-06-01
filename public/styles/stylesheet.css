@@ -1,0 +1,31 @@
+* {
+  text-align: center;
+}
+
+.choice {
+ border: none;
+}
+
+form {
+  margin: 0 auto;
+  padding-left: 45px;
+  padding-right: 45px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: solid black 1px;
+  display: inline-block;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+h1 {
+  background-color: #00dbde;
+}
+
+div {
+  background-color: lightblue;
+}
+
+input {
+  width: 75px;
+}
