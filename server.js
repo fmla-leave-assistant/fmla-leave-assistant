@@ -228,7 +228,7 @@ function renderUserPage(request, response) {
 
 function renderUserResults(request, response) {
   let responseObj = {};
-  const textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ'
+  const textToTranslate = 'Your total FMLA usage is listed below. Additional resources and information about FMLA are also provided below.'
   const target = request.body.language;
   const badgeNumber = request.body.badge;
   const inputHours = request.body.hours.map(hour => parseInt(hour));
