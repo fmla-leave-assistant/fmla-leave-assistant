@@ -18,15 +18,11 @@ The overall problem domain and how the project solves those problems
 
 Semantic versioning, beginning with version 1.0.0 and incremented as changes are made
 
-
 A list of any libraries, frameworks, or packages that your application requires in order to properly function
-
 
 Instructions that the user may need to follow in order to get your application up and running on their own computer
 
-
 Clearly defined API endpoints with sample responses
-
 
 Clearly defined database schemas
 
@@ -95,8 +91,7 @@ Scope
 ----------------
 --Front end--
 Customer page w/ week view
-Login/ create account 
-admin view 
+Login
 
 --API--
 translate
@@ -126,3 +121,22 @@ mock data api
 
 --Database--
 actually validates log in
+
+
+------------Set up-----------
+
+You need an excel style sheet following the format like the one linked in this repo
+https://docs.google.com/spreadsheets/d/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/edit#gid=0
+
+Which you will have to provide in the link on line 58 of server.js
+
+The proper Database schema is located in data/schema.sql
+
+You will also need API keys for google (enabled for sheets as well as translate) in the .env as 
+GOOGLE_API_KEY
+GOOGLE_SHEETS_API
+
+As well as link the database with the following env variable name 
+DATABASE_URL
+
+npm i will take care of the rest of the dependancies

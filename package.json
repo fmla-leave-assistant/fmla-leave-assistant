@@ -1,6 +1,6 @@
 {
   "name": "fmla-leave-assistant",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "The name of the project  # fmla-leave-assistant Names of the team members -Jonny Graybill -Lee-Roy King -Austin Wood -Adrienne Easton -Peter Murphy",
   "main": "server.js",
   "engines": {
