@@ -156,7 +156,7 @@ function renderUserPage(request, response) {
         client.query(SQL4)
           .then(hours => {
             let parsedHours = hours.rows[0].hours_available - hours.rows[0].sum
-            thisWillChange.totalUserHours = parsedHours;
+            thisWillChange.totalUserHours = Math.floor(parsedHours * 1000)/1000;
             response.render('pages/user', { pageData: thisWillChange })
             return true
           })
@@ -206,7 +206,7 @@ function renderUserPage(request, response) {
                   .then(hours => {
                     console.log(hours)
                     let parsedHours = hours.rows[0].hours_available - hours.rows[0].sum
-                    thisWillChange.totalUserHours = parsedHours;
+                    thisWillChange.totalUserHours = Math.floor(parsedHours * 1000)/1000;
                     return true
                   })
                   .catch(error => handleError(error, response))
@@ -262,6 +262,7 @@ function renderUserResults(request, response) {
       client.query(SQL3)
         .then(hours => {
           responseObj.mathResult = hours.rows[0].sick_leave - negativeHours;
+          responseObj.mathResult = Math.floor(responseObj.mathResult * 1000)/1000
         })
         .then((apple) => {
           if (target === 'en') {
