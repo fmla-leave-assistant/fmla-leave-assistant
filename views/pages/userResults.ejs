@@ -3,8 +3,9 @@
 
 <head>
     <link rel="stylesheet" href="/styles//reset.css">
-    <link rel="stylesheet" type="text/css" href="/styles//base.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="/styles//base.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Mukta|Nanum+Gothic|Varela+Round&display=swap" rel="stylesheet">
   <%- include('../layout/head') %>
 </head>
 
@@ -16,12 +17,19 @@
 
 <div class="container-user-form ">
   <div class="wrap-user-form">
-Sick Leave/FMLA available 
-Hours available 
+      <div id="img-container">
+        <a href="/">
+          <img class="icon" id="logo" src="/styles/images/JALA-logo.png">
+        </a>
+          </div>
+<div class="translated-text">
 <%- userResults.translatedText %>
-<%- userResults.mathResult %>
+</div>
+<div class="hours-available">
+  <%- userResults.mathResult %>
+</div>
 </div>
 </div>
     </form>
   </div>
-
+</body>

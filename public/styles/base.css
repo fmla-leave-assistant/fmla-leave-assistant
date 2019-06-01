@@ -17,22 +17,37 @@ body, html {
 #img-container {
   display: flex;
   margin-bottom: 20px;
+  justify-content: space-between;
 }
 
 #logo {
-  height: 75px;
-  width: 75px;
+  height: 60px;
+  width: 60px;
   margin-left: -10px;
   margin-top: -20px;
 }
 
-/* 
-hr {
-  border: solid #2727CC 1px;
-  width: 300px;
-  margin: 0 auto;
-  margin-bottom: 10px;
-} */
+.bar {
+  margin-top: 35px;
+  margin-bottom: -20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fa-calculator {
+  font-size: 30px;
+  color: black;
+}
+
+.fa-home {
+  font-size: 30px;
+  color: black;
+}
+
+.fa-users {
+  font-size: 30px;
+  color: black;
+}
 
 a {
   font-family: 'Mukta', sans-serif;
@@ -499,4 +514,121 @@ textarea.input {
   font-size: 12px;
   color: #333333;
   line-height: 1.2;
+}
+
+
+.translated-text {
+  font-size: 20px;
+  font-family: 'Varela Round', sans-serif;
+  margin-bottom: 20px;
+}
+
+.hours-available {
+  font-size: 30px;
+  text-align: center;
+}
+
+
+
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+#austin {
+  width: 275px;
+  height: 300px;
+  border-radius: 10%;
+  object-fit: cover;
+}
+
+#jonny {
+  animation: shake 5s;
+  animation-iteration-count: infinite; 
+  border-radius: 10%;
+  width: 275px;
+  height: 300px;
+  object-fit: cover;
+}
+
+#adrienne {
+  width: 275px;
+  height: 300px;
+  border-radius: 10%;
+}
+
+#lee {
+  width: 275px;
+  height: 300px;
+  border-radius: 10%;
+  object-fit: cover;
+}
+
+.about-photos > h3 p {
+  font-family: 'Mukta', sans-serif;
+}
+
+.negative-space {
+  margin-top: -30px;
+  margin-bottom: -20px;
+}
+
+.icon {
+  transition: all .2s ease-in-out;
+}
+
+.icon:hover {
+  opacity: 0.9;
+  transform: scale(1.2); 
+}
+
+hr {
+  border: solid 1px black;
+  margin-top: 30px;
+  margin-bottom: -10px;
+}
+
+
+#gross-hours-form {
+  display: flex;
+  margin-top: 20px;
+  align-items: baseline;
+}
+
+#gross-hours-form > input {
+  border: solid 1px black;
+  margin-left: 10px; 
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.selectors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  background-color: white;
+}
+
+.choice {
+  padding: 5px;
+}
+
+.hour-output-forms {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.the-main-forms {
+  width: 100%;
 }

@@ -16,6 +16,11 @@
   </nav>
   <div class="container-user-form">
       <div class="wrap-user-form">
+          <div id="img-container">
+              <a href="/">
+                <img class="icon" id="logo" src="/styles/images/JALA-logo.png">
+              </a>
+              </div>
   
   <div class="jumpButtons">
       <form action="/login" method="post" id="logform">
@@ -25,7 +30,7 @@
         <p><input type="hidden" name="language" value="<%= pageData.language %>"></p>
         <p><button type="submit"><i class="fas fa-arrow-left"></i></button></p>
       </form>
-      <h2 class="middle"> You Have: <%- pageData.totalUserHours %> Hours
+      <h2 class="middle">Balance: <%- pageData.totalUserHours %> Hours
   <% const getDateFromJd = (jd) => new Date(new Date(new Date().getFullYear(), 0, 0).getTime() + ((jd)/365 * 525600 * 60000)).toDateString().split(' ').slice(1,4).join(' ') %><h2>
 
     <form action="/login" method="post" id="logform">
@@ -61,10 +66,30 @@
                     <%= pageData.text %>
                 </span>
                 </button>
+                
             </div>
+            
           </div>
+          
     </form>
+
+<hr>
+
+    <div class="bar">
+      <a href="/">
+      <i class="fas fa-home icon"></i>
+      </a>
+
+      <a href="/about/">
+      <i class="fas fa-users icon"></i>
+      </a>
+
+      <a href="/calculator/">
+        <i class="fas fa-calculator icon"></i>
+        </a>
+    </div>
   </div>
+  
       </div>
       </div>
 

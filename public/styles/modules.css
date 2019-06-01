@@ -169,17 +169,29 @@ input.hourinput {
   font-size: 30px;
   position: relative;
   top: -5px;
-  font-family: 'Mukta', sans-serif;
+  font-family: 'Varela Round', sans-serif;
 }
 
 .fa-arrow-left {
+  transition: all .2s ease-in-out;
   font-size: 25px;
   position: relative;
 }
 
+.fa-arrow-left:hover {
+  opacity: 0.9;
+  transform: scale(1.3); 
+}
+
 .fa-arrow-right {
+  transition: all .2s ease-in-out;
   font-size: 25px;
   position: relative;
+}
+
+.fa-arrow-right:hover {
+  opacity: 0.9;
+  transform: scale(1.3); 
 }
 
 

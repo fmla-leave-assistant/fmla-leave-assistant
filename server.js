@@ -43,6 +43,7 @@ app.get('/', homePage);
 app.post('/login', renderUserPage);
 app.put('/submit', renderUserResults);
 app.get('/about', renderAboutUs);
+app.get('/calculator', renderCalculator);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
@@ -239,7 +240,7 @@ function renderUserPage(request, response) {
 
 function renderUserResults(request, response) {
   let responseObj = {};
-  const textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ'
+  const textToTranslate = 'Your total remaining FMLA balance is listed below. Please remember that only 480 hours of FMLA can be used each year.'
   const target = request.body.language;
   const badgeNumber = request.body.badge;
   const inputHours = request.body.hours.map(hour => parseInt(hour));
@@ -290,6 +291,10 @@ function renderUserResults(request, response) {
 
 function renderAboutUs(request, response){
   response.render('pages/about', {})
+}
+
+function renderCalculator(request, response){
+  response.render('pages/calculator', {})
 }
 
 // tools to make the magic happen
