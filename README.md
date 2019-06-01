@@ -140,6 +140,8 @@ DATABASE_URL
 npm i will take care of the rest of the dependancies
 
 
+line 82 getSpreadSheet() will handle initial database population for the base_hours table but to avoid creating duplicate entries it should only be run once. 
+
 Dev notes:
 Per instructor request I am drawing your attention to the difference between the SQL on line 155 as compares to lines 250/260, 
 lines 250/260 were written earlier in the project while we were less experienced with SQL and we would refactor the code to look more like line 155 (and save the lines of code that line does) if we had more time but we didn't think we would have time to debug that if we were to have implemented it as a general solution rather than where we did use line 155 as a solution to a specific bug.
@@ -173,3 +175,76 @@ response.body
     }
 }
 
+working badge numbers in current live site all other numbers will break
+
+88191
+21931
+94331
+87385
+24635
+27093
+42830
+94548
+98889
+85061
+97400
+22503
+14654
+79797
+64464
+72853
+78236
+61112
+17125
+57176
+81484
+93824
+ 47001
+ 11016
+ 53234
+ 30400
+ 57403
+ 84171
+ 10773
+ 79548
+ 27457
+ 58180
+ 72022
+ 39875
+  4074
+ 47802
+ 71334
+ 71509
+ 15199
+ 29401
+ 95335
+ 49815
+  4917
+ 87438
+ 26546
+ 44295
+ 75097
+  1222
+ 24774
+ 54783
+ 59412
+ 55640
+ 27261
+ 31973
+ 60120
+ 19418
+ 49752
+ 38987
+ 26840
+  4945
+ 80789
+ 45465
+ 63603
+ 24764
+  9695
+ 90751
+ 77342
+ 97733
+   956
+ 11103
+ 98581
