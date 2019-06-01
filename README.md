@@ -140,3 +140,8 @@ As well as link the database with the following env variable name
 DATABASE_URL
 
 npm i will take care of the rest of the dependancies
+
+
+Dev notes:
+Per instructor request I am drawing your attention to the difference between the SQL on line 155 as compares to lines 250/260, 
+lines 250/260 were written earlier in the project while we were more inexperienced with SQL and we would refactor the code to look more like line 155 (and save the lines of code that line does) if we had more time but we didn't think we would have time to debug that if we were to have implemented it as a general solution rather than where we did use line 155 as a solution to a specific bug.
