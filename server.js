@@ -150,19 +150,17 @@ function renderUserPage(request, response) {
               day.hours = currentHours.rows[idx].hours;
               return day;
             })
-            console.log('--------------before sick hours ', thisWillChange)
           })
           .catch(error => handleError(error, response));
-    let SQL4 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
-    client.query(SQL4)
-      .then(hours => {
-        let parsedHours = hours.rows[0].sick_leave
-        thisWillChange.totalUserHours = parsedHours;
-        console.log('-------------after sick hours' ,thisWillChange)
-        response.render('pages/user', { pageData: thisWillChange })
-        return true
+        let SQL4 = `SELECT SUM((CAST(hours AS numeric))), base_hours.sick_leave AS hours_available FROM base_hours RIGHT JOIN hastis on hastis.badge=base_hours.badge WHERE hastis.badge=${badgeNumber} GROUP BY base_hours.sick_leave;`
+        client.query(SQL4)
+          .then(hours => {
+            let parsedHours = hours.rows[0].hours_available - hours.rows[0].sum
+            thisWillChange.totalUserHours = parsedHours;
+            response.render('pages/user', { pageData: thisWillChange })
+            return true
+          })
       })
-    })
 
       .catch(error => handleError(error, response));
   }
@@ -203,10 +201,11 @@ function renderUserPage(request, response) {
               })
               .catch(error => handleError(error, response))
               .then(() => {
-                let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
+                let SQL3 = `SELECT SUM((CAST(hours AS numeric))), base_hours.sick_leave AS hours_available FROM base_hours RIGHT JOIN hastis on hastis.badge=base_hours.badge WHERE hastis.badge=${badgeNumber} GROUP BY base_hours.sick_leave;`
                 client.query(SQL3)
                   .then(hours => {
-                    let parsedHours = hours.rows[0].sick_leave
+                    console.log(hours)
+                    let parsedHours = hours.rows[0].hours_available - hours.rows[0].sum
                     thisWillChange.totalUserHours = parsedHours;
                     return true
                   })
@@ -289,11 +288,11 @@ function renderUserResults(request, response) {
     .catch(error => handleError(error, response))
 }
 
-function renderAboutUs(request, response){
+function renderAboutUs(request, response) {
   response.render('pages/about', {})
 }
 
-function renderCalculator(request, response){
+function renderCalculator(request, response) {
   response.render('pages/calculator', {})
 }
 

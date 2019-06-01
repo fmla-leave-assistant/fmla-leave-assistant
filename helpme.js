@@ -436,4 +436,3 @@ const translateLanguageList = (languages) => {
                   "name": "Zulu"
               }
           ]
-
