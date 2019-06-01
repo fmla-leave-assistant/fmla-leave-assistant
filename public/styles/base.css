@@ -17,13 +17,25 @@ body, html {
 #img-container {
   display: flex;
   margin-bottom: 20px;
+  justify-content: space-between;
 }
 
 #logo {
-  height: 75px;
-  width: 75px;
+  height: 60px;
+  width: 60px;
   margin-left: -10px;
   margin-top: -20px;
+}
+
+.calculator {
+  margin-top: 35px;
+  margin-bottom: -20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fa-calculator {
+  font-size: 30px;
 }
 
 /* 
@@ -505,6 +517,7 @@ textarea.input {
 .translated-text {
   font-size: 20px;
   font-family: 'Varela Round', sans-serif;
+  margin-bottom: 20px;
 }
 
 .hours-available {

@@ -20,9 +20,10 @@
   <div class="container-user-form">
     <div class="wrap-user-form">
       <div id="img-container">
-        <img id="logo" src="/styles/images/JALA-logo.png">
+          <a href="http://jala-leave.xyz">
+            <img id="logo" src="/styles/images/JALA-logo.png">
+          </a>
         </div>
-        <!-- <hr> -->
       <form action="/login" method="post" id="logform" class="input-form validate-form">
         <input type="hidden" name="currentDay" value="<%- dayFinder() %>" id="replacewithdayofyear">
         <input type="hidden" name="dayOfWeek" value="<%- new Date().getDay() %>">

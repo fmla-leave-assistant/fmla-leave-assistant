@@ -173,13 +173,25 @@ input.hourinput {
 }
 
 .fa-arrow-left {
+  transition: all .2s ease-in-out;
   font-size: 25px;
   position: relative;
 }
 
+.fa-arrow-left:hover {
+  opacity: 0.9;
+  transform: scale(1.3); 
+}
+
 .fa-arrow-right {
+  transition: all .2s ease-in-out;
   font-size: 25px;
   position: relative;
+}
+
+.fa-arrow-right:hover {
+  opacity: 0.9;
+  transform: scale(1.3); 
 }
 
 
