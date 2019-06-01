@@ -96,7 +96,6 @@ function homePage(request, response) {
 }
 
 function renderUserPage(request, response) {
-  console.log(request.body)
   const thisWillChange = {}
   const text = 'Submit your FMLA hours';
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -149,18 +148,21 @@ function renderUserPage(request, response) {
               day.hours = currentHours.rows[idx].hours;
               return day;
             })
-            console.log(thisWillChange)
+            console.log('--------------before sick hours ', thisWillChange)
           })
           .catch(error => handleError(error, response));
-      })
     let SQL4 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
     client.query(SQL4)
       .then(hours => {
         let parsedHours = hours.rows[0].sick_leave
         thisWillChange.totalUserHours = parsedHours[0];
+        console.log('-------------after sick hours' ,thisWillChange)
         response.render('pages/user', { pageData: thisWillChange })
         return true
       })
+    })
+
+      .catch(error => handleError(error, response));
   }
   else {
     superagent.post(url)
