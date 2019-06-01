@@ -1,0 +1,14 @@
+/* SMACCS */
+
+@media (max-width: 576px) {
+  .wrap-user-form {
+    padding: 72px 15px 65px 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .alert-validate::before {
+    visibility: visible;
+    opacity: 1;
+  }
+}

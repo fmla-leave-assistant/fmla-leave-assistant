@@ -42,6 +42,8 @@ app.set('view engine', 'ejs');
 app.get('/', homePage);
 app.post('/login', renderUserPage);
 app.put('/submit', renderUserResults);
+app.get('/about', renderAboutUs);
+app.get('/calculator', renderCalculator);
 
 //Catch all
 app.get('*', (request, response) => response.status(404).send('This page does not exist!'));
@@ -97,7 +99,7 @@ function homePage(request, response) {
 
 function renderUserPage(request, response) {
   const thisWillChange = {}
-  const text = 'Press here to submit your FMLA hours';
+  const text = 'Submit your FMLA hours';
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   thisWillChange.language = request.body.language;
   thisWillChange.text = text;
@@ -148,10 +150,19 @@ function renderUserPage(request, response) {
               day.hours = currentHours.rows[idx].hours;
               return day;
             })
-            response.render('pages/user', { pageData: thisWillChange })
           })
           .catch(error => handleError(error, response));
+        let SQL4 = `SELECT SUM((CAST(hours AS numeric))), base_hours.sick_leave AS hours_available FROM base_hours RIGHT JOIN hastis on hastis.badge=base_hours.badge WHERE hastis.badge=${badgeNumber} GROUP BY base_hours.sick_leave;`
+        client.query(SQL4)
+          .then(hours => {
+            let parsedHours = hours.rows[0].hours_available - hours.rows[0].sum
+            thisWillChange.totalUserHours = parsedHours;
+            response.render('pages/user', { pageData: thisWillChange })
+            return true
+          })
       })
+
+      .catch(error => handleError(error, response));
   }
   else {
     superagent.post(url)
@@ -190,11 +201,12 @@ function renderUserPage(request, response) {
               })
               .catch(error => handleError(error, response))
               .then(() => {
-                let SQL3 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
+                let SQL3 = `SELECT SUM((CAST(hours AS numeric))), base_hours.sick_leave AS hours_available FROM base_hours RIGHT JOIN hastis on hastis.badge=base_hours.badge WHERE hastis.badge=${badgeNumber} GROUP BY base_hours.sick_leave;`
                 client.query(SQL3)
                   .then(hours => {
-                    let parsedHours = Object.values(hours.rows[0])
-                    thisWillChange.totalUserHours = parsedHours[0];
+                    console.log(hours)
+                    let parsedHours = hours.rows[0].hours_available - hours.rows[0].sum
+                    thisWillChange.totalUserHours = parsedHours;
                     return true
                   })
                   .catch(error => handleError(error, response))
@@ -227,7 +239,7 @@ function renderUserPage(request, response) {
 
 function renderUserResults(request, response) {
   let responseObj = {};
-  const textToTranslate = 'YO JON PUT DAT ~~~ HERE PLZ'
+  const textToTranslate = 'Your total remaining FMLA balance is listed below. Please remember that only 480 hours of FMLA can be used each year.'
   const target = request.body.language;
   const badgeNumber = request.body.badge;
   const inputHours = request.body.hours.map(hour => parseInt(hour));
@@ -274,6 +286,14 @@ function renderUserResults(request, response) {
         .catch(error => handleError(error, response))
     })
     .catch(error => handleError(error, response))
+}
+
+function renderAboutUs(request, response) {
+  response.render('pages/about', {})
+}
+
+function renderCalculator(request, response) {
+  response.render('pages/calculator', {})
 }
 
 // tools to make the magic happen
