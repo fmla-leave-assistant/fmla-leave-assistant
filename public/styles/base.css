@@ -577,3 +577,58 @@ textarea.input {
 .about-photos > h3 p {
   font-family: 'Mukta', sans-serif;
 }
+
+.negative-space {
+  margin-top: -30px;
+  margin-bottom: -20px;
+}
+
+.icon {
+  transition: all .2s ease-in-out;
+}
+
+.icon:hover {
+  opacity: 0.9;
+  transform: scale(1.2); 
+}
+
+hr {
+  border: solid 1px black;
+  margin-top: 30px;
+  margin-bottom: -10px;
+}
+
+
+#gross-hours-form {
+  display: flex;
+  margin-top: 20px;
+  align-items: baseline;
+}
+
+#gross-hours-form > input {
+  border: solid 1px black;
+  margin-left: 10px; 
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.selectors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  background-color: white;
+}
+
+.choice {
+  padding: 5px;
+}
+
+.hour-output-forms {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.the-main-forms {
+  width: 100%;
+}
