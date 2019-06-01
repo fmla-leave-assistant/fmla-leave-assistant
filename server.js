@@ -149,9 +149,17 @@ function renderUserPage(request, response) {
               day.hours = currentHours.rows[idx].hours;
               return day;
             })
-            response.render('pages/user', { pageData: thisWillChange })
+            console.log(thisWillChange)
           })
           .catch(error => handleError(error, response));
+      })
+    let SQL4 = `SELECT sick_leave FROM base_hours WHERE badge='${badgeNumber}';`;
+    client.query(SQL4)
+      .then(hours => {
+        let parsedHours = hours.rows[0].sick_leave
+        thisWillChange.totalUserHours = parsedHours[0];
+        response.render('pages/user', { pageData: thisWillChange })
+        return true
       })
   }
   else {
