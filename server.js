@@ -238,7 +238,7 @@ function renderUserPage(request, response) {
 
 function renderUserResults(request, response) {
   let responseObj = {};
-  const textToTranslate = 'Your total remaining FMLA balance is listed below. Please remember that only 480 hours of FMLA can be used each year'
+  const textToTranslate = 'Your total remaining FMLA balance is listed below. Please remember that only 480 hours of FMLA can be used each year.'
   const target = request.body.language;
   const badgeNumber = request.body.badge;
   const inputHours = request.body.hours.map(hour => parseInt(hour));

@@ -36,15 +36,8 @@ body, html {
 
 .fa-calculator {
   font-size: 30px;
+  color: black;
 }
-
-/* 
-hr {
-  border: solid #2727CC 1px;
-  width: 300px;
-  margin: 0 auto;
-  margin-bottom: 10px;
-} */
 
 a {
   font-family: 'Mukta', sans-serif;
