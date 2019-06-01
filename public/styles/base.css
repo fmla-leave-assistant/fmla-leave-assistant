@@ -331,7 +331,6 @@ textarea.input {
   transform: translateY(-50%);
   right: 2px;
   pointer-events: none;
-  font-family: Poppins-Regular;
   color: #c80000;
   font-size: 13px;
   line-height: 1.4;
@@ -445,8 +444,13 @@ textarea.input {
   -ms-box-shadow: 0 3px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
-.select2-dropdown--above {top: -30px;}
-.select2-dropdown--below {top: 8px;}
+.select2-dropdown--above {
+  top: -30px;
+}
+
+.select2-dropdown--below {
+  top: 8px;
+}
 
 .select2-container .select2-results__option[aria-selected] {
   padding-top: 10px;

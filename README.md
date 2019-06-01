@@ -16,17 +16,11 @@ The overall problem domain and how the project solves those problems
 -Currently, operators have no idea what their usage of FMLA is. Without this knowledge they do not know when they can or cannot take leave. This app is designed to provide employees peace of mind for getting their leave approved. From the administration side, pay adjustments for fmla leave are encoded by individuals on a biweekly basis equating to roughly 10% of their work week. This project will address these issues by, reducing the amount of time administrators spend organizing and annotating leave. Additionally this will give operators, visibility into and control of their FMLA leave.
 
 
-Semantic versioning, beginning with version 1.0.0 and incremented as changes are made
-
-
 A list of any libraries, frameworks, or packages that your application requires in order to properly function
-
 
 Instructions that the user may need to follow in order to get your application up and running on their own computer
 
-
 Clearly defined API endpoints with sample responses
-
 
 Clearly defined database schemas
 
@@ -95,8 +89,7 @@ Scope
 ----------------
 --Front end--
 Customer page w/ week view
-Login/ create account 
-admin view 
+Login
 
 --API--
 translate
@@ -126,3 +119,57 @@ mock data api
 
 --Database--
 actually validates log in
+
+
+------------Set up instructions-----------
+
+You need an excel style sheet following the format like the one linked in this repo
+https://docs.google.com/spreadsheets/d/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/edit#gid=0
+
+Which you will have to provide in the link on line 58 of server.js
+
+The proper Database schema is located in data/schema.sql
+
+You will also need API keys for google (enabled for sheets as well as translate) in the .env as 
+GOOGLE_API_KEY
+GOOGLE_SHEETS_API
+
+As well as link the database with the following env variable name 
+DATABASE_URL
+
+npm i will take care of the rest of the dependancies
+
+
+Dev notes:
+Per instructor request I am drawing your attention to the difference between the SQL on line 155 as compares to lines 250/260, 
+lines 250/260 were written earlier in the project while we were less experienced with SQL and we would refactor the code to look more like line 155 (and save the lines of code that line does) if we had more time but we didn't think we would have time to debug that if we were to have implemented it as a general solution rather than where we did use line 155 as a solution to a specific bug.
+
+
+
+------Frameworks------
+jquery
+fontawesome
+google fonts
+select2
+
+------API endpoints----------
+
+google translate 
+${text} = 'text you want to translate'
+${target} = 'two letter abbreviation for language examples can be found 'fullLanguageList.json' (this was populated with api calls but doing this programatically was out of scope)
+
+POST::https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}
+
+sample response:
+
+response.body
+{
+    "data": {
+        "translations": [
+            {
+                "translatedText": "Domingo Lunes Martes Miércoles Jueves Viernes Sábado"
+            }
+        ]
+    }
+}
+

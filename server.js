@@ -204,7 +204,6 @@ function renderUserPage(request, response) {
                 let SQL3 = `SELECT SUM((CAST(hours AS numeric))), base_hours.sick_leave AS hours_available FROM base_hours RIGHT JOIN hastis on hastis.badge=base_hours.badge WHERE hastis.badge=${badgeNumber} GROUP BY base_hours.sick_leave;`
                 client.query(SQL3)
                   .then(hours => {
-                    console.log(hours)
                     let parsedHours = hours.rows[0].hours_available - hours.rows[0].sum
                     thisWillChange.totalUserHours = Math.floor(parsedHours * 1000)/1000;
                     return true
@@ -326,7 +325,6 @@ const weekMaker = (badgeNumber, startingDayOfYear, startingDayOfWeek, weekArray)
     return dayOfWeekNumber
   }
   let startArrayDayOfWeek = decrementDay(decrementDay(decrementDay(startingDayOfWeek)))
-
   let start = startArrayDay
   let result = [];
   for (let i = 0; i < 7; i++) {
