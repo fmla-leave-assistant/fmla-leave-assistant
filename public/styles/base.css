@@ -546,18 +546,19 @@ textarea.input {
 }
 
 #austin {
-  width: 225px;
+  width: 275px;
   height: 300px;
   border-radius: 10%;
+  object-fit: cover;
 }
 
-
 #jonny {
-  animation: shake 6s;
+  animation: shake 5s;
   animation-iteration-count: infinite; 
   border-radius: 10%;
-  width: 225px;
+  width: 275px;
   height: 300px;
+  object-fit: cover;
 }
 
 #adrienne {
@@ -566,3 +567,13 @@ textarea.input {
   border-radius: 10%;
 }
 
+#lee {
+  width: 275px;
+  height: 300px;
+  border-radius: 10%;
+  object-fit: cover;
+}
+
+.about-photos > h3 p {
+  font-family: 'Mukta', sans-serif;
+}
