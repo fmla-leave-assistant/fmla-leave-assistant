@@ -570,7 +570,6 @@ hr {
   margin-bottom: -10px;
 }
 
-
 #gross-hours-form {
   display: flex;
   margin-top: 20px;
@@ -591,8 +590,60 @@ hr {
   background-color: white;
 }
 
-.choice {
+.choices {
+  margin-top: -40px;
+  display: flex;
+  flex-wrap: wrap;
   padding: 5px;
+  justify-content: center;
+}
+
+section > * {
+  margin: 10px;
+}
+
+.hour-form-container > * {
+  margin-bottom: 20px;
+  border: solid 1px black;
+}
+
+#sickLeave {
+  border: solid 1px black;
+  width: 70px;
+}
+
+#vacationLeave {
+  border: solid 1px black;
+  width: 70px;
+}
+
+#ac {
+  border: solid 1px black;
+  width: 70px;
+}
+
+#ppl {
+  border: solid 1px black;
+  width: 70px;
+}
+
+#master {
+  background-color: slategray;
+  width: 75%;
+  border-radius: 10px;
+  padding: 0 20px;
+  height: 50px;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: bold;
+  font-size: 17px;
+  color: #fff;
+  line-height: 1.2;
+}
+
+#master:hover {
+  opacity: 0.9;
+  color: white;
+  font-weight: bold;
 }
 
 @keyframes shake {
