@@ -16,8 +16,6 @@
 
 A list of any libraries, frameworks, or packages that your application requires in order to properly function
 
-Instructions that the user may need to follow in order to get your application up and running on their own computer
-
 Clearly defined API endpoints with sample responses
 
 Clearly defined database schemas
@@ -95,47 +93,50 @@ mock data api
 actually validates log in
 
 
-------------Set up instructions-----------
-
-You need an excel style sheet following the format like the one linked in this repo
+*Set up instructions*
+---------------
+* You need an excel style sheet following the format like the one linked in this repo
 https://docs.google.com/spreadsheets/d/1xTi2w8NV6QqRjoZDyMrfwbSpBjjakBFJrIpPkCZ5UgI/edit#gid=0
 
-Which you will have to provide in the link on line 58 of server.js
+* Which you will have to provide in the link on line 58 of server.js
 
-The proper Database schema is located in data/schema.sql
+* *The proper Database schema is located in data/schema.sql
 
-You will also need API keys for google (enabled for sheets as well as translate) in the .env as 
+* You will also need API keys for google (enabled for sheets as well as translate) in the .env as 
 GOOGLE_API_KEY
 GOOGLE_SHEETS_API
 
-As well as link the database with the following env variable name 
+* As well as link the database with the following env variable name 
 DATABASE_URL
 
-npm i will take care of the rest of the dependancies
+* npm i will take care of the rest of the dependancies
 
 
-line 82 getSpreadSheet() will handle initial database population for the base_hours table but to avoid creating duplicate entries it should only be run once. 
+* line 82 getSpreadSheet() will handle initial database population for the base_hours table but to avoid creating duplicate entries it should only be run once. 
 
-Dev notes:
+*Dev notes:*
+---------------
 Per instructor request I am drawing your attention to the difference between the SQL on line 155 as compares to lines 250/260, 
 lines 250/260 were written earlier in the project while we were less experienced with SQL and we would refactor the code to look more like line 155 (and save the lines of code that line does) if we had more time but we didn't think we would have time to debug that if we were to have implemented it as a general solution rather than where we did use line 155 as a solution to a specific bug.
 
 
 
-------Frameworks------
-jquery
-fontawesome
-google fonts
-select2
+*Frameworks*
+---------------
+* jquery
+* fontawesome
+* google fonts
+* select2
 
-------API endpoints----------
+*API endpoints*
+---------------
 
-google translate 
-${text} = 'text you want to translate'
-${target} = 'two letter abbreviation for language examples can be found 'fullLanguageList.json' (this was populated with api calls but doing this programatically was out of scope)
+* google translate 
+* ${text} = 'text you want to translate'
+* ${target} = 'two letter abbreviation for language examples can be found 'fullLanguageList.json' (this was populated with api calls but doing this programatically was out of scope)
 
-POST::https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}
-
+* POST::https://translation.googleapis.com/language/translate/v2?q=${text}&key=${process.env.GOOGLE_API_KEY}&source=en&target=${target}
+```
 sample response:
 
 response.body
@@ -148,9 +149,9 @@ response.body
         ]
     }
 }
-
-working badge numbers in current live site all other numbers will break
-
+```
+* working badge numbers in current live demo site:
+```
 88191
 21931
 94331
@@ -173,52 +174,53 @@ working badge numbers in current live site all other numbers will break
 57176
 81484
 93824
- 47001
- 11016
- 53234
- 30400
- 57403
- 84171
- 10773
- 79548
- 27457
- 58180
- 72022
- 39875
-  4074
- 47802
- 71334
- 71509
- 15199
- 29401
- 95335
- 49815
-  4917
- 87438
- 26546
- 44295
- 75097
-  1222
- 24774
- 54783
- 59412
- 55640
- 27261
- 31973
- 60120
- 19418
- 49752
- 38987
- 26840
-  4945
- 80789
- 45465
- 63603
- 24764
-  9695
- 90751
- 77342
- 97733
-   956
- 11103
- 98581
+47001
+11016
+53234
+30400
+57403
+84171
+10773
+79548
+27457
+58180
+72022
+39875
+4074
+47802
+71334
+71509
+15199
+29401
+95335
+49815
+4917
+87438
+26546
+44295
+75097
+1222
+24774
+54783
+59412
+55640
+27261
+31973
+60120
+19418
+49752
+38987
+26840
+4945
+80789
+45465
+63603
+24764
+9695
+90751
+77342
+97733
+956
+11103
+98581
+```
