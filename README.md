@@ -47,42 +47,22 @@ As a admin I want to have multiple views so that I can see single employees or w
 As a admin I want to be able to see an employees data so that I can ensure complaince 
 
 
-Management
-As a manager I want to see data rendered in an easy to understand view so that I can track patterns in that data.
-As a manager I want a product that reduces operational burden so that we save time as an organization
+#### Management
+* As a manager I want to see data rendered in an easy to understand view so that I can track patterns in that data.
+* As a manager I want a product that reduces operational burden so that we save time as an organization
 
 
-Conflict plan
+#### Conflict Resolution Plan
 
-Try to get conflicting parties to self remediate, if that fails then bring in a third member of the group to mediate. 
-If there is full on chaos we will delete the repo and then beg the instructor for mercy. 
+* Remember first and foremost we are all on the same team and we should maintain that good will and shared vision.
+* Try to get conflicting parties to self remediate, if that fails then bring in a third member of the group to mediate. 
+* If there is full on chaos we will delete the repo and then beg the instructor for mercy. 
 
-If you are pissed you should play a game.
-
-Anyone can tell anyone else to take five. 
-
-Remember first and foremost we are all on the same team and we should maintain that good will and shared vision.
-
-No one is here trying to break stuff, we are all here working towards the same goal. 
-
-If Lee is trying to boss everyone around, tell him to take five and chill tf out. (~Lee wrote this)
-
-To address members who may not be contributing we will in a non-accusatory manor inform that member that more work is expected of them and then encourage and support them in order to make that happen.
-
-Communication plan 
-
-Cell phones / slack 
--text to check slack but most information should be passed through slack
-after hours communication is okay but there is no expectation of checking slack or phones outside of specified hours.
-6:30 - 9:30 pm working hours (regular class hours) 
-Safe environment - reference conflict plan
-Everyone will talk everyday
-
-Scope 
+## Scope: 
 *MVP*
 ----------------
 --Front end--
-Customer page w/ week view
+Customer page with week view
 Login
 
 --API--
