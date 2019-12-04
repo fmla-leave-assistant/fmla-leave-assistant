@@ -1,19 +1,17 @@
 
-The name of the project  # fmla-leave-assistant
-Names of the team members
--Jonny Graybill
--Lee-Roy King
--Austin Wood
--Adrienne Easton
--Peter Murphy
+# FMLA Leave Assistant
+### Team Members
+* Jonny Graybill
+* Lee-Roy King
+* Austin Wood
+* Adrienne Easton
 
+### Description
+* FMLA software designed to assist employees and administrators to provide accurate tracking of FMLA protected leave. 
 
-A description of the project
--FMLA software designed to assist employees and administrators to provide accurate tracking of FMLA protected leave. 
+### Problem Domain and Approach
 
-The overall problem domain and how the project solves those problems
-
--Currently, operators have no idea what their usage of FMLA is. Without this knowledge they do not know when they can or cannot take leave. This app is designed to provide employees peace of mind for getting their leave approved. From the administration side, pay adjustments for fmla leave are encoded by individuals on a biweekly basis equating to roughly 10% of their work week. This project will address these issues by, reducing the amount of time administrators spend organizing and annotating leave. Additionally this will give operators, visibility into and control of their FMLA leave.
+* Currently, operators have no idea what their usage of FMLA is. Without this knowledge they do not know when they can or cannot take leave. This app is designed to provide employees peace of mind for getting their leave approved. From the administration side, pay adjustments for fmla leave are encoded by individuals on a biweekly basis equating to roughly 10% of their work week. This project will address these issues by, reducing the amount of time administrators spend organizing and annotating leave. Additionally this will give operators, visibility into and control of their FMLA leave.
 
 
 A list of any libraries, frameworks, or packages that your application requires in order to properly function
@@ -26,27 +24,23 @@ Clearly defined database schemas
 
 
 
+### User Stories
 
+#### Users
+* As a user I want a clean interface  so that I understand what I need to do 
+* As a user I want to be able to select my language preference so that I can better understand the content
+* As a user I want to be able to clear access to clear accurate knowledge  so that I can plan my FMLA
+* As a user I want easily navigate my pages so that I don't frustrated
+* As a user I want my username to bring up my data so that I can track my data an ensure its accurate
+* As a user I want to be able to view my remaining FMLA so that I can plan my FMLA
 
+#### Developers
+* As a developer I want clean easily readable code so that I can understand what's happening without depending on comments
+* As a developer I want a well organized clear file tree so that I can easily navigate and connect all of the code 
+* As a developer I want to make a functional intuitive front end so that I don't look like a joke
+* As a developer I want a well structured database so that I can easily retrieve and update the data within it.
 
-
-User Stories
-
-Users
-As a user I want a clean interface  so that I understand what I need to do 
-As a user I want to be able to select my language preference so that I can better understand the content
-As a user I want to be able to clear access to clear accurate knowledge  so that I can plan my FMLA
-As a user I want easily navigate my pages so that I don't frustrated
-As a user I want my username to bring up my data so that I can track my data an ensure its accurate
-As a user I want to be able to view my remaining FMLA so that I can plan my FMLA
-
-Developers
-As a developer I want clean easily readable code so that I can understand what's happening without depending on comments
-As a developer I want a well organized clear file tree so that I can easily navigate and connect all of the code 
-As a developer I want to make a functional intuitive front end so that I don't look like a joke
-As a developer I want a well structured database so that I can easily retrieve and update the data within it.
-
-Admin 
+#### Admin 
 As a admin I want be able to calculate accrued leave so that I can ensure they are properly paid
 As a admin I want an easy to use interface so that the product actually gets used
 As a admin I want to have multiple views so that I can see single employees or whole organizations data
