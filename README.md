@@ -14,13 +14,6 @@
 * Currently, operators have no idea what their usage of FMLA is. Without this knowledge they do not know when they can or cannot take leave. This app is designed to provide employees peace of mind for getting their leave approved. From the administration side, pay adjustments for fmla leave are encoded by individuals on a biweekly basis equating to roughly 10% of their work week. This project will address these issues by, reducing the amount of time administrators spend organizing and annotating leave. Additionally this will give operators, visibility into and control of their FMLA leave.
 
 
-A list of any libraries, frameworks, or packages that your application requires in order to properly function
-
-Clearly defined API endpoints with sample responses
-
-Clearly defined database schemas
-
-
 
 ### User Stories
 
